@@ -63,7 +63,7 @@ class MatchAPI(object):
 			[{
 				'challenge': challenge,
 				'closeness': closeness,
-				'exitment': excitment,
+				'excitment': excitment,
 				'love': love,
 				'practicality': practicality,
 				'structure': structure

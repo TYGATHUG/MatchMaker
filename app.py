@@ -58,8 +58,10 @@ def home():
 
 @app.route('/member') 
 def member():
+    
     personality = api.MatchAPI().get_personality('test')
     print personality
+
 
     return render_template('member.html')
 
@@ -73,8 +75,11 @@ def login():
     return render_template('login.html')
 
 
-@app.route('/profile')
+@app.route('/profile', methods=['GET', 'POST'])
 def profile():
+    q1 = request.args.get('q1') 
+    
+    print q1
 
     return render_template('profile.html')
 
