@@ -1,6 +1,7 @@
 from flask import Flask, render_template, url_for, g, redirect, session, request, flash
 import os
 import sqlite3
+import api
 
 app = Flask(__name__)
 app.config.from_object(__name__) 
@@ -57,13 +58,23 @@ def home():
 
 @app.route('/member') 
 def member():
+
     
     return render_template('member.html')
 
 
 @app.route('/profile') 
 def profile():
-    
+
+    input_string = """Have you heard of the principle of least action? It’s the most important idea in physics, and it underlies everything. According to this principle, our reality is optimal in a mathematically exact way: it minimizes a function called the “action.” The universe that we find ourselves in is the one for which the action takes on the smallest value.
+    In quantum mechanics, reality isn’t quite that optimal. Quantum fields don’t have to decide on one specific configuration; they can do everything they want, and the action then quantifies the weight of each contribution. The sum of all these contributions – known as the path-integral – describes again what we observe.
+    This omniscient action has very little to do with action as action hero. It’s simply an integral, usually denoted S, over another function, called the Lagrangian, usually denoted L. There’s a Lagrangian for the Standard Model and one for General Relativity. Taken together they encode the behavior of everything that we know of, except dark matter and quantum gravity. 
+    With a little practice, there’s a lot you can read off directly from the Lagrangian, about the behavior of the theory at low or high energies, about the type of fields and mediator fields, and about the type of interaction. 
+    The below figure gives you a rough idea how that works."""
+
+    personality = api.MatchAPI.get_personality(inputstring)
+    print personailty
+
     return render_template('profile.html')
 
 
