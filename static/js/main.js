@@ -1,14 +1,15 @@
 $(document).ready(function() {
+
 	// Header Scroll
-	// $(window).on('scroll', function() {
-	// 	var scroll = $(window).scrollTop();
-    //
-	// 	if (scroll >= 50) {
-	// 		$('#header').addClass('fixed');
-	// 	} else {
-	// 		$('#header').removeClass('fixed');
-	// 	}
-	// });
+	$(window).on('scroll', function() {
+		var scroll = $(window).scrollTop();
+
+		if (scroll >= 50) {
+			$('#header').addClass('fixed');
+		} else {
+			$('#header').removeClass('fixed');
+		}
+	});
 
 	// Fancybox
 	$('.work-box').fancybox();
@@ -48,9 +49,22 @@ $(document).ready(function() {
 		$(this).toggleClass('close-nav');
 		nav.toggleClass('open');
 		return false;
-	});	
+	});
 	nav.find('a').on('click', function() {
 		$('.nav-toggle').toggleClass('close-nav');
 		nav.toggleClass('open');
 	});
+
+	// Arrow Scroll
+	var $root = $('html, body');
+	$('#down-arrow').on('click', 'img', function(event) {
+		$('html, body').animate({
+        	scrollTop: $('#welcome-content').offset().top
+    	}, 500);
+
+
+        return false;
+	});
+
+
 });
