@@ -15,6 +15,7 @@ app.config.update(dict(
 
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
+
 """
 Database Handlers
 """
@@ -51,35 +52,47 @@ Routes
 """
 @app.route('/') 
 def home():
-    
     return render_template('welcome.html')
 
 
-@app.route('/member') 
-def member():
-    
-    return render_template('member.html')
-
-
-@app.route('/profile') 
-def profile():
-    
-    return render_template('profile.html')
-
-
-@app.route('/register') 
+@app.route('/register')
 def register():
-    
     return render_template('register.html')
 
 
-@app.route('/login') 
+@app.route('/login')
 def login():
-    
     return render_template('login.html')
 
-    
 
+@app.route('/profile')
+def profile():
+    return render_template('profile.html')
+
+
+@app.route('/member')
+def member():
+    return render_template('member.html')
+
+
+@app.route('/terms')
+def terms():
+    return render_template('terms.html')
+
+
+@app.route('/privacy')
+def privacy():
+    return render_template('privacy.html')
+
+
+@app.route('/help')
+def help():
+    return render_template('help.html')
+
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 
 if __name__ == "__main__":
