@@ -2,16 +2,18 @@
 
 {% block body %}
 
-    <h1>Register</h1>
-    <header>MINIMALISTIC FORM</header>
-
-    <form id="form" class="topBefore">
-
-        <input id="name" type="text" placeholder="NAME">
-        <input id="email" type="text" placeholder="E-MAIL">
-        <textarea id="message" type="text" placeholder="MESSAGE"></textarea>
-        <input id="submit" type="submit" value="GO!">
-
-    </form>
+    <section id="intro" class="section intro no-padding">
+        <div class="container-fluid">
+            <div class="row no-gutter">
+                <header class="header">Register</header>
+                <form id="form" class="topBefore">
+                    <input id="username" name="username" type="text" placeholder="Username">
+                    <input id="password" name="password" type="text" placeholder="Password">
+{#                    <textarea id="message" name="message" type="text" placeholder="MESSAGE"></textarea>#}
+                    <input id="submit" type="submit" value="REGISTER">
+                </form>
+            </div>
+        </div>
+    </section>
 
 {% endblock %}
