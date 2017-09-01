@@ -1,116 +1,120 @@
 {% extends 'main.html' %}
 
 {% block body %}
-<h2>Setup your profile</h2>
-  <form role="form" action="{{ url_for('profile') }}">
+    <h2>Setup your profile</h2>
+    <form role="form" action="{{ url_for('profile') }}">
 
 
-    <div class="form-group">
-      <label for="q1">Tell me about yourself.</label>
-      <input type="text" class="form-control" id="q1" name='q1'>
-    </div>
-
-     <div class="form-group">
-      <label for="q2">What is your ideal holiday?.</label>
-      <input type="text" class="form-control" id="q2" name='q2'>
-    </div>
-
-    <div class="form-group">
-      <label for="q3">Describe your most recent shopping experience.</label>
-      <input type="text" class="form-control" id="q3" name='q3'>
-    </div>
-
-    <div class="form-group">
-      <label for="q4">Describe your expirence with going to the gym and if you have never attended a gym what do you think of them?</label>
-      <input type="text" class="form-control" id="q4" name='q4'>
-    </div>
-
-    <div class="form-group">
-      <label for="q5">What does being outdoor mean to you?</label>
-      <input type="text" class="form-control" id="q5" name='q5'>
-    </div>
-
-     <div class="form-group">
-      <label for="q6">Describe the last time you expirience being in nature.</label>
-      <input type="text" class="form-control" id="q6" name='q6'>
-    </div>
-
-     <div class="form-group">
-      <label for="q7">Describe a time when you did something entreprenuerial.</label>
-      <input type="text" class="form-control" id="q7" name='q7'>
-    </div>
-
-     <div class="form-group">
-      <label for="q8">What do you think of volunteering and have you ever volunteered?</label>
-      <input type="text" class="form-control" id="q8" name='q8'>
-    </div>
-
-    <button type="submit" class="btn btn-default">Submit</button>
-  </form>
-</div>
-
-
-
-<!-- profile section -->
-<section id="teams" class="section teams">
-  <div class="container">
-    <div class="row">
-      <!-- team member 1 -->
-      <div class="col-md-4 col-sm-8">
-        <div class="person"> <img src="../../static/images/team-1.png" alt="" class="img-responsive">
-          <div class="person-content">
-            <h4>Johnathan Doe</h4>
-            <h5 class="role">The Mastermind</h5>
-            <p>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. </p>
-          </div>
-          <ul class="social-icons clearfix">
-            <li><a href="#"><span class="fa fa-facebook"></span></a></li>
-            <li><a href="#"><span class="fa fa-twitter"></span></a></li>
-            <li><a href="#"><span class="fa fa-linkedin"></span></a></li>
-            <li><a href="#"><span class="fa fa-google-plus"></span></a></li>
-            <li><a href="#"><span class="fa fa-dribbble"></span></a></li>
-          </ul>
+        <div class="form-group">
+            <label for="q1">Tell me about yourself.</label>
+            <input type="text" class="form-control" id="q1" name='q1'>
         </div>
-      </div>
-      <!-- team member 1 -->
-      <!-- team member 2 -->
-      <div class="col-md-4 col-sm-8">
-        <div class="person"> <img src="../../static/images/team-2.png" alt="" class="img-responsive">
-          <div class="person-content">
-            <h4>Lisa Brown</h4>
-            <h5 class="role">Creative head</h5>
-            <p>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          </div>
-          <ul class="social-icons clearfix">
-            <li><a href="#" class=""><span class="fa fa-facebook"></span></a></li>
-            <li><a href="#" class=""><span class="fa fa-twitter"></span></a></li>
-            <li><a href="#" class=""><span class="fa fa-linkedin"></span></a></li>
-            <li><a href="#" class=""><span class="fa fa-google-plus"></span></a></li>
-            <li><a href="#" class=""><span class="fa fa-dribbble"></span></a></li>
-          </ul>
+
+        <div class="form-group">
+            <label for="q2">What is your ideal holiday?.</label>
+            <input type="text" class="form-control" id="q2" name='q2'>
         </div>
-      </div>
-      <!-- team member 2 -->
-      <!-- team member 3 -->
-      <div class="col-md-4 col-sm-8">
-        <div class="person"> <img src="../../static/images/team-3.png" alt="" class="img-responsive">
-          <div class="person-content">
-            <h4>Mike Collins</h4>
-            <h5 class="role">Technical lead</h5>
-            <p>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          </div>
-          <ul class="social-icons clearfix">
-            <li><a href="#" class=""><span class="fa fa-facebook"></span></a></li>
-            <li><a href="#" class=""><span class="fa fa-twitter"></span></a></li>
-            <li><a href="#" class=""><span class="fa fa-linkedin"></span></a></li>
-            <li><a href="#" class=""><span class="fa fa-google-plus"></span></a></li>
-            <li><a href="#" class=""><span class="fa fa-dribbble"></span></a></li>
-          </ul>
+
+        <div class="form-group">
+            <label for="q3">Describe your most recent shopping experience.</label>
+            <input type="text" class="form-control" id="q3" name='q3'>
         </div>
-      </div>
-      <!-- team member 1 -->
+
+        <div class="form-group">
+            <label for="q4">Describe your expirence with going to the gym and if you have never attended a gym what do
+                you think of them?</label>
+            <input type="text" class="form-control" id="q4" name='q4'>
+        </div>
+
+        <div class="form-group">
+            <label for="q5">What does being outdoor mean to you?</label>
+            <input type="text" class="form-control" id="q5" name='q5'>
+        </div>
+
+        <div class="form-group">
+            <label for="q6">Describe the last time you expirience being in nature.</label>
+            <input type="text" class="form-control" id="q6" name='q6'>
+        </div>
+
+        <div class="form-group">
+            <label for="q7">Describe a time when you did something entreprenuerial.</label>
+            <input type="text" class="form-control" id="q7" name='q7'>
+        </div>
+
+        <div class="form-group">
+            <label for="q8">What do you think of volunteering and have you ever volunteered?</label>
+            <input type="text" class="form-control" id="q8" name='q8'>
+        </div>
+
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
     </div>
-  </div>
-</section>
-<!-- profile section -->
+
+
+
+    <!-- profile section -->
+    <section id="teams" class="section teams">
+        <div class="container">
+            <div class="row">
+                <!-- team member 1 -->
+                <div class="col-md-4 col-sm-8">
+                    <div class="person"><img src="../../static/images/team-1.png" alt="" class="img-responsive">
+                        <div class="person-content">
+                            <h4>Johnathan Doe</h4>
+                            <h5 class="role">The Mastermind</h5>
+                            <p>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum
+                                massa justo sit amet risus. </p>
+                        </div>
+                        <ul class="social-icons clearfix">
+                            <li><a href="#"><span class="fa fa-facebook"></span></a></li>
+                            <li><a href="#"><span class="fa fa-twitter"></span></a></li>
+                            <li><a href="#"><span class="fa fa-linkedin"></span></a></li>
+                            <li><a href="#"><span class="fa fa-google-plus"></span></a></li>
+                            <li><a href="#"><span class="fa fa-dribbble"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- team member 1 -->
+                <!-- team member 2 -->
+                <div class="col-md-4 col-sm-8">
+                    <div class="person"><img src="../../static/images/team-2.png" alt="" class="img-responsive">
+                        <div class="person-content">
+                            <h4>Lisa Brown</h4>
+                            <h5 class="role">Creative head</h5>
+                            <p>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum
+                                massa justo sit amet risus.</p>
+                        </div>
+                        <ul class="social-icons clearfix">
+                            <li><a href="#" class=""><span class="fa fa-facebook"></span></a></li>
+                            <li><a href="#" class=""><span class="fa fa-twitter"></span></a></li>
+                            <li><a href="#" class=""><span class="fa fa-linkedin"></span></a></li>
+                            <li><a href="#" class=""><span class="fa fa-google-plus"></span></a></li>
+                            <li><a href="#" class=""><span class="fa fa-dribbble"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- team member 2 -->
+                <!-- team member 3 -->
+                <div class="col-md-4 col-sm-8">
+                    <div class="person"><img src="../../static/images/team-3.png" alt="" class="img-responsive">
+                        <div class="person-content">
+                            <h4>Mike Collins</h4>
+                            <h5 class="role">Technical lead</h5>
+                            <p>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum
+                                massa justo sit amet risus.</p>
+                        </div>
+                        <ul class="social-icons clearfix">
+                            <li><a href="#" class=""><span class="fa fa-facebook"></span></a></li>
+                            <li><a href="#" class=""><span class="fa fa-twitter"></span></a></li>
+                            <li><a href="#" class=""><span class="fa fa-linkedin"></span></a></li>
+                            <li><a href="#" class=""><span class="fa fa-google-plus"></span></a></li>
+                            <li><a href="#" class=""><span class="fa fa-dribbble"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- team member 1 -->
+            </div>
+        </div>
+    </section>
+    <!-- profile section -->
 {% endblock %}
