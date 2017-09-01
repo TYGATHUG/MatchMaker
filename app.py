@@ -56,12 +56,11 @@ def home():
     return render_template('welcome.html')
 
 
-@app.route('/member') 
+@app.route('/member')
 def member():
     
     personality = api.MatchAPI().get_personality('test')
     print personality
-
 
     return render_template('member.html')
 
