@@ -56,17 +56,16 @@ def home():
     return render_template('welcome.html')
 
 
-<<<<<<< HEAD
 @app.route('/member') 
 def member():
+    personality = api.MatchAPI().get_personality('test')
+    print personality
 
-    
     return render_template('member.html')
-=======
+
 @app.route('/register')
 def register():
     return render_template('register.html')
->>>>>>> 9b2227b5c872dcf5a2cf5c8499851df4efa77354
 
 
 @app.route('/login')
@@ -78,11 +77,6 @@ def login():
 def profile():
 
     return render_template('profile.html')
-
-
-@app.route('/member')
-def member():
-    return render_template('member.html')
 
 
 @app.route('/terms')

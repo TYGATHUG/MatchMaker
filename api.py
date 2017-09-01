@@ -80,9 +80,8 @@ class MatchAPI(object):
 			'volunteering': volunteering
 		}
 
-		print personality
 
-		return jsonProfile
+		return personality
 
 
 """
