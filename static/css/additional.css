@@ -301,7 +301,7 @@ ul li {
 	-webkit-background-size: cover;
 	background-size: cover;
 	min-height: 81px;
-	background-color: green;
+	background-color: rgba(0, 0, 0, 1);
 }
 .banner-btn {
 	opacity: 0.5;
