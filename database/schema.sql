@@ -16,7 +16,7 @@ CREATE TABLE AUTH (
 );
 
 CREATE TABLE USER (
-    uid integer no null,
+    id integer primary key autoincrement,
     fname text not null,
     lname text not null,
     gender text not null check (gender = "Male" or gender = "Female"),
@@ -37,6 +37,24 @@ CREATE TABLE USER (
     foreign key(uid) references AUTH (uid)
 );
 
+CREATE TABLE MATCH (
+    id integer primary key autoincrement,
+    practicality int not null,
+    love int not null,
+    excitment int not null,
+    challenge int not null
+    closeness int not null,
+    structure int not null,
+    live_music int not null,
+    spare_of_moment_purchase int not null,
+    gym_member int not null,
+    outdoors int not null,
+    volunteering int not null,
+    entreprenuer int not null,
+    reading int not null 
+)
+
+
 CREATE TABLE CHAT (
     cid integer not null primary key autoincrement,
     uid1 integer not null,
@@ -45,12 +63,4 @@ CREATE TABLE CHAT (
 
     foreign key(uid1) references AUTH (uid),
     foreign key(uid2) references AUTH (uid)
-);
-
-CREATE TABLE MATCH (
-    uid integer not null,
-    unvisited text,
-    visited text,
-
-    foreign key(uid) references AUTH (uid)
 );

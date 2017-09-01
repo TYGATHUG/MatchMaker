@@ -76,9 +76,31 @@ def login():
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
-    q1 = request.args.get('q1') 
     
-    print q1
+    q1 = str(request.args.get('q1'))
+    q2 = str(request.args.get('q2'))
+    q3 = str(request.args.get('q3'))
+    q4 = str(request.args.get('q4'))
+    q5 = str(request.args.get('q5'))
+    q6 = str(request.args.get('q6'))
+    q7 = str(request.args.get('q7'))
+    q8 = str(request.args.get('q8'))
+
+
+    personality = q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8
+    
+  
+    results = api.MatchAPI().get_personality(personality)
+    
+    
+    db_write = get_db()
+    practicality = results['needs'][0]['practicality']
+    love = results['needs'][0]['love']
+    excitement = results['needs'][0]['excitment']
+    
+    print practicality
+    #db_write.execute('insert into MATCH (')
+
 
     return render_template('profile.html')
 
