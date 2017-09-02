@@ -1,24 +1,37 @@
+# encoding=utf8
 from flask import Flask, render_template, url_for, g, redirect, session, request, flash
-import os
+from flask_sqlalchemy import SQLAlchemy
+from flask_user import login_required, UserManager, UserMixin, SQLAlchemyAdapter
 import sqlite3
+import os
 import api
 
+# Create app
 app = Flask(__name__)
-app.config.from_object(__name__) 
-
-
-app.config.update(dict(
-    DATABASE=os.path.join(app.root_path, 'app.db'),
-    SECRET_KEY='secretkey',
-    USERNAME='admin',
-    PASSSWORD='password'
-))
-
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/damontoumbourou/Code/match-maker/data/app.db'
+app.config['SECRET_KEY'] = 'secret'
+app.config['CSRF_ENABLED'] = True
+app.config['USER_ENABLE_EMAIL'] = False
+
+db = SQLAlchemy(app)
+
+
+class User(UserMixin, db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(50), nullable=False, unique=True)
+    password = db.Column(db.String(255), nullable=False, server_default='')
+    active = db.Column(db.Boolean(), nullable=False, server_default='0')
+
+db_adapter = SQLAlchemyAdapter(db, User)
+user_manager = UserManager(db_adapter, app)
+
+
 """
-Database Handlers
+Database handlers
+"""
 """
 def connect_db():
     rv = sqlite3.connect(app.config['DATABASE'])
@@ -47,12 +60,13 @@ def close_db(error):
     if hasattr(g, 'sqlite_db'):
         g.sqlite_db.close()
 
-
 """
-Routes
 """
-@app.route('/') 
+Page Routes
+"""
+@app.route('/', methods=['GET', 'POST']) 
 def home():
+
     return render_template('welcome.html')
 
 
@@ -66,8 +80,10 @@ def member():
 
 
 @app.route('/profile', methods=['GET', 'POST'])
+@login_required
 def profile():
-    
+
+    """
     q1 = str(request.args.get('q1'))
     q2 = str(request.args.get('q2'))
     q3 = str(request.args.get('q3'))
@@ -92,7 +108,7 @@ def profile():
     print practicality
     #db_write.execute('insert into MATCH (')
 
-
+    """    
     return render_template('profile.html')
 
 
@@ -116,6 +132,11 @@ def about():
     return render_template('about.html')
 
 
+"""
+Routes for user authentication
+"""
+
 
 if __name__ == "__main__":
+
     app.run(debug=True)

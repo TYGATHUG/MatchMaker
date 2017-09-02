@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS MATCH;
 /* ======== Create Table ======== */
 CREATE TABLE AUTH (
     uid integer not null primary key autoincrement,
-    name text not null,
+    email text not null,
     password text not null,
     date real
 );

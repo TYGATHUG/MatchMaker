@@ -1,6 +1,7 @@
 {% extends 'index.html' %}
 
 {% block body %}
+    
 
     <!-- Register Form Modal -->
     <div id="register-modal" class="modal">
@@ -8,11 +9,10 @@
         <div class="modal-content">
             <span id="register-close">&times;</span>
             <header class="header">Register</header>
-            <form action="#" method="post" id="form" class="topBefore">
-                <input id="username" name="username" type="text" placeholder="Username">
-                <input id="password" name="password" type="text" placeholder="Password">
-{#                    <textarea id="message" name="message" type="text" placeholder="MESSAGE"></textarea>#}
-                <input id="submit" type="submit" value="REGISTER">
+            <form action="/signup" method="post" id="form" class="topBefore">
+               
+            <input type="submit" value="Signup">
+               
             </form>
         </div>
     </div>
