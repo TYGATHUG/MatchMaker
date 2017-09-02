@@ -781,5 +781,18 @@ textarea:hover {
 	 Other
 -------------------------------------------------------------------------------*/
 .site-info {
-    margin-left: 500px;
+    width: 70% !important;
+    height: auto !important;
+    margin: 0 auto !important;
+    position: relative !important;
+    align-content: center !important;
+}
+
+.site-info h1 {
+    text-align: center;
+}
+
+.site-info .sub-heading {
+    text-align: center;
+    font-style: italic;
 }
