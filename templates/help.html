@@ -2,6 +2,77 @@
 
 {% block body %}
 
-    <h1>Help</h1>
+    <!-- Register Form Modal -->
+    <div id="register-modal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <p class="modal-closes"><span id="register-close">&times;</span></p>
+            <header class="header">Register</header>
+            <form action="#" method="post" id="form" class="topBefore">
+                <input id="username" name="username" type="text" placeholder="Username">
+                <input id="password" name="password" type="text" placeholder="Password">
+{#                    <textarea id="message" name="message" type="text" placeholder="MESSAGE"></textarea>#}
+                <input id="submit" type="submit" value="REGISTER">
+            </form>
+        </div>
+    </div>
+
+    <!-- Login Form Modal -->
+    <div id="login-modal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <p class="modal-closes"><span id="login-close">&times;</span></p>
+            <header class="header">Login</header>
+            <form action="#" method="post" id="form" class="topBefore">
+                <input id="username" name="username" type="text" placeholder="Username">
+                <input id="password" name="password" type="text" placeholder="Password">
+{#                    <textarea id="message" name="message" type="text" placeholder="MESSAGE"></textarea>#}
+                <input id="submit" type="submit" value="LOGIN">
+            </form>
+        </div>
+    </div>
+
+    <section id="intro" class="section intro no-padding">
+        <div class="container-fluid">
+            <blockquote class="site-info">
+                <h1>Help</h1>
+                <p class="sub-heading">
+                    Below is a guide on how to navigate and use the DIDO service.
+                </p>
+                <br><br>
+                <ol>
+                    <li><a id="tip-1" href="#tip-1">Tip 1 - Question</a></li>
+                    <li><a id="tip-2" href="#tip-2">Tip 2 - Question</a></li>
+                    <li><a id="tip-3" href="#tip-3">Tip 3 - Question</a></li>
+                    <li><a id="tip-4" href="#tip-4">Tip 4 - Question</a></li>
+                    <li><a id="tip-5" href="#tip-5">Tip 5 - Question</a></li>
+                    <li><a id="tip-6" href="#tip-6">Tip 6 - Question</a></li>
+                    <li><a id="tip-7" href="#tip-7">Tip 7 - Question</a></li>
+                    <li><a id="tip-8" href="#tip-8">Tip 8 - Question</a></li>
+                    <li><a id="tip-9" href="#tip-9">Tip 9 - Question</a></li>
+                    <li><a id="tip-10" href="#tip-10">Tip 10 - Question</a></li>
+                </ol>
+
+                <br><br><br><br><br>
+                <br><br><br><br><br>
+                <br><br><br><br><br>
+                <br><br><br><br><br>
+                <br><br><br><br><br>
+
+                <p><a id="tip-1" name="tip-1">Tip 1: Answer.....</a></p>
+                <p><a id="tip-2" name="tip-2">Tip 2: Answer.....</a></p>
+                <p><a id="tip-3" name="tip-3">Tip 3: Answer.....</a></p>
+                <p><a id="tip-4" name="tip-4">Tip 4: Answer.....</a></p>
+                <p><a id="tip-5" name="tip-5">Tip 5: Answer.....</a></p>
+                <p><a id="tip-6" name="tip-6">Tip 6: Answer.....</a></p>
+                <p><a id="tip-7" name="tip-7">Tip 7: Answer.....</a></p>
+                <p><a id="tip-8" name="tip-8">Tip 8: Answer.....</a></p>
+                <p><a id="tip-9" name="tip-9">Tip 9: Answer.....</a></p>
+                <p><a id="tip-10" name="tip-10">Tip 10: Answer.....</a></p>
+
+                <br><br><br><br>
+            </blockquote>
+        </div>
+    </section>
 
 {% endblock %}
