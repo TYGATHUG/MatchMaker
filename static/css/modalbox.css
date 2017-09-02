@@ -19,7 +19,8 @@
     margin: 15% auto; /* 15% from the top and centered */
     padding-left: 14px;
     padding-right: 11px;
-    border: 1px solid #888;
+    border:none;
+    border-bottom: 1px solid black;
 }
 
 /*!* The Close Button *!*/
