@@ -593,7 +593,10 @@ ul li {
 .testimonials blockquote {
     border: 0;
     margin: 0;
-    padding: 100px 15%;
+    padding-top: 25px;
+    padding-bottom: 70px;
+    padding-right: 15%;
+    padding-left: 15%;
 }
 
 .testimonials h1 {
@@ -714,10 +717,9 @@ body {
 
 .header {
     position: relative;
-    padding-top: 20px;
     font-size: 2.3em;
     text-align: center;
-    font-family: 'Lato', "Source Sans Pro";
+    font-family: "Source Sans Pro";
     letter-spacing: 4px;
     font-weight: 700;
     text-transform: uppercase;
