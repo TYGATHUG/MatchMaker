@@ -1,0 +1,72 @@
+{% extends 'main.html' %}
+
+{% block body %}
+
+    <!-- Register Form Modal -->
+    <div id="register-modal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <p class="modal-closes"><span id="register-close">&times;</span></p>
+            <header class="header">Register</header>
+            <form action="#" method="post" id="form" class="topBefore">
+                <input id="username" name="username" type="text" placeholder="Username">
+                <input id="password" name="password" type="text" placeholder="Password">
+{#                    <textarea id="message" name="message" type="text" placeholder="MESSAGE"></textarea>#}
+                <input id="submit" type="submit" value="REGISTER">
+            </form>
+        </div>
+    </div>
+
+    <!-- Login Form Modal -->
+    <div id="login-modal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <p class="modal-closes"><span id="login-close">&times;</span></p>
+            <header class="header">Login</header>
+            <form action="#" method="post" id="form" class="topBefore">
+                <input id="username" name="username" type="text" placeholder="Username">
+                <input id="password" name="password" type="text" placeholder="Password">
+{#                    <textarea id="message" name="message" type="text" placeholder="MESSAGE"></textarea>#}
+                <input id="submit" type="submit" value="LOGIN">
+            </form>
+        </div>
+    </div>
+
+    <section id="intro" class="section intro no-padding">
+        <div class="container-fluid">
+            <blockquote class="site-info">
+                <h1>Terms &amp; Conditions</h1>
+                <p class="sub-heading">
+                    This agreement was written in English (AU). To the extent any translated version of this agreement conflicts with the English version,
+                    the English version controls.<br>
+                    Date of Last Revision: September 2, 2017.
+                </p>
+                <p>
+                    This Statement of Rights and Responsibilities ("Statement," "Terms," or "SRR") derives from the DIDO Principles, and is our terms of service
+                    that governs our relationship with users and others who interact with DIDO. By using or accessing the DIDO Services, you agree to the following broad
+                    subject areas listed below. DIDO is not liable for any harm caused in relation to the subjects listed below.
+                </p>
+                <p style="padding-left:50px; white-space: pre; font-weight: bold;">
+                    1.    Privacy<br>
+                    2.    Sharing Your Content and Information<br>
+                    3.    Safety<br>
+                    4.    Registration and Account Security<br>
+                    5.    Protecting Other People's Rights<br>
+                    6.    Mobile and Other Devices<br>
+                    7.    Payments<br>
+                    8.    Special Provisions Applicable to Developers/Operators of Applications and Websites<br>
+                    9.    About Advertisements and Other Commercial Content Served or Enhanced by Facebook<br>
+                    10.  Special Provisions Applicable to Advertisers<br>
+                    11.  Special Provisions Applicable to Pages<br>
+                    12.  Special Provisions Applicable to Software<br>
+                    13.  Amendments<br>
+                    14.  Termination<br>
+                    15.  Disputes<br>
+                    16.  Special Provisions Applicable to Users Outside the Australia<br>
+                </p>
+                <br><br><br><br>
+            </blockquote>
+        </div>
+    </section>
+
+{% endblock %}
