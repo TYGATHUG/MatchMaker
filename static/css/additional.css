@@ -790,9 +790,14 @@ textarea:hover {
 
 .site-info h1 {
     text-align: center;
+    color: rgba(0, 0, 0, 1) !important;
 }
 
 .site-info .sub-heading {
     text-align: center;
     font-style: italic;
+}
+
+.site-info p {
+    color: rgba(0, 0, 0, 1) !important;
 }
