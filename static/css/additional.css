@@ -175,6 +175,24 @@ ul li {
     color: #fff;
 }
 
+.navigation button {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 13px;
+    font-weight: 400;
+    margin-left: 40px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    display: inline-block;
+    outline: 0 !important;
+    border: none;
+    background: black;
+    /*-webkit-appearance:none;*/
+}
+
+.navigation button:hover {
+    color: #fff;
+}
+
 .nav-toggle {
     display: none;
     height: 44px;
@@ -687,10 +705,9 @@ body {
 
 .header {
     position: relative;
-    padding-top: 130px;
     font-size: 2.3em;
     text-align: center;
-    font-family: 'Lato', "Source Sans Pro";
+    font-family: "Source Sans Pro";
     letter-spacing: 4px;
     font-weight: 700;
     text-transform: uppercase;
@@ -700,7 +717,7 @@ body {
 #form {
     position: relative;
     width: 500px;
-    margin: 50px auto 176px auto;
+    margin: 25px auto 50px auto;
 }
 
 input {
@@ -750,14 +767,19 @@ textarea:hover {
     outline: none;
     cursor: pointer;
     border: solid 1px #e84545;
-    border-top: none;
+    border-top: solid 1px #6c7279;
     letter-spacing: 1px;
     background: #e84545;
 }
 
 #submit:hover {
     background: #f14444;
-    color: #e2dedb;
+    color: #fff;
 }
 
-
+/* ------------------------------------------------------------------------------
+	 Other
+-------------------------------------------------------------------------------*/
+.site-info {
+    margin-left: 500px;
+}

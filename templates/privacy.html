@@ -2,6 +2,67 @@
 
 {% block body %}
 
-    <h1>Privacy</h1>
+    <!-- Register Form Modal -->
+    <div id="register-modal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <p class="modal-closes"><span id="register-close">&times;</span></p>
+            <header class="header">Register</header>
+            <form action="#" method="post" id="form" class="topBefore">
+                <input id="username" name="username" type="text" placeholder="Username">
+                <input id="password" name="password" type="text" placeholder="Password">
+{#                    <textarea id="message" name="message" type="text" placeholder="MESSAGE"></textarea>#}
+                <input id="submit" type="submit" value="REGISTER">
+            </form>
+        </div>
+    </div>
+
+    <!-- Login Form Modal -->
+    <div id="login-modal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <p class="modal-closes"><span id="login-close">&times;</span></p>
+            <header class="header">Login</header>
+            <form action="#" method="post" id="form" class="topBefore">
+                <input id="username" name="username" type="text" placeholder="Username">
+                <input id="password" name="password" type="text" placeholder="Password">
+{#                    <textarea id="message" name="message" type="text" placeholder="MESSAGE"></textarea>#}
+                <input id="submit" type="submit" value="LOGIN">
+            </form>
+        </div>
+    </div>
+
+    <section id="intro" class="section intro no-padding">
+        <div class="container-fluid">
+            <div class="row no-gutter">
+                <div class="col-md-6">
+                    <blockquote class="site-info">
+                        <h1>Privacy Policy</h1>
+                        <p>
+                            This policy describes what information we collect and how it is used and shared.
+                        </p>
+                        <p>
+                            <b>Things you do and information you provide.</b><br>
+                            We collect the content and other information you provide when you use our Services, including when you sign up for an account,
+                            create or share, and message or communicate with others. This can include information in or about the content you provide,
+                            such as the location of a photo or the date a file was created. We also collect information about how you use our Services,
+                            such as the types of content you view or engage with or the frequency and duration of your activities.
+                        </p>
+                        <p>
+                            <b>Things others do and information they provide.</b><br>
+                            We also collect content and information that other people provide when they use our Services, including information about you,
+                            such as when they share a photo of you, send a message to you, or upload, sync or import your contact information.
+                        </p>
+                        <p>
+                            <b>Things others do and information they provide.</b><br>
+                            We also collect content and information that other people provide when they use our Services, including information about you,
+                            such as when they share a photo of you, send a message to you, or upload, sync or import your contact information.
+                        </p>
+                        <br><br>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </section>
 
 {% endblock %}
