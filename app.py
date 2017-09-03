@@ -163,9 +163,6 @@ def login():
                 flash("Login Successful!")
                 return redirect(url_for('member'))
 
-    return render_template('login.html', form=form) 
-    
-    # return error 'username does not exist'
     return render_template('welcome.html', register_form=register_form, login_form=login_form)
 
 
