@@ -15,7 +15,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 # Create app
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/damontoumbourou/Code/match-maker/data/app.db'
+###### get pwd function
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/bendiep/Github/MatchMaker/data/app.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 #app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 Bootstrap(app)
@@ -43,6 +45,7 @@ class RegisterForm(FlaskForm):
     email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), Length(min=3, max=50)])
     username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
     password = PasswordField('password', validators=[InputRequired(), Length(min=8, max=80)])
+    unique = BooleanField('unique')
 
 class MatchForm(FlaskForm):
     age = StringField('age', validators=[InputRequired(), Length(min=1)])
@@ -69,16 +72,15 @@ Page Routes
 """
 @app.route('/', methods=['GET', 'POST']) 
 def home():
+    register_form = RegisterForm()
+    login_form = LoginForm()
 
-
-    return render_template('welcome.html')
+    return render_template('welcome.html', register_form=register_form, login_form=login_form)
 
 
 @app.route('/member')
 @login_required
 def member():
-
-
     personality = api.MatchAPI().get_personality('test')
     print personality
 
@@ -138,33 +140,45 @@ Routes for user authentication
 """
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    form = LoginForm()
+    login_form = LoginForm()
+    register_form = RegisterForm()
 
-    if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+    if login_form.validate_on_submit():
+        user = User.query.filter_by(username=login_form.username.data).first()
+
         if user:
-            if check_password_hash(user.password, form.password.data):
-                login_user(user, remember=form.remember.data)
+            if check_password_hash(user.password, login_form.password.data):
+                login_user(user, remember=login_form.remember.data)
+                flash("Login Successful!")
                 return redirect(url_for('member'))
 
-        return '<h2>Invalid username or password</h1>'
-
     return render_template('login.html', form=form) 
+    
+    # return error 'username does not exist'
+    return render_template('welcome.html', register_form=register_form, login_form=login_form)
 
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    form = RegisterForm()
+    login_form = LoginForm()
+    register_form = RegisterForm()
 
-    if form.validate_on_submit():
-        hashed_password = generate_password_hash(form.password.data, method='sha256')
-        new_user = User(username=form.username.data, email=form.email.data, password=hashed_password)
-        db.session.add(new_user)
-        db.session.commit()
+    user = User.query.filter_by(username=login_form.username.data).first()
+    if not user:
+        if register_form.validate_on_submit():
+            hashed_password = generate_password_hash(register_form.password.data, method='sha256')
+            new_user = User(username=register_form.username.data, email=register_form.email.data, password=hashed_password)
+            db.session.add(new_user)
+            db.session.commit()
+            flash("Register Successful!")
+            register_form.unique = True
+            return redirect(url_for('member'))
+    else:
+        hashed_password = generate_password_hash(register_form.password.data, method='sha256')
+        new_user = User(username=register_form.username.data, email=register_form.email.data, password=hashed_password)
+        register_form.unique = False
 
-        return '<h2>New user has been created!</h2>'
-
-    return render_template('register.html', form=form)
+    return render_template('welcome.html', register_form=register_form, login_form=login_form)
 
 
 @app.route('/logout')
