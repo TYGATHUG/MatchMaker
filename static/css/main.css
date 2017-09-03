@@ -162,7 +162,7 @@ ul li {
     display: inline-block;
 }
 
-.navigation a, .navigation button {
+.navigation a {
     color: rgba(255, 255, 255, 0.75);
     font-size: 13px;
     font-weight: 400;
@@ -172,24 +172,6 @@ ul li {
 }
 
 .navigation a:hover, .navigation a.active {
-    color: #fff;
-}
-
-.navigation button {
-    color: rgba(255, 255, 255, 0.75);
-    font-size: 13px;
-    font-weight: 400;
-    margin-left: 40px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    display: inline-block;
-    outline: 0 !important;
-    border: none;
-    background: black;
-    /*-webkit-appearance:none;*/
-}
-
-.navigation button:hover {
     color: #fff;
 }
 
@@ -593,7 +575,7 @@ ul li {
 .testimonials blockquote {
     border: 0;
     margin: 0;
-    padding-top: px;
+    padding-top: 10px;
     padding-bottom: 70px;
     padding-right: 15%;
     padding-left: 15%;
