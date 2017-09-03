@@ -117,7 +117,6 @@ def profile():
 def match():
     form = MatchForm()
 
-
     print "here : "  
     print form.gender.data
 
@@ -132,24 +131,36 @@ def match():
     return render_template('match.html', name=current_user.username, form=form)
 
 
-@app.route('/terms')
+@app.route('/terms', methods=['GET', 'POST'])
 def terms():
-    return render_template('terms.html')
+    register_form = RegisterForm()
+    login_form = LoginForm()
+
+    return render_template('terms.html', register_form=register_form, login_form=login_form)
 
 
-@app.route('/privacy')
+@app.route('/privacy', methods=['GET', 'POST'])
 def privacy():
-    return render_template('privacy.html')
+    register_form = RegisterForm()
+    login_form = LoginForm()
+
+    return render_template('privacy.html', register_form=register_form, login_form=login_form)
 
 
-@app.route('/help')
+@app.route('/help', methods=['GET', 'POST'])
 def help():
-    return render_template('help.html')
+    register_form = RegisterForm()
+    login_form = LoginForm()
+
+    return render_template('help.html', register_form=register_form, login_form=login_form)
 
 
-@app.route('/about')
+@app.route('/about', methods=['GET', 'POST'])
 def about():
-    return render_template('about.html')
+    register_form = RegisterForm()
+    login_form = LoginForm()
+
+    return render_template('about.html', register_form=register_form, login_form=login_form)
 
 
 """
