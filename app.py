@@ -15,7 +15,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 # Create app
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/damontoumbourou/Code/match-maker/data/app.db'
+###### get pwd function
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/bendiep/Github/MatchMaker/data/app.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 #app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 Bootstrap(app)
