@@ -5,7 +5,9 @@ from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField
 from wtforms.validators import InputRequired, Email, Length
+from flask_wtf.file import FileField, FileAllowed, FileRequired
 from flask_sqlalchemy import SQLAlchemy
+from flask_uploads import UploadSet, IMAGES
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 import sqlite3
 import os
@@ -16,7 +18,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret'
 ###### get pwd function
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/bendiep/Github/MatchMaker/data/app.db'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/bendiep/Github/MatchMaker/data/app.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/damontoumbourou/Code/match-maker/data/app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 #app.config.from_envvar('FLASKR_SETTINGS', silent=True)
@@ -25,6 +28,7 @@ db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
+images = UploadSet('images', IMAGES)
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -52,8 +56,15 @@ class MatchForm(FlaskForm):
     pref_age = StringField('pref_age', validators=[InputRequired(), Length(min=1)])
     gender = StringField('gender', validators=[InputRequired(), Length(min=1)])
     pref_gender = StringField('pref_gender', validators=[InputRequired(), Length(min=1)])
-    q1 = StringField('q1', validators=[InputRequired(), Length(min=20)])
-    q2 = StringField('q1', validators=[InputRequired(), Length(min=20)])
+    image = FileField('image', validators=[FileRequired(), FileAllowed(images, 'Images only!')])
+    q1 = StringField('q1', validators=[InputRequired(), Length(min=15, max=255)])
+    q2 = StringField('q2', validators=[InputRequired(), Length(min=15, max=255)])
+    q3 = StringField('q3', validators=[InputRequired(), Length(min=15, max=255)])
+    q4 = StringField('q4', validators=[InputRequired(), Length(min=15, max=255)])
+    q5 = StringField('q5', validators=[InputRequired(), Length(min=15, max=255)])
+    q6 = StringField('q6', validators=[InputRequired(), Length(min=15, max=255)])
+    q7 = StringField('q7', validators=[InputRequired(), Length(min=15, max=255)])
+    q8 = StringField('q8', validators=[InputRequired(), Length(min=15, max=255)])
 
 """
 class Match(db.Model):
@@ -152,7 +163,6 @@ def login():
                 flash("Login Successful!")
                 return redirect(url_for('member'))
 
-    return render_template('login.html', form=form) 
     
     # return error 'username does not exist'
     return render_template('welcome.html', register_form=register_form, login_form=login_form)
