@@ -23,6 +23,16 @@
                         {% endfor %}
                     </ul>
                 {% endif %}
+                {% if register_form.unique == False %}
+                    <script>
+                        document.getElementById('register-modal').style.display = "block";
+                    </script>
+
+                    <ul class="errors">
+                        <li>User already exists</li>
+                    </ul>
+                {% endif %}
+
                 {{ register_form.hidden_tag() }}
                 <div>{{ register_form.username(placeholder="Username") }}</div>
                 <div>{{ register_form.email(placeholder="Email") }}</div>

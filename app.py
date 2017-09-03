@@ -45,6 +45,7 @@ class RegisterForm(FlaskForm):
     email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), Length(min=3, max=50)])
     username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
     password = PasswordField('password', validators=[InputRequired(), Length(min=8, max=80)])
+    unique = BooleanField('unique')
 
 class MatchForm(FlaskForm):
     age = StringField('age', validators=[InputRequired(), Length(min=1)])
@@ -80,8 +81,6 @@ def home():
 @app.route('/member')
 @login_required
 def member():
-
-
     personality = api.MatchAPI().get_personality('test')
     print personality
 
@@ -150,6 +149,7 @@ def login():
         if user:
             if check_password_hash(user.password, login_form.password.data):
                 login_user(user, remember=login_form.remember.data)
+                flash("Login Successful!")
                 return redirect(url_for('member'))
 
     # return error 'wrong password'
@@ -162,13 +162,20 @@ def register():
     login_form = LoginForm()
     register_form = RegisterForm()
 
-    if register_form.validate_on_submit():
+    user = User.query.filter_by(username=login_form.username.data).first()
+    if not user:
+        if register_form.validate_on_submit():
+            hashed_password = generate_password_hash(register_form.password.data, method='sha256')
+            new_user = User(username=register_form.username.data, email=register_form.email.data, password=hashed_password)
+            db.session.add(new_user)
+            db.session.commit()
+            flash("Register Successful!")
+            register_form.unique = True
+            return redirect(url_for('member'))
+    else:
         hashed_password = generate_password_hash(register_form.password.data, method='sha256')
         new_user = User(username=register_form.username.data, email=register_form.email.data, password=hashed_password)
-        db.session.add(new_user)
-        db.session.commit()
-
-        return '<h2>New user has been created!</h2>'
+        register_form.unique = False
 
     return render_template('welcome.html', register_form=register_form, login_form=login_form)
 
