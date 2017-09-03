@@ -78,6 +78,9 @@ class Match(db.Model):
     password = db.Column(db.String(80))
 """
 
+
+
+
 """
 Page Routes
 """
@@ -86,7 +89,10 @@ def home():
     register_form = RegisterForm()
     login_form = LoginForm()
 
-    return render_template('welcome.html', register_form=register_form, login_form=login_form)
+    if current_user.is_authenticated:
+        return render_template('member.html')
+    else:
+        return render_template('welcome.html', register_form=register_form, login_form=login_form)
 
 
 @app.route('/member')
