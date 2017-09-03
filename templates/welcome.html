@@ -2,18 +2,31 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block body %}
-    
+
     <!-- Register Form Modal -->
     <div id="register-modal" class="modal">
         <!-- Modal content -->
         <div class="modal-content">
             <p class="modal-closes"><span id="register-close">&times;</span></p>
             <header class="header">Register</header>
-            <form action="#" method="post" id="form" class="topBefore">
-                <input id="username" name="username" type="text" placeholder="Username">
-                <input id="password" name="password" type="text" placeholder="Password">
-                <input id="email" name="email" type="text" placeholder="Email">
-{#                    <textarea id="message" name="message" type="text" placeholder="MESSAGE"></textarea>#}
+            <form action="/register" method="post" id="form" class="topBefore">
+                {% if register_form.errors %}
+                    <script>
+                        document.getElementById('register-modal').style.display = "block";
+                    </script>
+
+                    <ul class="errors">
+                        {% for field_name, field_errors in register_form.errors|dictsort if field_errors %}
+                            {% for error in field_errors %}
+                                <li>{{ register_form[field_name].label }}: {{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                {{ register_form.hidden_tag() }}
+                <div>{{ register_form.username(placeholder="Username") }}</div>
+                <div>{{ register_form.email(placeholder="Email") }}</div>
+                <div>{{ register_form.password(placeholder="Password") }}</div>
                 <input id="submit" type="submit" value="REGISTER">
             </form>
         </div>
@@ -25,11 +38,24 @@
         <div class="modal-content">
             <p class="modal-closes"><span id="login-close">&times;</span></p>
             <header class="header">Login</header>
-            <form action="#" method="post" id="form" class="topBefore">
-                <input id="username" name="username" type="text" placeholder="Username">
-                <input id="password" name="password" type="text" placeholder="Password">
-{#                {{ wtf.form_field(form.password) }}#}
-{#                    <textarea id="message" name="message" type="text" placeholder="MESSAGE"></textarea>#}
+            <form action="/login" method="post" id="form" class="topBefore ">
+                {% if login_form.errors %}
+                    <script>
+                        document.getElementById('login-modal').style.display = "block";
+                    </script>
+
+                    <ul class="errors">
+                        {% for field_name, field_errors in login_form.errors|dictsort if field_errors %}
+                            {% for error in field_errors %}
+                                <li>{{ login_form[field_name].label }}: {{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                {{ login_form.hidden_tag() }}
+                <div>{{ login_form.username(placeholder="Username") }}</div>
+                <div>{{ login_form.password(placeholder="Password") }}</div>
+                {#                <div>{{ login_form.remember(placeholder="Remember") }}</div>#}
                 <input id="submit" type="submit" value="LOGIN">
             </form>
         </div>

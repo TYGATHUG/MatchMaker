@@ -71,9 +71,10 @@ Page Routes
 """
 @app.route('/', methods=['GET', 'POST']) 
 def home():
+    register_form = RegisterForm()
+    login_form = LoginForm()
 
-
-    return render_template('welcome.html')
+    return render_template('welcome.html', register_form=register_form, login_form=login_form)
 
 
 @app.route('/member')
@@ -140,33 +141,36 @@ Routes for user authentication
 """
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    form = LoginForm()
+    login_form = LoginForm()
+    register_form = RegisterForm()
 
-    if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
+    if login_form.validate_on_submit():
+        user = User.query.filter_by(username=login_form.username.data).first()
+
         if user:
-            if check_password_hash(user.password, form.password.data):
-                login_user(user, remember=form.remember.data)
+            if check_password_hash(user.password, login_form.password.data):
+                login_user(user, remember=login_form.remember.data)
                 return redirect(url_for('member'))
 
-        return '<h2>Invalid username or password</h1>'
-
-    return render_template('login.html', form=form)
+    # return error 'wrong password'
+    # return error 'username does not exist'
+    return render_template('welcome.html', register_form=register_form, login_form=login_form)
 
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    form = RegisterForm()
+    login_form = LoginForm()
+    register_form = RegisterForm()
 
-    if form.validate_on_submit():
-        hashed_password = generate_password_hash(form.password.data, method='sha256')
-        new_user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+    if register_form.validate_on_submit():
+        hashed_password = generate_password_hash(register_form.password.data, method='sha256')
+        new_user = User(username=register_form.username.data, email=register_form.email.data, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
 
         return '<h2>New user has been created!</h2>'
 
-    return render_template('register.html', form=form)
+    return render_template('welcome.html', register_form=register_form, login_form=login_form)
 
 
 @app.route('/logout')
