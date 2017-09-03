@@ -709,7 +709,7 @@ body {
     position: relative;
     font-size: 2.3em;
     text-align: center;
-    font-family: "Source Sans Pro";
+    font-family: 'Oxygen', "Source Sans Pro";
     letter-spacing: 4px;
     font-weight: 700;
     text-transform: uppercase;
@@ -763,7 +763,7 @@ textarea:hover {
     width: 470px;
     padding: 0;
     margin: -5px 0px 0px 0px;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Oxygen', sans-serif;
     font-size: 1em;
     color: rgba(49, 41, 43, 1);
     outline: none;
