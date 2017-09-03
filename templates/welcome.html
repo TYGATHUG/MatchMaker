@@ -16,7 +16,7 @@
                     </script>
 
                     <ul class="errors">
-                        {% for field_name, field_errors in register_form.errors|dictsort if field_errors %}
+                        {% for field_name, field_errors in register_form.errors.iteritems() %}
                             {% for error in field_errors %}
                                 <li style="color: #e84545;">{{ register_form[field_name].label }}: {{ error }}</li>
                             {% endfor %}
@@ -57,11 +57,12 @@
                     </script>
 
                     <ul class="errors">
-                        {% for field_name, field_errors in login_form.errors|dictsort if field_errors %}
+                        {% for field_name, field_errors in login_form.errors.iteritems() %}
                             {% for error in field_errors %}
-                                <li>{{ login_form[field_name].label }}: {{ error }}</li>
+                                <li style="color: #e84545;">{{ register_form[field_name].label }}: {{ error }}</li>
                             {% endfor %}
                         {% endfor %}
+                        <br>
                     </ul>
                 {% endif %}
                 {{ login_form.hidden_tag() }}
