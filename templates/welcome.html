@@ -18,9 +18,10 @@
                     <ul class="errors">
                         {% for field_name, field_errors in register_form.errors|dictsort if field_errors %}
                             {% for error in field_errors %}
-                                <li>{{ register_form[field_name].label }}: {{ error }}</li>
+                                <li style="color: #e84545;">{{ register_form[field_name].label }}: {{ error }}</li>
                             {% endfor %}
                         {% endfor %}
+                        <br>
                     </ul>
                 {% endif %}
                 {% if register_form.unique == False %}
@@ -29,8 +30,9 @@
                     </script>
 
                     <ul class="errors">
-                        <li>User already exists</li>
+                        <li style="color: #e84545;"><b>username</b>: already exists</li>
                     </ul>
+                    <br>
                 {% endif %}
 
                 {{ register_form.hidden_tag() }}
