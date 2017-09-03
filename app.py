@@ -84,10 +84,11 @@ class Match(db.Model):
 """
 Page Routes
 """
-@app.route('/', methods=['GET', 'POST']) 
+@app.route('/', methods=['GET', 'POST'])
 def home():
     register_form = RegisterForm()
     login_form = LoginForm()
+    globals()['previous_saved_route'] = "welcome.html"
 
     if current_user.is_authenticated:
         return render_template('member.html')
@@ -166,6 +167,9 @@ def about():
 """
 Routes for user authentication
 """
+# Global Variables
+previous_saved_route = "welcome.html"
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     login_form = LoginForm()
@@ -180,7 +184,17 @@ def login():
                 flash("Login Successful!")
                 return redirect(url_for('member'))
 
-    return render_template('welcome.html', register_form=register_form, login_form=login_form)
+    previous_route = str(request.referrer.split("/", 2)[2].split('/')[1]) + ".html"
+    if previous_route == ".html":
+        previous_route = previous_saved_route
+    elif previous_route == "register.html":
+        previous_route = previous_saved_route
+    elif previous_route == "login.html":
+        previous_route = previous_saved_route
+    else:
+        globals()['previous_saved_route'] = previous_route
+
+    return render_template(previous_route, register_form=register_form, login_form=login_form)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -203,7 +217,17 @@ def register():
         new_user = User(username=register_form.username.data, email=register_form.email.data, password=hashed_password)
         register_form.unique = False
 
-    return render_template('welcome.html', register_form=register_form, login_form=login_form)
+    previous_route = str(request.referrer.split("/",2)[2].split('/')[1]) + ".html"
+    if previous_route == ".html":
+        previous_route = previous_saved_route
+    elif previous_route == "register.html":
+        previous_route = previous_saved_route
+    elif previous_route == "login.html":
+        previous_route = previous_saved_route
+    else:
+        globals()['previous_saved_route'] = previous_route
+
+    return render_template(previous_route, register_form=register_form, login_form=login_form)
 
 
 @app.route('/logout')

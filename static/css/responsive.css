@@ -38,7 +38,7 @@
         margin-bottom: 20px;
     }
 
-    .navigation a {
+    .navigation a, .navigation button {
         display: block;
         font-size: 25px;
         margin: 0;

@@ -162,7 +162,7 @@ ul li {
     display: inline-block;
 }
 
-.navigation a {
+.navigation a, .navigation button {
     color: rgba(255, 255, 255, 0.75);
     font-size: 13px;
     font-weight: 400;
