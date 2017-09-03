@@ -1,19 +1,15 @@
 {% extends 'index.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block body %}
     
-
     <!-- Register Form Modal -->
     <div id="register-modal" class="modal">
         <!-- Modal content -->
         <div class="modal-content">
             <p class="modal-closes"><span id="register-close">&times;</span></p>
-            <header class="header">Register</header>
-            <form action="/signup" method="post" id="form" class="topBefore">
-               
-            <input type="submit" value="Signup">
-               
-            </form>
+            <header class="header"><a href="{{ url_for('login') }}">Log in</a></header>
+            
         </div>
     </div>
 
@@ -22,12 +18,9 @@
         <!-- Modal content -->
         <div class="modal-content">
             <p class="modal-closes"><span id="login-close">&times;</span></p>
-            <header class="header">Login</header>
-            <form action="#" method="post" id="form" class="topBefore">
-                <input id="username" name="username" type="text" placeholder="Username">
-                <input id="password" name="password" type="text" placeholder="Password">
-{#                    <textarea id="message" name="message" type="text" placeholder="MESSAGE"></textarea>#}
-                <input id="submit" type="submit" value="LOGIN">
+            <header class="header"><a href="{{ url_for('register') }}">Register</a></header>
+    
+            
             </form>
         </div>
     </div>

@@ -1,0 +1,27 @@
+{% import "bootstrap/wtf.html" as wtf %}
+{% extends 'main.html' %}
+
+{% block body %}
+
+    <!-- services section -->
+    <section id="services" class="services service-section">
+        <div class="container">
+           
+
+<h1>Setup your profile</h1>
+<div class="container">
+    <h2 class="form-signin">Register here</h2>
+       <form action="/match" method="post" id="form" class="form-signin">
+            <div>{{ form.age.label }}: {{ form.age() }}</div>
+            <div>{{ form.gender.label }}: {{ form.gender() }}</div>
+
+       <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>     
+       
+    </form>
+</div>
+
+        </div>
+    </section>
+    <!-- services section -->
+
+{% endblock %}

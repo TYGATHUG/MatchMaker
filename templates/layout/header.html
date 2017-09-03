@@ -1,3 +1,4 @@
+{% import "bootstrap/wtf.html" as wtf %}
 <section class="banner" role="banner">
     <!-- header section -->
     <header id="header" class="fixed">
@@ -5,15 +6,19 @@
         <div class="header-content clearfix">
             <a class="logo" href="/"><img src="../static/images/icon.png" alt=""></a>
             <nav class="navigation" role="navigation">
-                <ul class="primary-nav">
-                    <li><a href="/">Welcome</a></li>
-                    <li>
-                        <button id="register-btn">Register</button>
-                    </li>
-                    <li>
-                        <button id="login-btn">Login</button>
-                    </li>
-                </ul>
+               
+                    <ul class="primary-nav" method="POST" action="">
+                        
+                        <li>
+                           
+                            <a href="{{ url_for('login') }}">Login</a>
+                            
+                        </li>
+                        <li>
+                            <a href="{{ url_for('register') }}">Register</a>
+                        </li>
+                    </ul>
+               
             </nav>
             <a href="#" class="nav-toggle">Menu<span></span></a>
         </div>
