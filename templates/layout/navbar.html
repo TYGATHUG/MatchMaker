@@ -6,22 +6,27 @@
             <a class="logo" href="/"><img src="../static/images/icon.png" alt=""></a>
             <nav class="navigation" role="navigation">
                 <ul class="primary-nav">
-                    <li><a href="/">Welcome</a></li>
-                    <li>
-                        <button id="register-btn">Register</button>
-                    </li>
-                    <li>
-                        <button id="login-btn">Login</button>
-                    </li>
-                    <li>
-                        <a href="{{ url_for('member')}}">Home</a></button>
-                    </li>
-                    <li>
-                        <a href="{{ url_for('profile')}}">Profile</a></button>
-                    </li>
-                    <li>
-                        <a href="{{ url_for('logout')}}">Sign out</a></button>
-                    </li>
+                    {% if current_user.is_authenticated %}
+                        <li>
+                            <a href="{{ url_for('member') }}">Home</a></button>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('profile') }}">Profile</a></button>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('logout') }}">Sign out</a></button>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="/">Welcome</a>
+                        </li>
+                        <li>
+                            <button id="register-btn">Register</button>
+                        </li>
+                        <li>
+                            <button id="login-btn">Login</button>
+                        </li>
+                    {% endif %}
                 </ul>
             </nav>
             <a href="#" class="nav-toggle">Menu<span></span></a>
