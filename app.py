@@ -58,9 +58,8 @@ class MatchForm(FlaskForm):
     age = StringField('age', validators=[InputRequired(), Length(min=1, max=3)])
     gender = StringField('gender', validators=[InputRequired(), Length(min=1, max =10)])
     height = StringField('height', validators=[InputRequired(), Length(min=1, max=5)])
-    suburb = StringField('suburb', validators=[InputRequired(), Length(min=1)])
     location = StringField('location', validators=[InputRequired(), Length(min=1)])
-    employment = StringField('employment', validators=[InputRequired(), Length(min=1, max=20)])
+
     education = StringField('education', validators=[InputRequired(), Length(min=1, max=20)])
     ethnicity = StringField('ethnicity', validators=[InputRequired(), Length(min=1, max=20)])
     religion = StringField('religion', validators=[InputRequired(), Length(min=1, max=20)])
@@ -87,7 +86,7 @@ class Match(db.Model):
     ethnicity = db.Column(db.String(30))
     religion = db.Column(db.String(30))
     bio = db.Column(db.String(255))
-    personality = db.Column(db.Integer())
+    practicality = db.Column(db.Integer())
     love = db.Column(db.Integer())
     excitment = db.Column(db.Integer())
     challenge = db.Column(db.Integer())
@@ -131,20 +130,33 @@ def member():
 @login_required
 def profile():
     match_form = MatchForm()
-    """
-    personality = api.MatchAPI().get_personality('test')
-    """
 
-    print"profile route"
+    user = current_user.username
+    get_personality = api.MatchAPI()
+
 
     if match_form.validate_on_submit():
         print"$$$ DATA $$$"
 
-        personality = str(match_form.q1.data) + str(match_form.q2.object_data)
-        print personality
+        q1 = str(match_form.q1.data)
+        q2 = str(match_form.q2.data)
+        q3 = str(match_form.q3.data)
+        q4 = str(match_form.q4.data)
+        q5 = str(match_form.q5.data)
+        q6 = str(match_form.q6.data)
+        q7 = str(match_form.q7.data)
+        q8 = str(match_form.q8.data)
+        personality = q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8
 
+        results = get_personality.get_personality('test')
+        practicality = results['needs'][0]['practicality']  
+        print practicality
 
-
+        """
+        new_match = Match(username=user, name=match_form.name.data, gender=match_form.gender.data, \
+                          age=match_form.age.data, height=match_form.height.data, suburb=match_form.suburb.data, \
+                          education=match_form.education.data, ethnicity=match_form.ethnicity.data, religion=match_form.religion.data)
+        """
         """
         new_user = User(username=register_form.username.data, email=register_form.email.data, password=hashed_password)
         db.session.add(new_user)

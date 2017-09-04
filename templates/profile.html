@@ -32,18 +32,6 @@
                         </p>
                         <br>
 
-                        <div class="form-single-input">
-                            <div class="form-group col_1_of_1">
-                                 <label for="imageUpload" id="imageUpload-btn"><span>Click to Upload Photo</span></label>
-                                {{ match_form.image(class="form-control", placeholder="image", id="imageUpload", class="form-control", style="display:none;") }}
-                            </div>
-
-{#                            <div class="form-group col_1_of_1">#}
-{#                                <label for="imageUpload" id="imageUpload-btn"><span>Click to Upload Photo</span></label>#}
-{#                                <input type="file" id="imageUpload" class="form-control" style="display:none;">#}
-{#                            </div>#}
-                        </div>
-
 
                             <div class="form-group col_1_of_2">
 
@@ -120,21 +108,21 @@
                         <div class="form-single-input">
                             <div class="form-group col_1_of_1">
                                 <label for="q1">Tell me about yourself.</label>
-                                <input type="text" class="form-control" id="q1" name='q1'>
+                                {{ match_form.q1(class="form-control", placeholder="question 1") }}
                             </div>
                         </div>
 
                         <div class="form-single-input">
                             <div class="form-group col_1_of_1">
                                 <label for="q2">What is your ideal holiday?.</label>
-                                <input type="text" class="form-control" id="q2" name='q2'>
+                                {{ match_form.q2(class="form-control", placeholder="question 2") }}
                             </div>
                         </div>
 
                         <div class="form-single-input">
                             <div class="form-group col_1_of_1">
                                 <label for="q3">Describe your most recent shopping experience.</label>
-                                <input type="text" class="form-control" id="q3" name='q3'>
+                                {{ match_form.q3(class="form-control", placeholder="question 3") }}
                             </div>
 
                         </div>
@@ -145,35 +133,35 @@
                                     Describe your expirence with going to the gym and if you have never attended
                                     a gym whatdo you think of them?
                                 </label>
-                                <input type="text" class="form-control" id="q4" name='q4'>
+                                 {{ match_form.q4(class="form-control", placeholder="question 4") }}
                             </div>
                         </div>
 
                         <div class="form-single-input">
                             <div class="form-group col_1_of_1">
                                 <label for="q5">What does being outdoor mean to you?</label>
-                                <input type="text" class="form-control" id="q5" name='q5'>
+                                {{ match_form.q5(class="form-control", placeholder="question 5") }}
                             </div>
                         </div>
 
                         <div class="form-single-input">
                             <div class="form-group col_1_of_1">
                                 <label for="q6">Describe the last time you expirience being in nature.</label>
-                                <input type="text" class="form-control" id="q6" name='q6'>
+                                {{ match_form.q6(class="form-control", placeholder="question 6") }}
                             </div>
                         </div>
 
                         <div class="form-single-input">
                             <div class="form-group col_1_of_1">
                                 <label for="q7">Describe a time when you did something entreprenuerial.</label>
-                                <input type="text" class="form-control" id="q7" name='q7'>
+                                {{ match_form.q7(class="form-control", placeholder="question 7") }}
                             </div>
                         </div>
 
                         <div class="form-single-input">
                             <div class="form-group col_1_of_1">
                                 <label for="q8">What do you think of volunteering and have you ever volunteered?</label>
-                                <input type="text" class="form-control" id="q8" name='q8'>
+                                {{ match_form.q8(class="form-control", placeholder="question 8") }}
                             </div>
                         </div>
 
