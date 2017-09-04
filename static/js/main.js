@@ -128,7 +128,7 @@ $(document).ready(function() {
                 }
             }
 		}
-		
+
 
         if (profile_form_check == true) {
 
