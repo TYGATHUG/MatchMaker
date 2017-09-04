@@ -1,4 +1,8 @@
+# ---------------------------------------------------------------------------------
+#   Imports
+# -------------------------------------------------------------------------------*/
 # encoding=utf8
+import os
 from flask import Flask, render_template, url_for, g, redirect, request, flash
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
@@ -10,7 +14,12 @@ from flask_uploads import UploadSet, IMAGES
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 import api
 from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 
+
+# ---------------------------------------------------------------------------------
+#   Initialisation / Settings
+# -------------------------------------------------------------------------------*/
 # Create app
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret'
@@ -19,15 +28,26 @@ app.config['SECRET_KEY'] = 'secret'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/damontoumbourou/Code/match-maker/data/app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-
+# Database Properties
 Bootstrap(app)
 db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
-images = UploadSet('images', IMAGES)
 
+# Upload Image Properties
+UPLOAD_FOLDER = "/static/images/profiles"
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024
 
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+# ---------------------------------------------------------------------------------
+#   Classes
+# -------------------------------------------------------------------------------*/
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(15), unique=True)
@@ -57,6 +77,8 @@ class MatchForm(FlaskForm):
     name = StringField('name', validators=[InputRequired(), Length(min=1, max=20)])
     age = StringField('age', validators=[InputRequired(), Length(min=1, max=3)])
     gender = StringField('gender', validators=[InputRequired(), Length(min=1, max =10)])
+    pref_gender = StringField('pref_gender', validators=[InputRequired(), Length(min=1, max=10)])
+    # image = FileField('image', validators=[FileRequired(), FileAllowed(images, 'Images only!')])
     height = StringField('height', validators=[InputRequired(), Length(min=1, max=5)])
     suburb = StringField('suburb', validators=[InputRequired(), Length(min=1)])
     location = StringField('location', validators=[InputRequired(), Length(min=1)])
@@ -101,11 +123,14 @@ class Match(db.Model):
     entreprenuer = db.Column(db.Integer())
     reading = db.Column(db.Integer())
 
+class UploadImage(FlaskForm):
+    image = FileField('image', validators=[FileRequired(), FileAllowed(ALLOWED_EXTENSIONS)])
 
-"""
-Page Routes
-"""
 
+
+# ---------------------------------------------------------------------------------
+#   Page Routes
+# -------------------------------------------------------------------------------*/
 @app.route('/', methods=['GET', 'POST'])
 def home():
     register_form = RegisterForm()
@@ -131,6 +156,7 @@ def member():
 @login_required
 def profile():
     match_form = MatchForm()
+<<<<<<< Updated upstream
     """
     personality = api.MatchAPI().get_personality('test')
     """
@@ -153,8 +179,29 @@ def profile():
 
         return redirect(url_for('member'))
 
+=======
+    upload_image = UploadImage()
 
-    return render_template('profile.html', name=current_user.username, match_form=match_form)
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+>>>>>>> Stashed changes
+
+        # if user does not select file, browser also submit a empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            return redirect(url_for('uploaded_file', filename=filename))
+
+
+    return render_template('profile.html', name=current_user.username, match_form=match_form, upload_image=upload_image)
 
 
 @app.route('/terms', methods=['GET', 'POST'])
@@ -189,11 +236,11 @@ def about():
     return render_template('about.html', register_form=register_form, login_form=login_form)
 
 
-"""
-Routes for user authentication
-"""
+# ---------------------------------------------------------------------------------
+#   Routes for user authentication
+# -------------------------------------------------------------------------------*/
 # Global Variables
-previous_saved_route = "welcome.html"
+PREVIOUS_SAVED_ROUTE = "welcome.html"
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -211,13 +258,13 @@ def login():
 
     previous_route = str(request.referrer.split("/", 2)[2].split('/')[1]) + ".html"
     if previous_route == ".html":
-        previous_route = previous_saved_route
+        previous_route = PREVIOUS_SAVED_ROUTE
     elif previous_route == "register.html":
-        previous_route = previous_saved_route
+        previous_route = PREVIOUS_SAVED_ROUTE
     elif previous_route == "login.html":
-        previous_route = previous_saved_route
+        previous_route = PREVIOUS_SAVED_ROUTE
     else:
-        globals()['previous_saved_route'] = previous_route
+        globals()['PREVIOUS_SAVED_ROUTE'] = previous_route
 
     return render_template(previous_route, register_form=register_form, login_form=login_form)
 
@@ -244,13 +291,13 @@ def register():
 
     previous_route = str(request.referrer.split("/",2)[2].split('/')[1]) + ".html"
     if previous_route == ".html":
-        previous_route = previous_saved_route
+        previous_route = PREVIOUS_SAVED_ROUTE
     elif previous_route == "register.html":
-        previous_route = previous_saved_route
+        previous_route = PREVIOUS_SAVED_ROUTE
     elif previous_route == "login.html":
-        previous_route = previous_saved_route
+        previous_route = PREVIOUS_SAVED_ROUTE
     else:
-        globals()['previous_saved_route'] = previous_route
+        globals()['PREVIOUS_SAVED_ROUTE'] = previous_route
 
     return render_template(previous_route, register_form=register_form, login_form=login_form)
 
@@ -263,5 +310,4 @@ def logout():
 
 
 if __name__ == "__main__":
-
     app.run(debug=True)

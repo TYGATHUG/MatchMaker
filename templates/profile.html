@@ -34,14 +34,9 @@
 
                         <div class="form-single-input">
                             <div class="form-group col_1_of_1">
-                                 <label for="imageUpload" id="imageUpload-btn"><span>Click to Upload Photo</span></label>
-                                {{ match_form.image(class="form-control", placeholder="image", id="imageUpload", class="form-control", style="display:none;") }}
+                                <label for="imageUpload" id="imageUpload-btn"><span>Click to Upload Photo</span></label>
+                                {{ upload_image.image(class="form-control", placeholder="image", id="imageUpload", class="form-control", style="display:none;") }}
                             </div>
-
-{#                            <div class="form-group col_1_of_1">#}
-{#                                <label for="imageUpload" id="imageUpload-btn"><span>Click to Upload Photo</span></label>#}
-{#                                <input type="file" id="imageUpload" class="form-control" style="display:none;">#}
-{#                            </div>#}
                         </div>
 
 
@@ -64,7 +59,7 @@
                             </div>
                             <div class="form-group col_1_of_2">
                                 <label>Location</label>
-                                 {{ match_form.location(class="form-control", placeholder="Location") }}
+                                {{ match_form.location(class="form-control", placeholder="Location") }}
                             </div>
                         </div>
 
@@ -89,7 +84,7 @@
 
                             <div class="form-group col_1_of_2">
                                 <label>Religion</label>
-                                 {{ match_form.religion(class="form-control", placeholder="Religion") }}
+                                {{ match_form.religion(class="form-control", placeholder="Religion") }}
                             </div>
 
                         </div>
