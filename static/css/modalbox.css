@@ -47,7 +47,17 @@
     display: none;
 }
 
+#profile-back-btn {
+    font-weight: bold;
+}
+
 #profile-next-btn {
     float:right;
     clear: left;
+    font-weight: bold;
+}
+
+.inactive-btn {
+    color: black;
+    pointer-events: none;
 }
