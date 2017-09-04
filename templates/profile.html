@@ -8,9 +8,21 @@
                 <h1>Profile Setup</h1>
                 <br><br>
 
-                <!-- Start of MatchForm -->
-                <form role="form" method="POST" enctype="multipart/form-data">
+                {% if match_form.errors %}
+                    <ul class="errors">
+                        {% for field_name, field_errors in match_form.errors.iteritems() %}
+                            {% for error in field_errors %}
+                                <li style="color: #e84545;">{{ match_form[field_name].label }}: {{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                        <br>
+                    </ul>
+                {% endif %}
 
+
+                <!-- Start of MatchForm -->
+                <form role="form" method="POST" action="/profile">
+                    {{ match_form.hidden_tag() }}
                     <div id="profile-form-modal-1">
                         <a href="#" class="inactive-btn">&#8678 Back</a>
                         <a href="#" id="profile-next-btn">Next &#8680</a>
@@ -20,24 +32,19 @@
                         </p>
                         <br>
 
-                        <div class="form-single-input">
-                            <div class="form-group col_1_of_1">
-                                 <label for="q1">Upload image</label>
-                                {{ match_form.image(class="form-control", placeholder="image") }}
-                            </div>
-                        </div>
-
                         <div class="form-double-input">
+                             <div class="form-group col_1_of_2">
+                                <label>Name</label>
+                                {{ match_form.name(class="form-control", placeholder="name") }}
+                            </div>
+
+
                             <div class="form-group col_1_of_2">
                                 <label>Age</label>
                                 {{ match_form.age(class="form-control", placeholder="age") }}
                             </div>
 
-                            <div class="form-group col_1_of_2">
 
-                                <label>Preferred Age</label>
-                                {{ match_form.pref_age(class="form-control", placeholder="preferred age") }}
-                            </div>
                         </div>
 
                         <div class="form-double-input">
@@ -45,10 +52,9 @@
                                 <label>Gender</label>
                                 {{ match_form.gender(class="form-control", placeholder="gender") }}
                             </div>
-
                             <div class="form-group col_1_of_2">
-                                <label>Preferred Gender</label>
-                                {{ match_form.pref_gender(class="form-control", placeholder="preferred gender") }}
+                                <label>Education</label>
+                                {{ match_form.education(class="form-control", placeholder="education") }}
                             </div>
                         </div>
 

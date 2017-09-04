@@ -15,8 +15,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret'
 ###### get pwd function
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/bendiep/Github/MatchMaker/data/app.db'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/damontoumbourou/Code/match-maker/data/app.db'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/bendiep/Github/MatchMaker/data/app.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/damontoumbourou/Code/match-maker/data/app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
@@ -56,13 +56,9 @@ class RegisterForm(FlaskForm):
 class MatchForm(FlaskForm):
     name = StringField('name', validators=[InputRequired(), Length(min=1, max=20)])
     age = StringField('age', validators=[InputRequired(), Length(min=1, max=3)])
-    pref_age = StringField('pref_age', validators=[InputRequired(), Length(min=1, max=3)])
     gender = StringField('gender', validators=[InputRequired(), Length(min=1, max =10)])
-    pref_gender = StringField('pref_gender', validators=[InputRequired(), Length(min=1, max=10)])
-    image = FileField('image', validators=[FileRequired(), FileAllowed(images, 'Images only!')])
     height = StringField('height', validators=[InputRequired(), Length(min=1, max=5)])
     suburb = StringField('suburb', validators=[InputRequired(), Length(min=1)])
-    employment = StringField('employment', validators=[InputRequired(), Length(min=1, max=20)])
     education = StringField('education', validators=[InputRequired(), Length(min=1, max=20)])
     ethnicity = StringField('ethnicity', validators=[InputRequired(), Length(min=1, max=20)])
     religion = StringField('religion', validators=[InputRequired(), Length(min=1, max=20)])
@@ -84,7 +80,24 @@ class Match(db.Model):
     gender = db.Column(db.String(20))
     age = db.Column(db.Integer())
     height = db.Column(db.Integer())
-    
+    suburb = db.Column(db.String(30))
+    education = db.Column(db.String(30))
+    ethnicity = db.Column(db.String(30))
+    religion = db.Column(db.String(30))
+    bio = db.Column(db.String(255))
+    personality = db.Column(db.Integer())
+    love = db.Column(db.Integer())
+    excitment = db.Column(db.Integer())
+    challenge = db.Column(db.Integer())
+    closeness = db.Column(db.Integer())
+    structure = db.Column(db.Integer())
+    live_music = db.Column(db.Integer())
+    spare_moment_purchases = db.Column(db.Integer())
+    gym_member = db.Column(db.Integer())
+    outdoors = db.Column(db.Integer())
+    volunteering = db.Column(db.Integer())
+    entreprenuer = db.Column(db.Integer())
+    reading = db.Column(db.Integer())
 
 
 """
@@ -107,8 +120,7 @@ def home():
 @login_required
 def member():
 
-    personality = api.MatchAPI().get_personality('test')
-    print personality
+
 
     return render_template('member.html', name=current_user.username)
 
@@ -117,10 +129,28 @@ def member():
 @login_required
 def profile():
     match_form = MatchForm()
+    """
+    personality = api.MatchAPI().get_personality('test')
+    """
 
-    print "age: "
-    print match_form.age.data
-    print match_form.image.data
+    print"profile route"
+
+    if match_form.validate_on_submit():
+        print"$$$ DATA $$$"
+
+        personality = str(match_form.q1.data) + str(match_form.q2.object_data)
+        print personality
+
+
+
+        """
+        new_user = User(username=register_form.username.data, email=register_form.email.data, password=hashed_password)
+        db.session.add(new_user)
+        db.session.commit()
+        """
+
+        return redirect(url_for('member'))
+
 
     return render_template('profile.html', name=current_user.username, match_form=match_form)
 
