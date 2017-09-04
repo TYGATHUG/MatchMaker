@@ -1,6 +1,5 @@
 # encoding=utf8
-from flask import Flask, render_template, url_for, g, redirect, session, request, flash
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, render_template, url_for, g, redirect, request, flash
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField
@@ -9,8 +8,6 @@ from flask_wtf.file import FileField, FileAllowed, FileRequired
 from flask_sqlalchemy import SQLAlchemy
 from flask_uploads import UploadSet, IMAGES
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-import sqlite3
-import os
 import api
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -22,7 +19,7 @@ app.config['SECRET_KEY'] = 'secret'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/damontoumbourou/Code/match-maker/data/app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-#app.config.from_envvar('FLASKR_SETTINGS', silent=True)
+
 Bootstrap(app)
 db = SQLAlchemy(app)
 login_manager = LoginManager()
@@ -30,20 +27,24 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 images = UploadSet('images', IMAGES)
 
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(15), unique=True)
     email = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(80))
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
 
 class LoginForm(FlaskForm):
     username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
     password = PasswordField('password', validators=[InputRequired(), Length(min=8, max=80)])
     remember = BooleanField('remember me')
+
 
 class RegisterForm(FlaskForm):
     email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), Length(min=3, max=50)])
@@ -51,7 +52,9 @@ class RegisterForm(FlaskForm):
     password = PasswordField('password', validators=[InputRequired(), Length(min=8, max=80)])
     unique = BooleanField('unique')
 
+
 class MatchForm(FlaskForm):
+    name = StringField('name', validators=[InputRequired(), Length(min=1, max=20)])
     age = StringField('age', validators=[InputRequired(), Length(min=1, max=3)])
     pref_age = StringField('pref_age', validators=[InputRequired(), Length(min=1, max=3)])
     gender = StringField('gender', validators=[InputRequired(), Length(min=1, max =10)])
@@ -59,7 +62,6 @@ class MatchForm(FlaskForm):
     image = FileField('image', validators=[FileRequired(), FileAllowed(images, 'Images only!')])
     height = StringField('height', validators=[InputRequired(), Length(min=1, max=5)])
     suburb = StringField('suburb', validators=[InputRequired(), Length(min=1)])
-    height = StringField('height', validators=[InputRequired(), Length(min=1)])
     employment = StringField('employment', validators=[InputRequired(), Length(min=1, max=20)])
     education = StringField('education', validators=[InputRequired(), Length(min=1, max=20)])
     ethnicity = StringField('ethnicity', validators=[InputRequired(), Length(min=1, max=20)])
@@ -78,16 +80,17 @@ class MatchForm(FlaskForm):
 class Match(db.Model):
     __tablename__ = 'Match'
     username = db.Column(db.String(15), primary_key=True, unique=True)
+    name = db.Column(db.String(20))
     gender = db.Column(db.String(20))
-    pref_gender = db.Column(db.String(20))
     age = db.Column(db.Integer())
-    pref_age = db.Column(db.Integer())
+    height = db.Column(db.Integer())
     
 
 
 """
 Page Routes
 """
+
 @app.route('/', methods=['GET', 'POST'])
 def home():
     register_form = RegisterForm()
