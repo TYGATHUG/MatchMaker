@@ -18,8 +18,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret'
 ###### get pwd function
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/bendiep/Github/MatchMaker/data/app.db'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/damontoumbourou/Code/match-maker/data/app.db'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/bendiep/Github/MatchMaker/data/app.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/damontoumbourou/Code/match-maker/data/app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 #app.config.from_envvar('FLASKR_SETTINGS', silent=True)
@@ -52,11 +52,19 @@ class RegisterForm(FlaskForm):
     unique = BooleanField('unique')
 
 class MatchForm(FlaskForm):
-    age = StringField('age', validators=[InputRequired(), Length(min=1)])
-    pref_age = StringField('pref_age', validators=[InputRequired(), Length(min=1)])
-    gender = StringField('gender', validators=[InputRequired(), Length(min=1)])
-    pref_gender = StringField('pref_gender', validators=[InputRequired(), Length(min=1)])
+    age = StringField('age', validators=[InputRequired(), Length(min=1, max=3)])
+    pref_age = StringField('pref_age', validators=[InputRequired(), Length(min=1, max=3)])
+    gender = StringField('gender', validators=[InputRequired(), Length(min=1, max =10)])
+    pref_gender = StringField('pref_gender', validators=[InputRequired(), Length(min=1, max=10)])
     image = FileField('image', validators=[FileRequired(), FileAllowed(images, 'Images only!')])
+    height = StringField('height', validators=[InputRequired(), Length(min=1, max=5)])
+    suburb = StringField('suburb', validators=[InputRequired(), Length(min=1)])
+    height = StringField('height', validators=[InputRequired(), Length(min=1)])
+    employment = StringField('employment', validators=[InputRequired(), Length(min=1, max=20)])
+    education = StringField('education', validators=[InputRequired(), Length(min=1, max=20)])
+    ethnicity = StringField('ethnicity', validators=[InputRequired(), Length(min=1, max=20)])
+    religion = StringField('religion', validators=[InputRequired(), Length(min=1, max=20)])
+    bio = StringField('bio', validators=[InputRequired(), Length(min=1, max=255)])
     q1 = StringField('q1', validators=[InputRequired(), Length(min=15, max=255)])
     q2 = StringField('q2', validators=[InputRequired(), Length(min=15, max=255)])
     q3 = StringField('q3', validators=[InputRequired(), Length(min=15, max=255)])
@@ -66,19 +74,15 @@ class MatchForm(FlaskForm):
     q7 = StringField('q7', validators=[InputRequired(), Length(min=15, max=255)])
     q8 = StringField('q8', validators=[InputRequired(), Length(min=15, max=255)])
 
-"""
+
 class Match(db.Model):
-    username = db.Column(db.String(15), unique=True)
+    __tablename__ = 'Match'
+    username = db.Column(db.String(15), primary_key=True, unique=True)
     gender = db.Column(db.String(20))
     pref_gender = db.Column(db.String(20))
-    age = db.Column(db.Integer(10))
-    password = db.Column(db.String(80))
-    password = db.Column(db.String(80))
-    password = db.Column(db.String(80))
-    password = db.Column(db.String(80))
-"""
-
-
+    age = db.Column(db.Integer())
+    pref_age = db.Column(db.Integer())
+    
 
 
 """
@@ -99,6 +103,7 @@ def home():
 @app.route('/member')
 @login_required
 def member():
+
     personality = api.MatchAPI().get_personality('test')
     print personality
 
@@ -108,28 +113,13 @@ def member():
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
+    match_form = MatchForm()
 
-    
-    return render_template('profile.html', name=current_user.username)
+    print "age: "
+    print match_form.age.data
+    print match_form.image.data
 
-
-@app.route('/match', methods=['GET', 'POST'])
-@login_required
-def match():
-    form = MatchForm()
-
-    print "here : "  
-    print form.gender.data
-
-    """
-    if form.validate_on_submit():
-        hashed_password = generate_password_hash(form.password.data, method='sha256')
-        new_user = User(username=form.username.data, email=form.email.data, password=hashed_password)
-        db.session.add(new_user)
-        db.session.commit()
-    """
-
-    return render_template('match.html', name=current_user.username, form=form)
+    return render_template('profile.html', name=current_user.username, match_form=match_form)
 
 
 @app.route('/terms', methods=['GET', 'POST'])

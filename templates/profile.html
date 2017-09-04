@@ -8,7 +8,8 @@
                 <h1>Profile Setup</h1>
                 <br><br>
 
-                <form role="form" action="{{ url_for('profile') }}">
+                <!-- Start of MatchForm -->
+                <form role="form" method="POST" enctype="multipart/form-data">
 
                     <div id="profile-form-modal-1">
                         <a href="#" class="inactive-btn">&#8678 Back</a>
@@ -21,76 +22,65 @@
 
                         <div class="form-single-input">
                             <div class="form-group col_1_of_1">
-                                <label for="imageUpload" id="imageUpload-btn"><span>Click to Upload Photo</span></label>
-                                <input type="file" id="imageUpload" class="form-control" style="display:none;">
+                                 <label for="q1">Upload image</label>
+                                {{ match_form.image(class="form-control", placeholder="image") }}
                             </div>
                         </div>
 
                         <div class="form-double-input">
                             <div class="form-group col_1_of_2">
-                                <label>First Name</label>
-                                <input type="text" class="form-control">
+                                <label>Age</label>
+                                {{ match_form.age(class="form-control", placeholder="age") }}
                             </div>
 
                             <div class="form-group col_1_of_2">
-                                <label>Last Name</label>
-                                <input type="text" class="form-control">
+
+                                <label>Preferred Age</label>
+                                {{ match_form.pref_age(class="form-control", placeholder="preferred age") }}
                             </div>
                         </div>
 
                         <div class="form-double-input">
                             <div class="form-group col_1_of_2">
                                 <label>Gender</label>
-                                <input type="text" class="form-control">
+                                {{ match_form.gender(class="form-control", placeholder="gender") }}
                             </div>
 
                             <div class="form-group col_1_of_2">
-                                <label>Age</label>
-                                <input type="text" class="form-control">
+                                <label>Preferred Gender</label>
+                                {{ match_form.pref_gender(class="form-control", placeholder="preferred gender") }}
                             </div>
                         </div>
 
                         <div class="form-double-input">
                             <div class="form-group col_1_of_2">
                                 <label>Height</label>
-                                <input type="text" class="form-control">
+                                {{ match_form.height(class="form-control", placeholder="height") }}
                             </div>
 
                             <div class="form-group col_1_of_2">
-                                <label>Hometown</label>
-                                <input type="text" class="form-control">
-                            </div>
-                        </div>
-
-                        <div class="form-double-input">
-                            <div class="form-group col_1_of_2">
-                                <label>Employment Status</label>
-                                <input type="text" class="form-control">
-                            </div>
-
-                            <div class="form-group col_1_of_2">
-                                <label>Education Level</label>
-                                <input type="text" class="form-control">
+                                <label>Suburb</label>
+                                 {{ match_form.suburb(class="form-control", placeholder="suburb") }}
                             </div>
                         </div>
 
                         <div class="form-double-input">
                             <div class="form-group col_1_of_2">
                                 <label>Ethnicity</label>
-                                <input type="text" class="form-control">
+                                {{ match_form.ethnicity(class="form-control", placeholder="ethnicity") }}
                             </div>
 
                             <div class="form-group col_1_of_2">
                                 <label>Religion</label>
-                                <input type="text" class="form-control">
+                                 {{ match_form.religion(class="form-control", placeholder="religion") }}
                             </div>
 
                         </div>
 
                         <div class="form-single-input">
                             <div class="form-group col_1_of_1">
-                                <label>Bio</label>
-                                <input type="text" class="form-control">
+                                <label>About me</label>
+                                {{ match_form.bio(class="form-control", placeholder="About me") }}
                             </div>
                         </div>
 
