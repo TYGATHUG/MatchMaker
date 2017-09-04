@@ -59,6 +59,8 @@ class MatchForm(FlaskForm):
     gender = StringField('gender', validators=[InputRequired(), Length(min=1, max =10)])
     height = StringField('height', validators=[InputRequired(), Length(min=1, max=5)])
     suburb = StringField('suburb', validators=[InputRequired(), Length(min=1)])
+    location = StringField('location', validators=[InputRequired(), Length(min=1)])
+    employment = StringField('employment', validators=[InputRequired(), Length(min=1, max=20)])
     education = StringField('education', validators=[InputRequired(), Length(min=1, max=20)])
     ethnicity = StringField('ethnicity', validators=[InputRequired(), Length(min=1, max=20)])
     religion = StringField('religion', validators=[InputRequired(), Length(min=1, max=20)])
