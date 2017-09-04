@@ -40,3 +40,14 @@
     text-align: right;
     margin-top: 6px;
 }
+
+
+/* Profile Form */
+#profile-form-modal-2 {
+    display: none;
+}
+
+#profile-next-btn {
+    float:right;
+    clear: left;
+}

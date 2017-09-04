@@ -68,6 +68,42 @@ $(document).ready(function() {
 
 	// Form Modals
 	function loadModalAnimation() {
+
+		// profile form
+		var nextmodal = document.getElementById('profile-form-modal-1');
+        var nextbtn = document.getElementById('profile-next-btn');
+
+        var backmodal = document.getElementById('profile-form-modal-2');
+        var backbtn = document.getElementById('profile-back-btn');
+
+        nextbtn.onclick = function () {
+        	nextmodal.style.display = "none";
+            backmodal.style.display = "block";
+            backmodal.style.zIndex = 99;
+
+            // $(backmodal)
+            //     .css('opacity', 0)
+            //     .slideDown('slow')
+            //     .animate(
+            //         {opacity: 1},
+            //         {queue: false, duration: 'fast'}
+            //     );
+        }
+
+		backbtn.onclick = function () {
+        	backmodal.style.display = "none";
+            nextmodal.style.display = "block";
+
+            // $(nextmodal)
+            //     .css('opacity', 0)
+            //     .slideDown('slow')
+            //     .animate(
+            //         {opacity: 1},
+            //         {queue: false, duration: 'fast'}
+            //     );
+        }
+
+        // login / register forms
         var rmodal = document.getElementById('register-modal'); // Get the modal
         var rbtn = document.getElementById('register-btn'); // Get the button that opens the modal
         var rspan = document.getElementById('register-close'); // Get the <span> element that closes the modal
@@ -119,6 +155,42 @@ $(document).ready(function() {
             	$(lmodal).fadeOut('fast');
             }
         }
+
+
+        // profile form
+		var nextmodal = document.getElementsByClassName('profile-form-modal-1')[0];
+        var nextbtn = document.getElementById('profile-next-btn');
+
+        var backmodal = document.getElementsByClassName('profile-form-modal-2')[0];
+        var backbtn = document.getElementById('profile-back-btn');
+
+        nextbtn.onclick = function () {
+        	nextmodal.style.display = "none";
+            backmodal.style.display = "block";
+            backmodal.style.zIndex = 99;
+
+            // $(backmodal)
+            //     .css('opacity', 0)
+            //     .slideDown('slow')
+            //     .animate(
+            //         {opacity: 1},
+            //         {queue: false, duration: 'fast'}
+            //     );
+        }
+
+		backbtn.onclick = function () {
+        	backmodal.style.display = "none";
+            nextmodal.style.display = "block";
+
+            // $(nextmodal)
+            //     .css('opacity', 0)
+            //     .slideDown('slow')
+            //     .animate(
+            //         {opacity: 1},
+            //         {queue: false, duration: 'fast'}
+            //     );
+        }
+
     };
 	$(window).onload=loadModalAnimation();
 
