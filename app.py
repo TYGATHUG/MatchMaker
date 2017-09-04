@@ -24,8 +24,8 @@ from werkzeug.utils import secure_filename
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret'
 ###### get pwd function
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/bendiep/Github/MatchMaker/data/app.db'
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/damontoumbourou/Code/match-maker/data/app.db'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/bendiep/Github/MatchMaker/data/app.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/damontoumbourou/Code/match-maker/data/app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Database Properties
@@ -77,7 +77,7 @@ class MatchForm(FlaskForm):
     name = StringField('name', validators=[InputRequired(), Length(min=1, max=20)])
     age = StringField('age', validators=[InputRequired(), Length(min=1, max=3)])
     gender = StringField('gender', validators=[InputRequired(), Length(min=1, max =10)])
-    pref_gender = StringField('pref_gender', validators=[InputRequired(), Length(min=1, max=10)])
+
     # image = FileField('image', validators=[FileRequired(), FileAllowed(images, 'Images only!')])
     height = StringField('height', validators=[InputRequired(), Length(min=1, max=5)])
     location = StringField('location', validators=[InputRequired(), Length(min=1)])
@@ -162,7 +162,7 @@ def profile():
 
     if match_form.validate_on_submit():
         print"$$$ DATA $$$"
-
+        print"cunt"
         q1 = str(match_form.q1.data)
         q2 = str(match_form.q2.data)
         q3 = str(match_form.q3.data)
@@ -174,9 +174,13 @@ def profile():
         personality = q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8
 
         results = get_personality.get_personality('test')
-        practicality = results['needs'][0]['practicality']  
+        practicality = results['needs'][0]['practicality']
+        love = results['needs'][0]['love']
+        excitment = results['needs'][0]['excitment']
+        
         print practicality
-        personality = str(match_form.q1.data) + str(match_form.q2.object_data)
+
+
 
         """
         new_match = Match(username=user, name=match_form.name.data, gender=match_form.gender.data, \
@@ -191,26 +195,9 @@ def profile():
 
         return redirect(url_for('member'))
 
-    upload_image = UploadImage()
-    if request.method == 'POST':
-        # check if the post request has the file part
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        file = request.files['file']
-
-        # if user does not select file, browser also submit a empty part without filename
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('uploaded_file', filename=filename))
 
 
-    return render_template('profile.html', name=current_user.username, match_form=match_form, upload_image=upload_image)
+    return render_template('profile.html', name=current_user.username, match_form=match_form)
 
 
 @app.route('/terms', methods=['GET', 'POST'])
