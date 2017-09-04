@@ -69,128 +69,103 @@ $(document).ready(function() {
 	// Form Modals
 	function loadModalAnimation() {
 
-		// profile form
-		var nextmodal = document.getElementById('profile-form-modal-1');
-        var nextbtn = document.getElementById('profile-next-btn');
+		// Variables to check if element exists
+		var login_register_form_check = document.body.contains(document.getElementById("register-modal"));
+		var profile_form_check = document.body.contains(document.getElementById("profile-form-modal-1"));
 
-        var backmodal = document.getElementById('profile-form-modal-2');
-        var backbtn = document.getElementById('profile-back-btn');
+        if (login_register_form_check == true) {
 
-        nextbtn.onclick = function () {
-        	nextmodal.style.display = "none";
-            backmodal.style.display = "block";
-            backmodal.style.zIndex = 99;
+            // login / register forms
+            var rmodal = document.getElementById('register-modal'); // Get the modal
+            var rbtn = document.getElementById('register-btn'); // Get the button that opens the modal
+            var rspan = document.getElementById('register-close'); // Get the <span> element that closes the modal
 
-            // $(backmodal)
-            //     .css('opacity', 0)
-            //     .slideDown('slow')
-            //     .animate(
-            //         {opacity: 1},
-            //         {queue: false, duration: 'fast'}
-            //     );
-        }
+            var lmodal = document.getElementById('login-modal');
+            var lbtn = document.getElementById('login-btn');
+            var lspan = document.getElementById('login-close');
 
-		backbtn.onclick = function () {
-        	backmodal.style.display = "none";
-            nextmodal.style.display = "block";
+            // When the user clicks on the button, open the modal
+            rbtn.onclick = function () {
+                lmodal.style.display = "none";
+                rmodal.style.display = "block";
 
-            // $(nextmodal)
-            //     .css('opacity', 0)
-            //     .slideDown('slow')
-            //     .animate(
-            //         {opacity: 1},
-            //         {queue: false, duration: 'fast'}
-            //     );
-        }
+                $(rmodal)
+                    .css('opacity', 0)
+                    .slideDown('slow')
+                    .animate(
+                        {opacity: 1},
+                        {queue: false, duration: 'fast'}
+                    );
+            }
+            lbtn.onclick = function () {
+                rmodal.style.display = "none";
+                lmodal.style.display = "block";
 
-        // login / register forms
-        var rmodal = document.getElementById('register-modal'); // Get the modal
-        var rbtn = document.getElementById('register-btn'); // Get the button that opens the modal
-        var rspan = document.getElementById('register-close'); // Get the <span> element that closes the modal
+                $(lmodal)
+                    .css('opacity', 0)
+                    .slideDown('slow')
+                    .animate(
+                        {opacity: 1},
+                        {queue: false, duration: 'fast'}
+                    );
+            }
 
-		var lmodal = document.getElementById('login-modal');
-        var lbtn = document.getElementById('login-btn');
-        var lspan = document.getElementById('login-close');
-
-        // When the user clicks on the button, open the modal
-        rbtn.onclick = function () {
-        	lmodal.style.display = "none";
-            rmodal.style.display = "block";
-
-            $(rmodal)
-                .css('opacity', 0)
-                .slideDown('slow')
-                .animate(
-                    {opacity: 1},
-                    {queue: false, duration: 'fast'}
-                );
-        }
-        lbtn.onclick = function () {
-        	rmodal.style.display = "none";
-            lmodal.style.display = "block";
-
-            $(lmodal)
-                .css('opacity', 0)
-                .slideDown('slow')
-                .animate(
-                    {opacity: 1},
-                    {queue: false, duration: 'fast'}
-                );
-        }
-
-        // When the user clicks on <span> (x), close the modal
-        rspan.onclick = function () {
-			$(rmodal).fadeOut('fast');
-        }
-        lspan.onclick = function () {
-			$(lmodal).fadeOut('fast');
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-		window.onclick = function (event) {
-            if (event.target == rmodal) {
+            // When the user clicks on <span> (x), close the modal
+            rspan.onclick = function () {
                 $(rmodal).fadeOut('fast');
             }
-        	if (event.target == lmodal) {
-            	$(lmodal).fadeOut('fast');
+            lspan.onclick = function () {
+                $(lmodal).fadeOut('fast');
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                if (event.target == rmodal) {
+                    $(rmodal).fadeOut('fast');
+                }
+                if (event.target == lmodal) {
+                    $(lmodal).fadeOut('fast');
+                }
+            }
+		}
+		
+
+        if (profile_form_check == true) {
+
+            // profile form
+            var nextmodal = document.getElementById('profile-form-modal-1');
+            var nextbtn = document.getElementById('profile-next-btn');
+
+            var backmodal = document.getElementById('profile-form-modal-2');
+            var backbtn = document.getElementById('profile-back-btn');
+
+            nextbtn.onclick = function () {
+                nextmodal.style.display = "none";
+                backmodal.style.display = "block";
+                backmodal.style.zIndex = 99;
+
+                // $(backmodal)
+                //     .css('opacity', 0)
+                //     .slideDown('slow')
+                //     .animate(
+                //         {opacity: 1},
+                //         {queue: false, duration: 'fast'}
+                //     );
+            }
+
+            backbtn.onclick = function () {
+                backmodal.style.display = "none";
+                nextmodal.style.display = "block";
+
+                // $(nextmodal)
+                //     .css('opacity', 0)
+                //     .slideDown('slow')
+                //     .animate(
+                //         {opacity: 1},
+                //         {queue: false, duration: 'fast'}
+                //     );
             }
         }
-
-
-        // profile form
-		var nextmodal = document.getElementsByClassName('profile-form-modal-1')[0];
-        var nextbtn = document.getElementById('profile-next-btn');
-
-        var backmodal = document.getElementsByClassName('profile-form-modal-2')[0];
-        var backbtn = document.getElementById('profile-back-btn');
-
-        nextbtn.onclick = function () {
-        	nextmodal.style.display = "none";
-            backmodal.style.display = "block";
-            backmodal.style.zIndex = 99;
-
-            // $(backmodal)
-            //     .css('opacity', 0)
-            //     .slideDown('slow')
-            //     .animate(
-            //         {opacity: 1},
-            //         {queue: false, duration: 'fast'}
-            //     );
-        }
-
-		backbtn.onclick = function () {
-        	backmodal.style.display = "none";
-            nextmodal.style.display = "block";
-
-            // $(nextmodal)
-            //     .css('opacity', 0)
-            //     .slideDown('slow')
-            //     .animate(
-            //         {opacity: 1},
-            //         {queue: false, duration: 'fast'}
-            //     );
-        }
-
     };
 	$(window).onload=loadModalAnimation();
 
