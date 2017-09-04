@@ -24,8 +24,8 @@ from werkzeug.utils import secure_filename
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret'
 ###### get pwd function
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/bendiep/Github/MatchMaker/data/app.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/damontoumbourou/Code/match-maker/data/app.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/bendiep/Github/MatchMaker/data/app.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/damontoumbourou/Code/match-maker/data/app.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Database Properties
@@ -156,7 +156,6 @@ def member():
 @login_required
 def profile():
     match_form = MatchForm()
-<<<<<<< Updated upstream
     """
     personality = api.MatchAPI().get_personality('test')
     """
@@ -169,8 +168,6 @@ def profile():
         personality = str(match_form.q1.data) + str(match_form.q2.object_data)
         print personality
 
-
-
         """
         new_user = User(username=register_form.username.data, email=register_form.email.data, password=hashed_password)
         db.session.add(new_user)
@@ -179,16 +176,13 @@ def profile():
 
         return redirect(url_for('member'))
 
-=======
     upload_image = UploadImage()
-
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
             flash('No file part')
             return redirect(request.url)
         file = request.files['file']
->>>>>>> Stashed changes
 
         # if user does not select file, browser also submit a empty part without filename
         if file.filename == '':
