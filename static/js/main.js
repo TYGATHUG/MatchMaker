@@ -135,6 +135,7 @@ $(document).ready(function() {
             // profile form
             var nextmodal = document.getElementById('profile-form-modal-1');
             var nextbtn = document.getElementById('profile-next-btn');
+            var nextbtn2 = document.getElementById('profile-next-btn-2');
 
             var backmodal = document.getElementById('profile-form-modal-2');
             var backbtn = document.getElementById('profile-back-btn');
@@ -144,26 +145,38 @@ $(document).ready(function() {
                 backmodal.style.display = "block";
                 backmodal.style.zIndex = 99;
 
-                // $(backmodal)
-                //     .css('opacity', 0)
-                //     .slideDown('slow')
-                //     .animate(
-                //         {opacity: 1},
-                //         {queue: false, duration: 'fast'}
-                //     );
+                $(backmodal)
+                    .css('opacity', 0)
+                    .animate(
+                        {opacity: 1},
+                        {queue: false, duration: 'fast'}
+                    );
+            }
+
+            nextbtn2.onclick = function () {
+                nextmodal.style.display = "none";
+                backmodal.style.display = "block";
+                backmodal.style.zIndex = 99;
+
+                $(backmodal)
+                    .css('opacity', 0)
+                    .slideDown('slow')
+                    .animate(
+                        {opacity: 1},
+                        {queue: false, duration: 'fast'}
+                    );
             }
 
             backbtn.onclick = function () {
                 backmodal.style.display = "none";
                 nextmodal.style.display = "block";
 
-                // $(nextmodal)
-                //     .css('opacity', 0)
-                //     .slideDown('slow')
-                //     .animate(
-                //         {opacity: 1},
-                //         {queue: false, duration: 'fast'}
-                //     );
+                $(nextmodal)
+                    .css('opacity', 0)
+                    .animate(
+                        {opacity: 1},
+                        {queue: false, duration: 'fast'}
+                    );
             }
         }
     };

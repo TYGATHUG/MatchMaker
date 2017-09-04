@@ -61,3 +61,50 @@
     color: black;
     pointer-events: none;
 }
+
+.form-double-input {
+    clear: both;
+}
+
+.form-double-input label {
+    margin-top: 15px;
+}
+
+.form-single-input label {
+    margin-top: 15px;
+}
+
+.form-single-input button {
+    width: 45%;
+    height: 50px;
+    margin-top: 25px;
+    margin-left: 24.5%;
+    margin-right: 24.5%;
+}
+
+.col_1_of_2 {
+    width: 45%;
+	display: block;
+	float: left;
+	margin:0 0 0 4%;
+}
+
+.col_1_of_1 {
+    width: 94%;
+    display: block;
+	float: left;
+	margin:0 0 0 4%;
+}
+
+#imageUpload-btn {
+    width: 100%;
+    height: 50px;
+    padding-top: 10px;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 25px;
+}
+
+#imageUpload-btn:hover {
+    background-color: #DDDDDD;
+}
