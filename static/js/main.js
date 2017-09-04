@@ -143,7 +143,6 @@ $(document).ready(function() {
             nextbtn.onclick = function () {
                 nextmodal.style.display = "none";
                 backmodal.style.display = "block";
-                backmodal.style.zIndex = 99;
 
                 $(backmodal)
                     .css('opacity', 0)
@@ -156,7 +155,6 @@ $(document).ready(function() {
             nextbtn2.onclick = function () {
                 nextmodal.style.display = "none";
                 backmodal.style.display = "block";
-                backmodal.style.zIndex = 99;
 
                 $(backmodal)
                     .css('opacity', 0)

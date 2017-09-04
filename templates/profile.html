@@ -22,6 +22,7 @@
 
                 <!-- Start of MatchForm -->
                 <form role="form" method="POST" action="/profile">
+
                     {{ match_form.hidden_tag() }}
                     <div id="profile-form-modal-1">
                         <a href="#" class="inactive-btn">&#8678 Back</a>
@@ -32,17 +33,23 @@
                         </p>
                         <br>
 
-
-                            <div class="form-group col_1_of_2">
-
-                                <label>Name</label>
-                                {{ match_form.name(class="form-control", placeholder="Name") }}
+                        <div class="form-single-input">
+                            <div class="form-group col_1_of_1">
+                                <label for="imageUpload" id="imageUpload-btn"><span>Click to Upload Photo</span></label>
+                                {{ upload_image.image(class="form-control", placeholder="image", id="imageUpload", class="form-control", style="display:none;") }}
                             </div>
+                        </div>
+                        <br><br><br>
 
-                            <div class="form-group col_1_of_2">
-                                <label>Age</label>
-                                {{ match_form.age(class="form-control", placeholder="Age") }}
-                            </div>
+                        <div class="form-group col_1_of_2">
+
+                            <label>Name</label>
+                            {{ match_form.name(class="form-control", placeholder="Name") }}
+                        </div>
+
+                        <div class="form-group col_1_of_2">
+                            <label>Age</label>
+                            {{ match_form.age(class="form-control", placeholder="Age") }}
                         </div>
 
                         <div class="form-double-input">
@@ -52,7 +59,7 @@
                             </div>
                             <div class="form-group col_1_of_2">
                                 <label>Location</label>
-                                 {{ match_form.location(class="form-control", placeholder="Location") }}
+                                {{ match_form.location(class="form-control", placeholder="Location") }}
                             </div>
                         </div>
 
@@ -66,7 +73,6 @@
                                 <label>Education</label>
                                 {{ match_form.education(class="form-control", placeholder="Education") }}
                             </div>
-
                         </div>
 
                         <div class="form-double-input">
@@ -77,9 +83,8 @@
 
                             <div class="form-group col_1_of_2">
                                 <label>Religion</label>
-                                 {{ match_form.religion(class="form-control", placeholder="Religion") }}
+                                {{ match_form.religion(class="form-control", placeholder="Religion") }}
                             </div>
-
                         </div>
 
                         <div class="form-single-input">
@@ -92,6 +97,7 @@
                         <div class="form-single-input">
                             <button type="button" id="profile-next-btn-2" class="btn btn-default">Next</button>
                         </div>
+
                         <br><br><br>
                     </div>
 
