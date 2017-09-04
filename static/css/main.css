@@ -753,12 +753,15 @@ textarea:hover {
     border: solid 1px #e84545;
     border-top: solid 1px #6c7279;
     letter-spacing: 1px;
-    background: #e84545;
+    background: #f14444 !important;
+    color: #fff;
+    font-weight: bold !important;
 }
 
 #submit:hover {
-    background: #f14444;
+    background: #3D3D3D !important;
     color: #fff;
+    border: 1px solid #3D3D3D !important;
 }
 
 /* ------------------------------------------------------------------------------
