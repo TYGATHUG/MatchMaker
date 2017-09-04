@@ -36,14 +36,13 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 # Upload Image Properties
-UPLOAD_FOLDER = "/static/images/profiles"
+UPLOAD_FOLDER = "./static/images/profiles"
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024
 
 def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # ---------------------------------------------------------------------------------
 #   Classes
@@ -130,6 +129,41 @@ class UploadImage(FlaskForm):
 # ---------------------------------------------------------------------------------
 #   Page Routes
 # -------------------------------------------------------------------------------*/
+@app.route('/upload', methods=['GET', 'POST'])
+def upload_file():
+
+    if request.method == 'POST':
+
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+
+        # if user does not select file, browser also
+        # submit a empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            print "Filename: " + filename
+            print "Filepath: " + UPLOAD_FOLDER + "/" + filename
+            return redirect(url_for('upload_file', filename=filename))
+
+    return '''
+        <!doctype html>
+        <title>Upload new File</title>
+        <h1>Upload new File</h1>
+        <form method=post enctype=multipart/form-data>
+          <p><input type=file name=file>
+             <input type=submit value=Upload>
+        </form>
+        '''
+
+
 @app.route('/', methods=['GET', 'POST'])
 def home():
     register_form = RegisterForm()
@@ -155,6 +189,10 @@ def member():
 @login_required
 def profile():
     match_form = MatchForm()
+    upload_image = UploadImage()
+    """
+    personality = api.MatchAPI().get_personality('test')
+    """
 
     user = current_user.username
     get_personality = api.MatchAPI()
@@ -194,8 +232,6 @@ def profile():
         """
 
         return redirect(url_for('member'))
-
-
 
     return render_template('profile.html', name=current_user.username, match_form=match_form)
 
