@@ -61,7 +61,7 @@ class MatchForm(FlaskForm):
     pref_gender = StringField('pref_gender', validators=[InputRequired(), Length(min=1, max=10)])
     image = FileField('image', validators=[FileRequired(), FileAllowed(images, 'Images only!')])
     height = StringField('height', validators=[InputRequired(), Length(min=1, max=5)])
-    suburb = StringField('suburb', validators=[InputRequired(), Length(min=1)])
+    location = StringField('location', validators=[InputRequired(), Length(min=1)])
     employment = StringField('employment', validators=[InputRequired(), Length(min=1, max=20)])
     education = StringField('education', validators=[InputRequired(), Length(min=1, max=20)])
     ethnicity = StringField('ethnicity', validators=[InputRequired(), Length(min=1, max=20)])
