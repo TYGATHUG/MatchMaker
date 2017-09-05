@@ -123,40 +123,6 @@ class Match(db.Model):
 # ---------------------------------------------------------------------------------
 #   Page Routes
 # -------------------------------------------------------------------------------*/
-@app.route('/upload', methods=['GET', 'POST'])
-def upload_file():
-
-    if request.method == 'POST':
-
-        # check if the post request has the file part
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        file = request.files['file']
-
-        # if user does not select file, browser also
-        # submit a empty part without filename
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            print "Filename: " + filename
-            print "Filepath: " + UPLOAD_FOLDER + "/" + filename
-            return redirect(url_for('upload_file', filename=filename))
-
-    return '''
-        <!doctype html>
-        <title>Upload new File</title>
-        <h1>Upload new File</h1>
-        <form method=post enctype=multipart/form-data>
-          <p><input type=file name=file>
-             <input type=submit value=Upload>
-        </form>
-        '''
-
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -174,8 +140,6 @@ def home():
 @login_required
 def member():
 
-
-
     return render_template('member.html', name=current_user.username)
 
 
@@ -184,34 +148,39 @@ def member():
 def profile():
     match_form = MatchForm()
     # instatiate API for getting Watson data
-    personality = api.MatchAPI().get_personality('test')
-
-
+    personality_results = api.MatchAPI()
 
     # validate form and upload to match data to DB
     if match_form.validate_on_submit():
 
         # get image
-        if request.method == 'POST':
+        print 'here'
 
-            # check if the post request has the file part
-            if 'file' not in request.files:
-                flash('No file part')
-                return redirect(request.url)
-            file = request.files['file']
+        """
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            print 'helli'
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['image']
 
-            # if user does not select file, browser also
-            # submit a empty part without filename
-            if file.filename == '':
-                flash('No selected file')
-                return redirect(request.url)
+        # if user does not select file, browser also
+        # submit a empty part without filename
+        if file.filename == '':
+            print 'cunt'
+            flash('No selected file')
+            return redirect(request.url)
+        """
+        filename = ""
+        file = request.files['image']
+        if file and allowed_file(file.filename):
+            print 'heres'
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-            if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                print "Filename: " + filename
-                print "Filepath: " + UPLOAD_FOLDER + "/" + filename
-
+            print "Filepath: " + UPLOAD_FOLDER + "/" + filename
+            
+        print filename
 
         print"$$$ DATA $$$"
         print"cunt"
@@ -226,14 +195,14 @@ def profile():
         personality = q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8
 
         # call the Watson API and pass in the 8 questions
-        results = get_personality.get_personality('test')
+        results = personality_results.get_personality('test')
 
         # extract traits: 0 - 100 scale
         practicality = results['needs'][0]['practicality']
         love = results['needs'][0]['love']
         challenge = results['needs'][0]['challenge']
         closeness = results['needs'][0]['closeness']
-        excitment = results['needs'][0]['excitement']
+        excitment = results['needs'][0]['excitment']
         structure = results['needs'][0]['structure']
 
         # extract traits: 1 - 3 scale
@@ -242,7 +211,6 @@ def profile():
         entreprenuer = results['entreprenuer']
         reading = results['reading']
 
-        """
         new_match = Match(username=user, name=match_form.name.data, gender=match_form.gender.data, \
                           age=match_form.age.data, height=match_form.height.data, suburb=match_form.suburb.data, \
                           education=match_form.education.data, ethnicity=match_form.ethnicity.data, \
@@ -251,7 +219,7 @@ def profile():
         new_user = User(username=register_form.username.data, email=register_form.email.data, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
-        """
+
 
         return redirect(url_for('member'))
 
