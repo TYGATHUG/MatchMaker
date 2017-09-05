@@ -15,6 +15,7 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 import api
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
+import sqlite3
 
 # ---------------------------------------------------------------------------------
 #   Initialisation / Settings
@@ -43,7 +44,6 @@ app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
 
 # ---------------------------------------------------------------------------------
 #   Classes Databases
@@ -88,6 +88,62 @@ class Match(db.Model):
     entreprenuer = db.Column(db.Integer())
     reading = db.Column(db.Integer())
 
+    # create a python object of Match
+    def __init__(self, username, view_count, image, name, gender, age, height, location, education,
+                 ethnicity, religion, bio, practicality, love, excitment, challenge, closeness,
+                 structure, live_music, spare_moment_purchases, gym_member, outdoors, volunteering,
+                 entreprenuer, reading):
+        self.username = username
+        self.view_count = view_count
+        self.image = image
+        self.name = name
+        self.gender = gender
+        self.age = age
+        self.height = height
+        self.location = location
+        self.education = education
+        self.ethnicity = ethnicity
+        self.religion = religion
+        self.bio = bio
+        self.practicality = practicality
+        self.love = love
+        self.excitment = excitment
+        self.challenge = challenge
+        self.closeness = closeness
+        self.structure = structure
+        self.live_music = live_music
+        self.spare_moment_purchases = spare_moment_purchases
+        self.gym_member = gym_member
+        self.outdoors = outdoors
+        self.volunteering = volunteering
+        self.entreprenuer = entreprenuer
+        self.reading = reading
+
+def seedusers():
+
+    users = [
+        ("Stefanie", "4.jpeg", "Stefanie", "Female", 30, 170, "Sydney", "Bachelor", "Hispanic", "Catholic",
+         "I'm just you're average person.", 5, 20, 15, 43, 2, 75, 0.5, 0.5, 1, 0, 0, 1, 0.5),
+        ("Tom", "5.jpeg", "Tom", "Male", 28, 150, "Syndey", "Associate Degree", "White", "Catholic",
+         "I like to surf and long walks.", 10, 15, 3, 52, 12, 32, 1, 1, 0, 0, 0.5, 1, 0),
+        ("Arwa", "6.jpeg", "Arwa", "Female", 25, 180, "Sydney", "PHD", "African", "Atheist", "I study a lot.", 43, 59,
+         2, 23, 3, 68, 0, 0.5, 1, 1, 1, 0, 0.5),
+        ("John", "7.jpeg", "John", "Male", 30, 190, "Melbourne", "Bachelor", "Asian", "Atheist", "I like to eat.", 10,
+         54, 32, 2, 42, 4, 1, 1, 0.5, 1, 0, 0, 1),
+        ("Ashe", "8.jpeg", "Ashe", "Male", 22, 175, "Melbourne", "Cert IV", "White", "Christian",
+         "I like to go bowling.", 2, 32, 76, 8, 23, 22, 1, 0, 0, 0.5, 1, 1, 1),
+        ("Sophie", "9.jpeg", "Sophie", "Female", 39, 180, "Melbourne", "Bachelor", "White", "Catholic",
+         "I like to go fishing.", 3, 5, 21, 42, 74, 29, 1, 1, 0.5, 1, 0, 0, 1),
+        ("Laura", "10.jpeg", "Laura", "Female", 29, 177, "Melbourne", "Bachelor", "Asian", "Atheist",
+         "I like to dance.", 22, 5, 75, 34, 6, 43, 1, 0.5, 0.5, 0, 1, 1, 1)
+    ]
+
+    con = sqlite3.connect(db)
+
+    con.executemany("INSERT INTO Match(username, image, name, gender, age, height, location, education, ethnicity, "
+                    "religion, bio, practicality, love, excitment, challenge, closeness, structure, live_music, "
+                    "spare_moment_purchases, gym_member, outdoors, volunteering, entreprenuer, reading) "
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", users)
 
 # ---------------------------------------------------------------------------------
 #   Classes Forms
@@ -102,7 +158,8 @@ class RegisterForm(FlaskForm):
     email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), Length(min=3, max=50)])
     username = StringField('username', validators=[InputRequired(), Length(min=3, max=15)])
     password = PasswordField('password', validators=[InputRequired(), Length(min=4, max=80)])
-    unique = BooleanField('unique')
+    unique_user = BooleanField('unique_user')
+    unique_email = BooleanField('unique_email')
 
 
 class MatchForm(FlaskForm):
@@ -440,7 +497,7 @@ def register():
     register_form = RegisterForm()
 
     user = User.query.filter_by(username=register_form.username.data).first()
-    email = User.query.filter_by(email=register_form.email.data).first()
+    email = User.query.filter_by(email=register_form.email.data.lower()).first()
     print user
     if not user:
         if not email:
@@ -453,18 +510,17 @@ def register():
 
                 login_user(new_user)
                 flash("Registration Successful !")
-                register_form.unique = True
+                register_form.unique_user = True
+                register_form.unique_email = True
                 return redirect(url_for('member'))
 
-        # else:
-        #     register_form = list(register_form)
-        #     register_form.append('Email already registered')
-        #     register_form = tuple(register_form)
+        else:
+            register_form.unique_email = False
 
     else:
         hashed_password = generate_password_hash(register_form.password.data, method='sha256')
         new_user = User(username=register_form.username.data, email=register_form.email.data, password=hashed_password)
-        register_form.unique = False
+        register_form.unique_user = False
 
     previous_route = str(request.referrer.split("/", 2)[2].split('/')[1]) + ".html"
     if previous_route == ".html":

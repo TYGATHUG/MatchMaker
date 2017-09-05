@@ -42,7 +42,7 @@ CREATE TABLE MATCH (
     practicality int not null,
     love int not null,
     excitment int not null,
-    challenge int not null
+    challenge int not null,
     closeness int not null,
     structure int not null,
     live_music int not null,
@@ -52,7 +52,7 @@ CREATE TABLE MATCH (
     volunteering int not null,
     entreprenuer int not null,
     reading int not null 
-)
+);
 
 
 CREATE TABLE CHAT (
