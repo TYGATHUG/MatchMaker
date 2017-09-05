@@ -117,7 +117,11 @@
 div.tab {
     overflow: hidden;
     border: 2px solid #ccc;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
     background-color: #f1f1f1;
+    text-transform: uppercase;
+
 }
 
 /* Style the buttons inside the tab */
@@ -150,6 +154,8 @@ div.tab button.active {
     display: none;
     padding: 6px 12px;
     border: 1px solid #ccc;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
     border-top: none;
     min-height: 600px;
     background: #ffffff;

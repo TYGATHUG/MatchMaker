@@ -773,6 +773,7 @@ textarea:hover {
     margin: 0 auto !important;
     position: relative !important;
     align-content: center !important;
+    padding: 75px !important;
 }
 
 .site-info h1 {
@@ -787,4 +788,12 @@ textarea:hover {
 
 .site-info p {
     color: rgba(0, 0, 0, 1) !important;
+}
+
+blockquote.site-info {
+    max-width: 1024px;
+}
+
+div.container-fluid {
+    background-image: url(../images/Elegant_Background-7.jpg);
 }
