@@ -17,3 +17,5 @@ private.py
 .idea/vcs.xml
 
 .idea/workspace.xml
+
+data/app.db
