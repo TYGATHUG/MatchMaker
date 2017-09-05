@@ -149,7 +149,7 @@ def member():
 
     # current user data
     matched_users = ""
-    username=current_user.username.title()
+    username = current_user.username.title()
     curr_user = Match.query.filter_by(username=username).first()
     if curr_user:
         print "username: "
@@ -232,13 +232,33 @@ def member():
 
 
             print '\n'
-        print matched_users
 
 
+    # get the number of fields that match for each user
+    up = 0
+    down = 1000
+    for match in matched_users:
+        num_match = len(matched_users[match])
+        matched_users[match].append({'num_match': num_match} )
+        if num_match > up:
+            up = num_match
+        if num_match < down:
+            down = num_match
 
+    # return the highest matched users
+    highest_match_users = []
+    for match in matched_users:
+        for data in matched_users[match]:
+            try:
+                if data['num_match'] == up:
+                    highest_match_users.append(matched_users[match])
 
+            except:
+                nothing = ""
 
-    return render_template('member.html', name=current_user.username, matched_users=matched_users)
+    print highest_match_users
+
+    return render_template('member.html', name=current_user.username, highest_match_users=highest_match_users)
 
 
 @app.route('/profile', methods=['GET', 'POST'])
