@@ -153,13 +153,8 @@ def profile():
     # validate form and upload to match data to DB
     if match_form.validate_on_submit():
 
-        # get image
-        print 'here'
-
-        """
         # check if the post request has the file part
         if 'file' not in request.files:
-            print 'helli'
             flash('No file part')
             return redirect(request.url)
         file = request.files['image']
@@ -167,16 +162,14 @@ def profile():
         # if user does not select file, browser also
         # submit a empty part without filename
         if file.filename == '':
-            print 'cunt'
             flash('No selected file')
             return redirect(request.url)
-        """
-        filename = ""
-        file = request.files['image']
+
         if file and allowed_file(file.filename):
-            print 'heres'
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            print "Filename: " + filename
+            print "Filepath: " + UPLOAD_FOLDER + "/" + filename
 
             print "Filepath: " + UPLOAD_FOLDER + "/" + filename
             
@@ -215,7 +208,7 @@ def profile():
                           age=match_form.age.data, height=match_form.height.data, suburb=match_form.suburb.data, \
                           education=match_form.education.data, ethnicity=match_form.ethnicity.data, \
                           religion=match_form.religion.data)
-        
+
         new_user = User(username=register_form.username.data, email=register_form.email.data, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
