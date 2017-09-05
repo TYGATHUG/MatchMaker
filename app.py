@@ -44,8 +44,9 @@ app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+
 # ---------------------------------------------------------------------------------
-#   Classes
+#   Classes Databases
 # -------------------------------------------------------------------------------*/
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -58,17 +59,47 @@ class User(UserMixin, db.Model):
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+class Match(db.Model):
+    __tablename__ = 'Match'
+    username = db.Column(db.String(15), primary_key=True, unique=True)
+    image = db.Column(db.String(120))
+    name = db.Column(db.String(20))
+    gender = db.Column(db.String(20))
+    age = db.Column(db.Integer())
+    height = db.Column(db.Integer())
+    location = db.Column(db.String(30))
+    education = db.Column(db.String(30))
+    ethnicity = db.Column(db.String(30))
+    religion = db.Column(db.String(30))
+    bio = db.Column(db.String(255))
+    practicality = db.Column(db.Integer())
+    love = db.Column(db.Integer())
+    excitment = db.Column(db.Integer())
+    challenge = db.Column(db.Integer())
+    closeness = db.Column(db.Integer())
+    structure = db.Column(db.Integer())
+    live_music = db.Column(db.Integer())
+    spare_moment_purchases = db.Column(db.Integer())
+    gym_member = db.Column(db.Integer())
+    outdoors = db.Column(db.Integer())
+    volunteering = db.Column(db.Integer())
+    entreprenuer = db.Column(db.Integer())
+    reading = db.Column(db.Integer())
 
+
+# ---------------------------------------------------------------------------------
+#   Classes Forms
+# -------------------------------------------------------------------------------*/
 class LoginForm(FlaskForm):
-    username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
-    password = PasswordField('password', validators=[InputRequired(), Length(min=8, max=80)])
+    username = StringField('username', validators=[InputRequired(), Length(min=3, max=15)])
+    password = PasswordField('password', validators=[InputRequired(), Length(min=4, max=80)])
     remember = BooleanField('remember me')
 
 
 class RegisterForm(FlaskForm):
     email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), Length(min=3, max=50)])
-    username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
-    password = PasswordField('password', validators=[InputRequired(), Length(min=8, max=80)])
+    username = StringField('username', validators=[InputRequired(), Length(min=3, max=15)])
+    password = PasswordField('password', validators=[InputRequired(), Length(min=4, max=80)])
     unique = BooleanField('unique')
 
 
@@ -92,32 +123,6 @@ class MatchForm(FlaskForm):
     q7 = StringField('q7', validators=[InputRequired(), Length(min=15, max=255)])
     q8 = StringField('q8', validators=[InputRequired(), Length(min=15, max=255)])
 
-
-class Match(db.Model):
-    __tablename__ = 'Match'
-    username = db.Column(db.String(15), primary_key=True, unique=True)
-    name = db.Column(db.String(20))
-    gender = db.Column(db.String(20))
-    age = db.Column(db.Integer())
-    height = db.Column(db.Integer())
-    suburb = db.Column(db.String(30))
-    education = db.Column(db.String(30))
-    ethnicity = db.Column(db.String(30))
-    religion = db.Column(db.String(30))
-    bio = db.Column(db.String(255))
-    practicality = db.Column(db.Integer())
-    love = db.Column(db.Integer())
-    excitment = db.Column(db.Integer())
-    challenge = db.Column(db.Integer())
-    closeness = db.Column(db.Integer())
-    structure = db.Column(db.Integer())
-    live_music = db.Column(db.Integer())
-    spare_moment_purchases = db.Column(db.Integer())
-    gym_member = db.Column(db.Integer())
-    outdoors = db.Column(db.Integer())
-    volunteering = db.Column(db.Integer())
-    entreprenuer = db.Column(db.Integer())
-    reading = db.Column(db.Integer())
 
 
 # ---------------------------------------------------------------------------------
@@ -152,31 +157,27 @@ def profile():
 
     # validate form and upload to match data to DB
     if match_form.validate_on_submit():
-
+        """
         # check if the post request has the file part
         if 'file' not in request.files:
             flash('No file part')
             return redirect(request.url)
-        file = request.files['image']
+        
 
         # if user does not select file, browser also
         # submit a empty part without filename
+    
         if file.filename == '':
             flash('No selected file')
             return redirect(request.url)
-
+        """
+        filename = ""
+        file = request.files['image']
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            print "Filename: " + filename
-            print "Filepath: " + UPLOAD_FOLDER + "/" + filename
 
-            print "Filepath: " + UPLOAD_FOLDER + "/" + filename
-            
-        print filename
 
-        print"$$$ DATA $$$"
-        print"cunt"
         q1 = str(match_form.q1.data)
         q2 = str(match_form.q2.data)
         q3 = str(match_form.q3.data)
@@ -204,15 +205,19 @@ def profile():
         entreprenuer = results['entreprenuer']
         reading = results['reading']
 
-        new_match = Match(username=user, name=match_form.name.data, gender=match_form.gender.data, \
-                          age=match_form.age.data, height=match_form.height.data, suburb=match_form.suburb.data, \
-                          education=match_form.education.data, ethnicity=match_form.ethnicity.data, \
-                          religion=match_form.religion.data)
+        new_match = Match(username=match_form.name.data, name=match_form.name.data, image_uri=filename, \
+                          gender=match_form.gender.data, age=match_form.age.data, height=match_form.height.data, \
+                          location=match_form.location.data, education=match_form.education.data, ethnicity=match_form.ethnicity.data, \
+                          religion=match_form.religion.data, bio=match_form.bio.data, practicality=match_form.practicality.data,\
+                          love=match_form.love.data, excitment=match_form.excitment.data, challenge=match_form.challenge.data, \
+                          closseness=match_form.closseness.data, structure=match_form.structure.data, live_music=match_form.live_music.data, \
+                          spare_moment_purchases=match_form.spare_moment_purchases.data, gym_member=match_form.gym_member.data, \
+                          outdoors=match_form.gym_member.data, volunteering=match_form.volunteering.data, \
+                          entreprenuer=match_form.entreprenuer.data, reading=match_form.reading.data \
+                    )
 
-        new_user = User(username=register_form.username.data, email=register_form.email.data, password=hashed_password)
-        db.session.add(new_user)
+        db.session.add(new_match)
         db.session.commit()
-
 
         return redirect(url_for('member'))
 
@@ -272,7 +277,10 @@ def login():
                 return redirect(url_for('member'))
 
     previous_route = str(request.referrer.split("/", 2)[2].split('/')[1]) + ".html"
+
     if previous_route == ".html":
+        previous_route = PREVIOUS_SAVED_ROUTE
+    elif previous_route == "#.html":
         previous_route = PREVIOUS_SAVED_ROUTE
     elif previous_route == "register.html":
         previous_route = PREVIOUS_SAVED_ROUTE
@@ -290,15 +298,17 @@ def register():
     register_form = RegisterForm()
 
     user = User.query.filter_by(username=login_form.username.data).first()
+    print user
     if not user:
         if register_form.validate_on_submit():
             hashed_password = generate_password_hash(register_form.password.data, method='sha256')
             new_user = User(username=register_form.username.data, email=register_form.email.data, password=hashed_password)
             db.session.add(new_user)
             db.session.commit()
-            flash("Register Successful!")
+            flash("Registration Successful!")
             register_form.unique = True
-            return redirect(url_for('member'))
+            print ("HEREEEE")
+            return render_template('member.html')
     else:
         hashed_password = generate_password_hash(register_form.password.data, method='sha256')
         new_user = User(username=register_form.username.data, email=register_form.email.data, password=hashed_password)
@@ -313,6 +323,9 @@ def register():
         previous_route = PREVIOUS_SAVED_ROUTE
     else:
         globals()['PREVIOUS_SAVED_ROUTE'] = previous_route
+
+    print previous_route
+    print PREVIOUS_SAVED_ROUTE
 
     return render_template(previous_route, register_form=register_form, login_form=login_form)
 

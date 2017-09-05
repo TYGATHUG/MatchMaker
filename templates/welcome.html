@@ -5,11 +5,15 @@
 
     <!-- Register Form Modal -->
     <div id="register-modal" class="modal">
+
+
         <!-- Modal content -->
         <div class="modal-content">
             <p class="modal-closes"><span id="register-close">&times;</span></p>
             <header class="header">Register</header>
             <form action="/register" method="post" id="form" class="topBefore">
+
+                <!-- Display registration form errors -->
                 {% if register_form.errors %}
                     <script>
                         document.getElementById('register-modal').style.display = "block";
@@ -24,6 +28,8 @@
                         <br>
                     </ul>
                 {% endif %}
+                <!-- End display registration form errors-->
+
                 {% if register_form.unique == False %}
                     <script>
                         document.getElementById('register-modal').style.display = "block";
@@ -59,12 +65,13 @@
                     <ul class="errors">
                         {% for field_name, field_errors in login_form.errors.iteritems() %}
                             {% for error in field_errors %}
-                                <li style="color: #e84545;">{{ register_form[field_name].label }}: {{ error }}</li>
+                                <li style="color: #e84545;">{{ login_form[field_name].label }}: {{ error }}</li>
                             {% endfor %}
                         {% endfor %}
                         <br>
                     </ul>
                 {% endif %}
+
                 {{ login_form.hidden_tag() }}
                 <div>{{ login_form.username(placeholder="Username") }}</div>
                 <div>{{ login_form.password(placeholder="Password") }}</div>
