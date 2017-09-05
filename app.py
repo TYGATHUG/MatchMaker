@@ -148,88 +148,93 @@ def member():
     #user = User.query.filter_by(username=login_form.username.data).first()
 
     # current user data
+    matched_users = ""
     username=current_user.username.title()
     curr_user = Match.query.filter_by(username=username).first()
-    print "username: "
-    """
-    print cu_match.practicality
-    print cu_match.love
-    print cu_match.excitment
-    print '\n'
-    """
-    matched_users = {}
-    # match user data
-    users = Match.query.all()
-    for user in users:
-        username = user.username
-        matched_users.update({user.username: []})
-
-
-    for user in users:
-
-        up = user.practicality + 10
-        down = user.practicality - 10
-        if not curr_user.practicality > up:
-            if not curr_user.practicality < down:
-                matched_users[user.username].append({'practicality': user.practicality} )
-                print "!!!!Match prac: "
-                print curr_user.practicality
-                print user.practicality
-                print '\n'
-
-        up = user.love + 10
-        down = user.love - 10
-        if not curr_user.love > up:
-            if not curr_user.love < down:
-                matched_users[user.username].append({'love': user.love} )
-                print "!!!!Match love: "
-                print curr_user.love
-                print user.love
-                print '\n'
-
-        up = user.excitment + 10
-        down = user.excitment - 10
-        if not curr_user.excitment > up:
-            if not curr_user.excitment < down:
-                matched_users[user.username].append({'excitment': user.excitment} )
-                print "!!!!Match exc: "
-                print curr_user.excitment
-                print user.excitment
-                print '\n'
-
-        up = user.challenge + 10
-        down = user.challenge - 10
-        if not curr_user.challenge > up:
-            if not curr_user.challenge < down:
-                print "!!!!Match challenge: "
-                print user.challenge
-                print '\n'
-
-        up = user.closeness + 10
-        down = user.closeness - 10
-        if not curr_user.closeness > up:
-            if not curr_user.closeness < down:
-                print "!!!!Match closeness: "
-                print user.closeness
-                print '\n'
-
-        up = user.structure + 10
-        down = user.structure - 10
-        if not curr_user.structure > up:
-            if not curr_user.structure < down:
-                print "!!!!Match structure: "
-                print user.structure
-                print '\n'
-
-        if not curr_user.live_music == 0:
-            if not user.live_music == 0:
-                print "!!!!Match music: "
-                print user.live_music
-                print '\n'
-
-
+    if curr_user:
+        print "username: "
+        print curr_user.username
+        """
+        print cu_match.practicality
+        print cu_match.love
+        print cu_match.excitment
         print '\n'
-    print matched_users
+        """
+        matched_users = {}
+        # match user data
+        users = Match.query.all()
+        for user in users:
+            username = user.username
+            matched_users.update({user.username: []})
+
+
+        for user in users:
+
+            up = user.practicality + 10
+            down = user.practicality - 10
+            if not curr_user.practicality > up:
+                if not curr_user.practicality < down:
+                    matched_users[user.username].append({'practicality': user.practicality} )
+                    print "!!!!Match prac: "
+                    print curr_user.practicality
+                    print user.practicality
+                    print '\n'
+
+            up = user.love + 10
+            down = user.love - 10
+            if not curr_user.love > up:
+                if not curr_user.love < down:
+                    matched_users[user.username].append({'love': user.love} )
+                    print "!!!!Match love: "
+                    print curr_user.love
+                    print user.love
+                    print '\n'
+
+            up = user.excitment + 10
+            down = user.excitment - 10
+            if not curr_user.excitment > up:
+                if not curr_user.excitment < down:
+                    matched_users[user.username].append({'excitment': user.excitment} )
+                    print "!!!!Match exc: "
+                    print curr_user.excitment
+                    print user.excitment
+                    print '\n'
+
+            up = user.challenge + 10
+            down = user.challenge - 10
+            if not curr_user.challenge > up:
+                if not curr_user.challenge < down:
+                    print "!!!!Match challenge: "
+                    print user.challenge
+                    print '\n'
+
+            up = user.closeness + 10
+            down = user.closeness - 10
+            if not curr_user.closeness > up:
+                if not curr_user.closeness < down:
+                    print "!!!!Match closeness: "
+                    print user.closeness
+                    print '\n'
+
+            up = user.structure + 10
+            down = user.structure - 10
+            if not curr_user.structure > up:
+                if not curr_user.structure < down:
+                    print "!!!!Match structure: "
+                    print user.structure
+                    print '\n'
+
+            if not curr_user.live_music == 0:
+                if not user.live_music == 0:
+                    print "!!!!Match music: "
+                    print user.live_music
+                    print '\n'
+
+
+            print '\n'
+        print matched_users
+
+
 
 
 
