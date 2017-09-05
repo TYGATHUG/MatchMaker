@@ -74,14 +74,11 @@ class RegisterForm(FlaskForm):
 
 class MatchForm(FlaskForm):
     image = FileField('image', validators=[FileRequired(), FileAllowed(ALLOWED_EXTENSIONS)])
-
     name = StringField('name', validators=[InputRequired(), Length(min=1, max=20)])
     age = StringField('age', validators=[InputRequired(), Length(min=1, max=3)])
     gender = StringField('gender', validators=[InputRequired(), Length(min=1, max =10)])
-
     height = StringField('height', validators=[InputRequired(), Length(min=1, max=5)])
     location = StringField('location', validators=[InputRequired(), Length(min=1)])
-
     education = StringField('education', validators=[InputRequired(), Length(min=1, max=20)])
     ethnicity = StringField('ethnicity', validators=[InputRequired(), Length(min=1, max=20)])
     religion = StringField('religion', validators=[InputRequired(), Length(min=1, max=20)])
@@ -186,16 +183,36 @@ def member():
 @login_required
 def profile():
     match_form = MatchForm()
-
-    """
+    # instatiate API for getting Watson data
     personality = api.MatchAPI().get_personality('test')
-    """
-
-    user = current_user.username
-    get_personality = api.MatchAPI()
 
 
+
+    # validate form and upload to match data to DB
     if match_form.validate_on_submit():
+
+        # get image
+        if request.method == 'POST':
+
+            # check if the post request has the file part
+            if 'file' not in request.files:
+                flash('No file part')
+                return redirect(request.url)
+            file = request.files['file']
+
+            # if user does not select file, browser also
+            # submit a empty part without filename
+            if file.filename == '':
+                flash('No selected file')
+                return redirect(request.url)
+
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                print "Filename: " + filename
+                print "Filepath: " + UPLOAD_FOLDER + "/" + filename
+
+
         print"$$$ DATA $$$"
         print"cunt"
         q1 = str(match_form.q1.data)
@@ -208,21 +225,29 @@ def profile():
         q8 = str(match_form.q8.data)
         personality = q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8
 
+        # call the Watson API and pass in the 8 questions
         results = get_personality.get_personality('test')
+
+        # extract traits: 0 - 100 scale
         practicality = results['needs'][0]['practicality']
         love = results['needs'][0]['love']
-        excitment = results['needs'][0]['excitment']
+        challenge = results['needs'][0]['challenge']
+        closeness = results['needs'][0]['closeness']
+        excitment = results['needs'][0]['excitement']
+        structure = results['needs'][0]['structure']
 
-        print practicality
-
-
+        # extract traits: 1 - 3 scale
+        live_music = results['live_music']
+        volunteering = results['volunteering']['score']
+        entreprenuer = results['entreprenuer']
+        reading = results['reading']
 
         """
         new_match = Match(username=user, name=match_form.name.data, gender=match_form.gender.data, \
                           age=match_form.age.data, height=match_form.height.data, suburb=match_form.suburb.data, \
-                          education=match_form.education.data, ethnicity=match_form.ethnicity.data, religion=match_form.religion.data)
-        """
-        """
+                          education=match_form.education.data, ethnicity=match_form.ethnicity.data, \
+                          religion=match_form.religion.data)
+        
         new_user = User(username=register_form.username.data, email=register_form.email.data, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
