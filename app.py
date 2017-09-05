@@ -133,7 +133,7 @@ class MatchForm(FlaskForm):
 def home():
     register_form = RegisterForm()
     login_form = LoginForm()
-    globals()['previous_saved_route'] = "welcome.html"
+    globals()['PREVIOUS_SAVED_ROUTE'] = "welcome.html"
 
     if current_user.is_authenticated:
         return render_template('member.html')
@@ -309,8 +309,8 @@ def register():
             login_user(new_user)
             flash("Registration Successful!")
             register_form.unique = True
-            print ("HEREEEE")
             return redirect(url_for('member'))
+    
     else:
         hashed_password = generate_password_hash(register_form.password.data, method='sha256')
         new_user = User(username=register_form.username.data, email=register_form.email.data, password=hashed_password)
@@ -318,6 +318,8 @@ def register():
 
     previous_route = str(request.referrer.split("/",2)[2].split('/')[1]) + ".html"
     if previous_route == ".html":
+        previous_route = PREVIOUS_SAVED_ROUTE
+    elif previous_route == "#.html":
         previous_route = PREVIOUS_SAVED_ROUTE
     elif previous_route == "register.html":
         previous_route = PREVIOUS_SAVED_ROUTE

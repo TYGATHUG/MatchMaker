@@ -183,25 +183,12 @@ $(document).ready(function() {
 
     // Upload Image Button
     function displayFilename() {
-
-        // Variables to check if element exists
-		var image_field_check = document.body.contains(document.getElementById("image-file-name"));
-
-		 if (image_field_check == true) {
-
-            var imagebtn = document.getElementById('imageUpload-btn');
-            var image_display = document.getElementById('image-file-name-display');
-            var imagetxt = document.getElementById('image-file-name');
-
-
-
-            nextbtn.onclick = function () {
-                nextmodal.style.display = "none";
-                backmodal.style.display = "block";
-
-
-            }
-         }
+        alert("Hello");
     }
-    $(window).onload=displayFilename();
+
+    $('#image-file-name').val().onchan = function () {
+        // alert('Selected file: ' + this.value);
+        alert("You Did It");
+
+    }
 });

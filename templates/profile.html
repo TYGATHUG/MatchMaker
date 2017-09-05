@@ -38,7 +38,8 @@
                                 <span>Click to Upload Photo</span><br>
                                 <span id="image-file-name-display" style="font-size: 15px; font-weight: normal;">No File Selected</span>
                             </label>
-                            {{ match_form.image(id="image-file-name", class="form-control", placeholder="image", id="imageUpload", class="form-control", style="display:none;") }}
+{#                            {{ match_form.image(id="image-file-name", id="imageUpload", class="form-control", placeholder="image", style="display:none;") }}#}
+                            {{ match_form.image(id="image-file-name", id="imageUpload", class="form-control", placeholder="image") }}
                         </div>
                         <br><br><br>
 
