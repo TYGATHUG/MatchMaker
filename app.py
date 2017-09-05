@@ -149,6 +149,7 @@ def member():
 
     # current user data
     matched_users = ""
+    highest_match_users = ""
     username = current_user.username.title()
     curr_user = Match.query.filter_by(username=username).first()
     if curr_user:
@@ -249,12 +250,30 @@ def member():
         highest_match_users = []
         for match in matched_users:
             for data in matched_users[match]:
-                try:
-                    if data['num_match'] == up:
-                        highest_match_users.append(matched_users[match])
 
+                user_match = 0
+                try:
+                    user_match = data['num_match']
                 except:
-                    nothing = ""
+                    user_match = 0
+
+                if user_match == up:
+                    #highest_match_users.append(matched_users[match])
+
+                    user = Match.query.filter_by(name=match).first()
+                    print 'here'
+                    highest_match_users.append([
+                        {'name': user.name},
+                        {'image': user.image},
+                        {'age': user.age},
+                        {'bio': user.name}
+                    ])
+
+                    print user.image
+                    print '\n'
+
+
+                    break;
 
         print highest_match_users
 
