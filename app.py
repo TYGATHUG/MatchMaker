@@ -62,6 +62,7 @@ def load_user(user_id):
 class Match(db.Model):
     __tablename__ = 'Match'
     username = db.Column(db.String(15), primary_key=True, unique=True)
+    view_count = db.Column(db.Integer())
     image = db.Column(db.String(120))
     name = db.Column(db.String(20))
     gender = db.Column(db.String(20))
@@ -144,7 +145,95 @@ def home():
 @app.route('/member')
 @login_required
 def member():
-    return render_template('member.html', name=current_user.username)
+    #user = User.query.filter_by(username=login_form.username.data).first()
+
+    # current user data
+    username=current_user.username.title()
+    curr_user = Match.query.filter_by(username=username).first()
+    print "username: "
+    """
+    print cu_match.practicality
+    print cu_match.love
+    print cu_match.excitment
+    print '\n'
+    """
+    matched_users = {}
+    # match user data
+    users = Match.query.all()
+    for user in users:
+        username = user.username
+        matched_users.update({user.username: []})
+
+
+    for user in users:
+
+        up = user.practicality + 10
+        down = user.practicality - 10
+        if not curr_user.practicality > up:
+            if not curr_user.practicality < down:
+                matched_users[user.username].append({'practicality': user.practicality} )
+                print "!!!!Match prac: "
+                print curr_user.practicality
+                print user.practicality
+                print '\n'
+
+        up = user.love + 10
+        down = user.love - 10
+        if not curr_user.love > up:
+            if not curr_user.love < down:
+                matched_users[user.username].append({'love': user.love} )
+                print "!!!!Match love: "
+                print curr_user.love
+                print user.love
+                print '\n'
+
+        up = user.excitment + 10
+        down = user.excitment - 10
+        if not curr_user.excitment > up:
+            if not curr_user.excitment < down:
+                matched_users[user.username].append({'excitment': user.excitment} )
+                print "!!!!Match exc: "
+                print curr_user.excitment
+                print user.excitment
+                print '\n'
+
+        up = user.challenge + 10
+        down = user.challenge - 10
+        if not curr_user.challenge > up:
+            if not curr_user.challenge < down:
+                print "!!!!Match challenge: "
+                print user.challenge
+                print '\n'
+
+        up = user.closeness + 10
+        down = user.closeness - 10
+        if not curr_user.closeness > up:
+            if not curr_user.closeness < down:
+                print "!!!!Match closeness: "
+                print user.closeness
+                print '\n'
+
+        up = user.structure + 10
+        down = user.structure - 10
+        if not curr_user.structure > up:
+            if not curr_user.structure < down:
+                print "!!!!Match structure: "
+                print user.structure
+                print '\n'
+
+        if not curr_user.live_music == 0:
+            if not user.live_music == 0:
+                print "!!!!Match music: "
+                print user.live_music
+                print '\n'
+
+
+        print '\n'
+    print matched_users
+
+
+
+    return render_template('member.html', name=current_user.username, matched_users=matched_users)
 
 
 @app.route('/profile', methods=['GET', 'POST'])
@@ -176,7 +265,6 @@ def profile():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-
         q1 = str(match_form.q1.data)
         q2 = str(match_form.q2.data)
         q3 = str(match_form.q3.data)
@@ -188,11 +276,12 @@ def profile():
         personality = q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8
 
         # call the Watson API and pass in the 8 questions
-        results = personality_results.get_personality('test')
+        results = personality_results.get_personality(personality)
 
         # extract traits: 0 - 100 scale
         practicality = results['needs'][0]['practicality']
         love = results['needs'][0]['love']
+        challenge = results['needs'][0]['challenge']
         challenge = results['needs'][0]['challenge']
         closeness = results['needs'][0]['closeness']
         excitment = results['needs'][0]['excitment']
@@ -202,17 +291,23 @@ def profile():
         live_music = results['live_music']
         volunteering = results['volunteering']['score']
         entreprenuer = results['entreprenuer']
+        gym_member = results['consumption'][0]['gym_member']
+        spare_moment_purchases = results['consumption'][0]['spare_of_moment_purchase']
+        outdoors = results['consumption'][0]['outdoors']
         reading = results['reading']
 
-        new_match = Match(username=match_form.name.data, name=match_form.name.data, image_uri=filename, \
+        # capitalize the first char of the username
+        username = match_form.data.title()
+
+        new_match = Match(username=username, name=match_form.name.data, image=filename, \
                           gender=match_form.gender.data, age=match_form.age.data, height=match_form.height.data, \
                           location=match_form.location.data, education=match_form.education.data, ethnicity=match_form.ethnicity.data, \
-                          religion=match_form.religion.data, bio=match_form.bio.data, practicality=match_form.practicality.data,\
-                          love=match_form.love.data, excitment=match_form.excitment.data, challenge=match_form.challenge.data, \
-                          closseness=match_form.closseness.data, structure=match_form.structure.data, live_music=match_form.live_music.data, \
-                          spare_moment_purchases=match_form.spare_moment_purchases.data, gym_member=match_form.gym_member.data, \
-                          outdoors=match_form.gym_member.data, volunteering=match_form.volunteering.data, \
-                          entreprenuer=match_form.entreprenuer.data, reading=match_form.reading.data \
+                          religion=match_form.religion.data, bio=match_form.bio.data, practicality=practicality,\
+                          love=love, excitment=excitment, challenge=challenge, \
+                          closeness=closeness, structure=structure, live_music=live_music, \
+                          spare_moment_purchases=spare_moment_purchases, gym_member=gym_member, \
+                          outdoors=outdoors, volunteering=volunteering, \
+                          entreprenuer=entreprenuer, reading=reading \
                     )
 
         db.session.add(new_match)
