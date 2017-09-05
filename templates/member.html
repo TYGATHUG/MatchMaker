@@ -5,7 +5,7 @@
     {% with messages=get_flashed_messages() %}
         {% if messages %}
             {% for message in messages %}
-                <div style="margin-top: 50px;">
+{#                <div style="margin-bottom: 100px !important;">#}
                     <script>
                         toastr.options = {
                             "closeButton": true,
@@ -27,7 +27,7 @@
                         }
                         toastr["success"]("Welcome {{ name }} !", "{{ message }}")
                     </script>
-                </div>
+{#                </div>#}
 
             {% endfor %}
         {% endif %}
@@ -52,12 +52,12 @@
 
                 <div id="chat" class="tabcontent">
                     <img src="../static/images/chat_demo.png" width="100%">
-                    <p>Need to figure out the format of chats with multiple users...</p>
+                    <p><b>Need to figure out the format of chats with multiple users...</b></p>
                 </div>
 
                 <div id="setting" class="tabcontent">
                     <img src="../static/images/settings_demo.jpg" width="100%">
-                    <p>Quick setting toggles will go here (Age/Gender Preference)</p>
+                    <p><b>Quick setting toggles will go here (Age/Gender Preference)</b></p>
                 </div>
 
                 <script>
