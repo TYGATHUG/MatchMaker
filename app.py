@@ -305,10 +305,12 @@ def register():
             new_user = User(username=register_form.username.data, email=register_form.email.data, password=hashed_password)
             db.session.add(new_user)
             db.session.commit()
+
+            login_user(new_user)
             flash("Registration Successful!")
             register_form.unique = True
             print ("HEREEEE")
-            return render_template('member.html')
+            return redirect(url_for('member'))
     else:
         hashed_password = generate_password_hash(register_form.password.data, method='sha256')
         new_user = User(username=register_form.username.data, email=register_form.email.data, password=hashed_password)
