@@ -24,8 +24,8 @@ from werkzeug.utils import secure_filename
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret'
 ###### get pwd function
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/bendiep/Github/MatchMaker/data/app.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/damontoumbourou/Code/match-maker/data/app.db'
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////' + os.path.join(basedir, 'data/app.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Database Properties
@@ -36,14 +36,13 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 # Upload Image Properties
-UPLOAD_FOLDER = "/static/images/profiles"
+UPLOAD_FOLDER = "./static/images/profiles"
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024
 
 def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 # ---------------------------------------------------------------------------------
 #   Classes
@@ -74,11 +73,12 @@ class RegisterForm(FlaskForm):
 
 
 class MatchForm(FlaskForm):
+    image = FileField('image', validators=[FileRequired(), FileAllowed(ALLOWED_EXTENSIONS)])
+
     name = StringField('name', validators=[InputRequired(), Length(min=1, max=20)])
     age = StringField('age', validators=[InputRequired(), Length(min=1, max=3)])
     gender = StringField('gender', validators=[InputRequired(), Length(min=1, max =10)])
 
-    # image = FileField('image', validators=[FileRequired(), FileAllowed(images, 'Images only!')])
     height = StringField('height', validators=[InputRequired(), Length(min=1, max=5)])
     location = StringField('location', validators=[InputRequired(), Length(min=1)])
 
@@ -122,14 +122,45 @@ class Match(db.Model):
     entreprenuer = db.Column(db.Integer())
     reading = db.Column(db.Integer())
 
-class UploadImage(FlaskForm):
-    image = FileField('image', validators=[FileRequired(), FileAllowed(ALLOWED_EXTENSIONS)])
-
-
 
 # ---------------------------------------------------------------------------------
 #   Page Routes
 # -------------------------------------------------------------------------------*/
+@app.route('/upload', methods=['GET', 'POST'])
+def upload_file():
+
+    if request.method == 'POST':
+
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+
+        # if user does not select file, browser also
+        # submit a empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            print "Filename: " + filename
+            print "Filepath: " + UPLOAD_FOLDER + "/" + filename
+            return redirect(url_for('upload_file', filename=filename))
+
+    return '''
+        <!doctype html>
+        <title>Upload new File</title>
+        <h1>Upload new File</h1>
+        <form method=post enctype=multipart/form-data>
+          <p><input type=file name=file>
+             <input type=submit value=Upload>
+        </form>
+        '''
+
+
 @app.route('/', methods=['GET', 'POST'])
 def home():
     register_form = RegisterForm()
@@ -155,6 +186,10 @@ def member():
 @login_required
 def profile():
     match_form = MatchForm()
+
+    """
+    personality = api.MatchAPI().get_personality('test')
+    """
 
     user = current_user.username
     get_personality = api.MatchAPI()
@@ -194,8 +229,6 @@ def profile():
         """
 
         return redirect(url_for('member'))
-
-
 
     return render_template('profile.html', name=current_user.username, match_form=match_form)
 
