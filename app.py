@@ -102,7 +102,8 @@ class RegisterForm(FlaskForm):
     email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), Length(min=3, max=50)])
     username = StringField('username', validators=[InputRequired(), Length(min=3, max=15)])
     password = PasswordField('password', validators=[InputRequired(), Length(min=4, max=80)])
-    unique = BooleanField('unique')
+    unique_user = BooleanField('unique_user')
+    unique_email = BooleanField('unique_email')
 
 
 class MatchForm(FlaskForm):
@@ -440,7 +441,7 @@ def register():
     register_form = RegisterForm()
 
     user = User.query.filter_by(username=register_form.username.data).first()
-    email = User.query.filter_by(email=register_form.email.data).first()
+    email = User.query.filter_by(email=register_form.email.data.lower()).first()
     print user
     if not user:
         if not email:
@@ -453,18 +454,17 @@ def register():
 
                 login_user(new_user)
                 flash("Registration Successful !")
-                register_form.unique = True
+                register_form.unique_user = True
+                register_form.unique_email = True
                 return redirect(url_for('member'))
 
-        # else:
-        #     register_form = list(register_form)
-        #     register_form.append('Email already registered')
-        #     register_form = tuple(register_form)
+        else:
+            register_form.unique_email = False
 
     else:
         hashed_password = generate_password_hash(register_form.password.data, method='sha256')
         new_user = User(username=register_form.username.data, email=register_form.email.data, password=hashed_password)
-        register_form.unique = False
+        register_form.unique_user = False
 
     previous_route = str(request.referrer.split("/", 2)[2].split('/')[1]) + ".html"
     if previous_route == ".html":
