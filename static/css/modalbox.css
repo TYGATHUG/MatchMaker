@@ -152,4 +152,5 @@ div.tab button.active {
     border: 1px solid #ccc;
     border-top: none;
     min-height: 600px;
+    background: #ffffff;
 }
