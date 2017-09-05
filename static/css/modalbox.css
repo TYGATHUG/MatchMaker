@@ -107,4 +107,5 @@
 
 #imageUpload-btn:hover {
     background-color: #DDDDDD;
+    cursor: pointer;
 }
