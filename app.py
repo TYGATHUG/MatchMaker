@@ -24,8 +24,8 @@ from werkzeug.utils import secure_filename
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret'
 ###### get pwd function
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/bendiep/Github/MatchMaker/data/app.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/damontoumbourou/Code/match-maker/data/app.db'
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////' + os.path.join(basedir, 'data/app.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Database Properties
@@ -73,11 +73,12 @@ class RegisterForm(FlaskForm):
 
 
 class MatchForm(FlaskForm):
+    image = FileField('image', validators=[FileRequired(), FileAllowed(ALLOWED_EXTENSIONS)])
+
     name = StringField('name', validators=[InputRequired(), Length(min=1, max=20)])
     age = StringField('age', validators=[InputRequired(), Length(min=1, max=3)])
     gender = StringField('gender', validators=[InputRequired(), Length(min=1, max =10)])
 
-    # image = FileField('image', validators=[FileRequired(), FileAllowed(images, 'Images only!')])
     height = StringField('height', validators=[InputRequired(), Length(min=1, max=5)])
     location = StringField('location', validators=[InputRequired(), Length(min=1)])
 
@@ -120,10 +121,6 @@ class Match(db.Model):
     volunteering = db.Column(db.Integer())
     entreprenuer = db.Column(db.Integer())
     reading = db.Column(db.Integer())
-
-class UploadImage(FlaskForm):
-    image = FileField('image', validators=[FileRequired(), FileAllowed(ALLOWED_EXTENSIONS)])
-
 
 
 # ---------------------------------------------------------------------------------
@@ -189,7 +186,7 @@ def member():
 @login_required
 def profile():
     match_form = MatchForm()
-    upload_image = UploadImage()
+
     """
     personality = api.MatchAPI().get_personality('test')
     """
