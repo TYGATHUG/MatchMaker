@@ -266,7 +266,7 @@ def member():
                         {'name': user.name},
                         {'image': user.image},
                         {'age': user.age},
-                        {'bio': user.name}
+                        {'bio': user.bio}
                     ])
 
                     print user.image
