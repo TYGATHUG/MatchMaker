@@ -272,7 +272,7 @@ def login():
         if user:
             if check_password_hash(user.password, login_form.password.data):
                 login_user(user, remember=login_form.remember.data)
-                flash("Login Successful!")
+                flash("Login Successful !")
                 return redirect(url_for('member'))
 
     previous_route = str(request.referrer.split("/", 2)[2].split('/')[1]) + ".html"
@@ -306,7 +306,7 @@ def register():
             db.session.commit()
 
             login_user(new_user)
-            flash("Registration Successful!")
+            flash("Registration Successful !")
             register_form.unique = True
             return redirect(url_for('member'))
     
