@@ -21,7 +21,7 @@
 
 
                 <!-- Start of MatchForm -->
-                <form role="form" method="POST" action="/profile">
+                <form role="form" method="POST" action="/profile" enctype="multipart/form-data">
 
                     {{ match_form.hidden_tag() }}
                     <div id="profile-form-modal-1">
@@ -172,8 +172,8 @@
                         </div>
 
                         <div class="form-single-input">
-                            <div class="form-group col_1_of_1">
-                                <button type="submit" class="btn btn-default" style="margin-bottom: 100px;">Submit</button>
+                            <div class="form-group col_1_of_1" style="margin-bottom: 100px;">
+                                <button type="submit" class="btn btn-default">Submit</button>
                             </div>
                         </div>
                     </div>
