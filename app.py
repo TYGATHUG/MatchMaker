@@ -144,7 +144,6 @@ def home():
 @app.route('/member')
 @login_required
 def member():
-
     return render_template('member.html', name=current_user.username)
 
 

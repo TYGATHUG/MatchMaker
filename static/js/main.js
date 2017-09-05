@@ -179,16 +179,4 @@ $(document).ready(function() {
         }
     };
 	$(window).onload=loadModalAnimation();
-
-
-    // Upload Image Button
-    function displayFilename() {
-        alert("Hello");
-    }
-
-    $('#image-file-name').val().onchan = function () {
-        // alert('Selected file: ' + this.value);
-        alert("You Did It");
-
-    }
 });
