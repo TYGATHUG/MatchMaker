@@ -12,55 +12,58 @@
         {% endif %}
     {% endwith %}
 
-    <!-- services section -->
-    <section id="services" class="services service-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 col-sm-6 services"><span class="icon icon-strategy"></span>
-                    <div class="services-content">
-                        <h5>Strategy & Consulting</h5>
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna
-                            mollis ornare vel eu leo. Donec ullamcorper nulla non metus auctor fringilla.</p>
-                    </div>
+    <section id="intro" class="section intro no-padding">
+        <div class="container-fluid">
+            <blockquote class="site-info">
+                <h1>Home</h1>
+
+
+                <div class="tab">
+                    <button class="tablinks" onclick="openCity(event, 'match')" id="defaultOpen">Match</button>
+                    <button class="tablinks" onclick="openCity(event, 'chat')">Chat</button>
+                    <button class="tablinks" onclick="openCity(event, 'setting')">Settings</button>
                 </div>
-                <div class="col-md-4 col-sm-6 services"><span class="icon icon-briefcase"></span>
-                    <div class="services-content">
-                        <h5>corporate identity</h5>
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna
-                            mollis ornare vel eu leo. Donec ullamcorper nulla non metus auctor fringilla.</p>
-                    </div>
+
+                <div id="match" class="tabcontent">
+                    <h3>Match</h3>
+                    <p>Match Content Goes here (Picture/Like/Dislike)</p>
+                    <p>Need a expand div here to show matches profile</p>
                 </div>
-                <div class="col-md-4 col-sm-6 services"><span class="icon icon-tools"></span>
-                    <div class="services-content">
-                        <h5>web design and development</h5>
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna
-                            mollis ornare vel eu leo. Donec ullamcorper nulla non metus auctor fringilla.</p>
-                    </div>
+
+                <div id="chat" class="tabcontent">
+                    <h3>Chat</h3>
+                    <p>Need to figure out the format of chats with multiple users...</p>
                 </div>
-                <div class="col-md-4 col-sm-6 services"><span class="icon icon-genius"></span>
-                    <div class="services-content">
-                        <h5>Branding</h5>
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna
-                            mollis ornare vel eu leo. Donec ullamcorper nulla non metus auctor fringilla.</p>
-                    </div>
+
+                <div id="setting" class="tabcontent">
+                    <h3>Settings</h3>
+                    <p>Quick setting toggles will go here (Age/Gender Preference)</p>
                 </div>
-                <div class="col-md-4 col-sm-6 services"><span class="icon icon-megaphone"></span>
-                    <div class="services-content">
-                        <h5>Digital marketing</h5>
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna
-                            mollis ornare vel eu leo. Donec ullamcorper nulla non metus auctor fringilla.</p>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6 services"><span class="icon icon-trophy"></span>
-                    <div class="services-content">
-                        <h5>Promotion material</h5>
-                        <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nullam quis risus eget urna
-                            mollis ornare vel eu leo. Donec ullamcorper nulla non metus auctor fringilla.</p>
-                    </div>
-                </div>
-            </div>
+
+                <script>
+                    function openCity(evt, pageName) {
+                        var i, tabcontent, tablinks;
+                        tabcontent = document.getElementsByClassName("tabcontent");
+                        for (i = 0; i < tabcontent.length; i++) {
+                            tabcontent[i].style.display = "none";
+                        }
+                        tablinks = document.getElementsByClassName("tablinks");
+                        for (i = 0; i < tablinks.length; i++) {
+                            tablinks[i].className = tablinks[i].className.replace(" active", "");
+                        }
+                        document.getElementById(pageName).style.display = "block";
+                        evt.currentTarget.className += " active";
+                    }
+
+                    // Get the element with id="defaultOpen" and click on it
+                    document.getElementById("defaultOpen").click();
+                </script>
+
+
+                <br><br><br><br>
+            </blockquote>
         </div>
     </section>
-    <!-- services section -->
+
 
 {% endblock %}
