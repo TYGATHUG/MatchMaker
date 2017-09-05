@@ -2,32 +2,33 @@
 
 {% block body %}
 
-    {#    <h2>Welcome {{ name }}</h2>#}
-
     {% with messages=get_flashed_messages() %}
         {% if messages %}
             {% for message in messages %}
-                <script>
-                    toastr.options = {
-                        "closeButton": true,
-                        "debug": false,
-                        "newestOnTop": false,
-                        "progressBar": true,
-                        "positionClass": "toast-top-center",
-                        "preventDuplicates": true,
-                        "onclick": null,
-                        "showDuration": "2000",
-                        "hideDuration": "2000",
-                        "timeOut": "2500",
-                        "extendedTimeOut": "1000",
-                        "showEasing": "swing",
-                        "hideEasing": "linear",
-                        "showMethod": "fadeIn",
-                        "hideMethod": "fadeOut",
-                        "closeMethod": "fadeOut"
-                    }
-                    toastr["success"](" ", "{{ message }}")
-                </script>
+{#                <div style="margin-bottom: 100px !important;">#}
+                    <script>
+                        toastr.options = {
+                            "closeButton": true,
+                            "debug": false,
+                            "newestOnTop": false,
+                            "progressBar": true,
+                            "positionClass": "toast-top-center",
+                            "preventDuplicates": true,
+                            "onclick": null,
+                            "showDuration": "2000",
+                            "hideDuration": "2000",
+                            "timeOut": "2500",
+                            "extendedTimeOut": "1000",
+                            "showEasing": "swing",
+                            "hideEasing": "linear",
+                            "showMethod": "fadeIn",
+                            "hideMethod": "fadeOut",
+                            "closeMethod": "fadeOut"
+                        }
+                        toastr["success"]("Welcome {{ name }} !", "{{ message }}")
+                    </script>
+{#                </div>#}
+
             {% endfor %}
         {% endif %}
     {% endwith %}
@@ -51,12 +52,12 @@
 
                 <div id="chat" class="tabcontent">
                     <img src="../static/images/chat_demo.png" width="100%">
-                    <p>Need to figure out the format of chats with multiple users...</p>
+                    <p><b>Need to figure out the format of chats with multiple users...</b></p>
                 </div>
 
                 <div id="setting" class="tabcontent">
                     <img src="../static/images/settings_demo.jpg" width="100%">
-                    <p>Quick setting toggles will go here (Age/Gender Preference)</p>
+                    <p><b>Quick setting toggles will go here (Age/Gender Preference)</b></p>
                 </div>
 
                 <script>
