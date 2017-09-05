@@ -177,7 +177,7 @@ def profile():
         practicality = results['needs'][0]['practicality']
         love = results['needs'][0]['love']
         excitment = results['needs'][0]['excitment']
-        
+
         print practicality
 
 
