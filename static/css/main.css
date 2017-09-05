@@ -130,6 +130,7 @@ ul li {
 
 #header .logo {
     float: left;
+    padding-top: 2.5px;
 }
 
 #header.fixed {
@@ -138,7 +139,8 @@ ul li {
 
 #header.fixed .header-content {
     border-bottom: 0;
-    padding: 25px 0;
+    /*padding: 25px 0;*/
+    padding: 10px 0 19px 0;
 }
 
 #header.fixed .nav-toggle {
@@ -166,7 +168,6 @@ ul li {
     color: rgba(255, 255, 255, 0.75);
     font-size: 13px;
     font-weight: 400;
-    margin-left: 40px;
     letter-spacing: 3px;
     text-transform: uppercase;
 }
@@ -770,6 +771,6 @@ textarea:hover {
 #welcome-content {
     display: block;
     position: relative;
-    top: -80px;
+    top: -62px;
     visibility: hidden;
 }

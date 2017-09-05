@@ -9,6 +9,8 @@
             <p class="modal-closes"><span id="register-close">&times;</span></p>
             <header class="header">Register</header>
             <form action="/register" method="post" id="form" class="topBefore">
+
+                <!-- Display registration form errors -->
                 {% if register_form.errors %}
                     <script>
                         document.getElementById('register-modal').style.display = "block";
@@ -23,13 +25,25 @@
                         <br>
                     </ul>
                 {% endif %}
-                {% if register_form.unique == False %}
+                <!-- End display registration form errors-->
+
+                {% if register_form.unique_user == False %}
                     <script>
                         document.getElementById('register-modal').style.display = "block";
                     </script>
 
                     <ul class="errors">
                         <li style="color: #e84545;"><b>username</b>: already exists</li>
+                    </ul>
+                    <br>
+                {% endif %}
+                {% if register_form.unique_email == False %}
+                    <script>
+                        document.getElementById('register-modal').style.display = "block";
+                    </script>
+
+                    <ul class="errors">
+                        <li style="color: #e84545;"><b>email</b>: already exists</li>
                     </ul>
                     <br>
                 {% endif %}
@@ -76,83 +90,67 @@
 
     <section id="intro" class="section intro no-padding">
         <div class="container-fluid">
-            <blockquote class="site-info">
+            <blockquote class="site-info" style="max-width: 1200px !important;">
                 <h1>About Us</h1>
                 <p class="sub-heading">
                     "We started from the bottom and now we here."
                 </p>
-                <br><br>
+
+                <!-- profile section -->
+                <section id="teams" class="section teams">
+                    <div class="container">
+                        <p></p>
+                        <div class="row">
+                            <!-- team member 1 -->
+                            <div class="col-md-4 col-sm-8">
+                                <div class="person"><img src="../../static/images/ben.jpg" alt=""
+                                                         class="img-responsive">
+                                    <div class="person-content">
+                                        <h4>Ben Diep</h4>
+                                        <h5 class="role">Scrum Master<br><br>Project Team</h5>
+                                        <p>
+                                            <b>s3462344@student.rmit.edu</b>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- team member 1 -->
+                            <!-- team member 2 -->
+                            <div class="col-md-4 col-sm-8">
+                                <div class="person"><img src="../../static/images/damon.jpg" alt=""
+                                                         class="img-responsive">
+                                    <div class="person-content">
+                                        <h4>Damon Toumbourou</h4>
+                                        <h5 class="role">Lead Developer<br><br>Project Team</h5>
+                                        <p>
+                                            <b>s3019592@student.rmit.edu.au</b>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- team member 2 -->
+                            <!-- team member 3 -->
+                            <div class="col-md-4 col-sm-8">
+                                <div class="person"><img src="../../static/images/alex.jpg" alt=""
+                                                         class="img-responsive">
+                                    <div class="person-content">
+                                        <h4>Alex Cheong</h4>
+                                        <h5 class="role">Project Leader<br><br>Project Team</h5>
+                                        <p>
+                                            <b>s3436036@student.rmit.edu.au</b>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- team member 1 -->
+                        </div>
+                        <br><br><br><br>
+                    </div>
+                </section>
+                <!-- profile section -->
             </blockquote>
         </div>
     </section>
-    <!-- profile section -->
-    <section id="teams" class="section teams">
-        <div class="container">
-            <p></p>
-            <div class="row">
-                <!-- team member 1 -->
-                <div class="col-md-4 col-sm-8">
-                    <div class="person"><img src="../../static/images/ben.jpg" alt="" class="img-responsive">
-                        <div class="person-content">
-                            <h4>Ben Diep</h4>
-                            <h5 class="role">Scrum Master<br><br>Project Team</h5>
-                            <p>
-                                s3462344@student.rmit.edu
-                        </div>
-                        <ul class="social-icons clearfix">
-                            <li><a href="#"><span class="fa fa-facebook"></span></a></li>
-                            <li><a href="#"><span class="fa fa-twitter"></span></a></li>
-                            <li><a href="#"><span class="fa fa-linkedin"></span></a></li>
-                            <li><a href="#"><span class="fa fa-google-plus"></span></a></li>
-                            <li><a href="#"><span class="fa fa-dribbble"></span></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- team member 1 -->
-                <!-- team member 2 -->
-                <div class="col-md-4 col-sm-8">
-                    <div class="person"><img src="../../static/images/damon.jpg" alt="" class="img-responsive">
-                        <div class="person-content">
-                            <h4>Damon Toumbourou</h4>
-                            <h5 class="role">Lead Developer<br><br>Project Team</h5>
-                            <p>
-                                s3019592@student.rmit.edu.au
-                            </p>
-                        </div>
-                        <ul class="social-icons clearfix">
-                            <li><a href="#" class=""><span class="fa fa-facebook"></span></a></li>
-                            <li><a href="#" class=""><span class="fa fa-twitter"></span></a></li>
-                            <li><a href="#" class=""><span class="fa fa-linkedin"></span></a></li>
-                            <li><a href="#" class=""><span class="fa fa-google-plus"></span></a></li>
-                            <li><a href="#" class=""><span class="fa fa-dribbble"></span></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- team member 2 -->
-                <!-- team member 3 -->
-                <div class="col-md-4 col-sm-8">
-                    <div class="person"><img src="../../static/images/alex.jpg" alt="" class="img-responsive">
-                        <div class="person-content">
-                            <h4>Alex Cheong</h4>
-                            <h5 class="role">Project Leader<br><br>Project Team</h5>
-                            <p>
-                                s3436036@student.rmit.edu.au
-                            </p>
-                        </div>
-                        <ul class="social-icons clearfix">
-                            <li><a href="#" class=""><span class="fa fa-facebook"></span></a></li>
-                            <li><a href="#" class=""><span class="fa fa-twitter"></span></a></li>
-                            <li><a href="#" class=""><span class="fa fa-linkedin"></span></a></li>
-                            <li><a href="#" class=""><span class="fa fa-google-plus"></span></a></li>
-                            <li><a href="#" class=""><span class="fa fa-dribbble"></span></a></li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- team member 1 -->
-            </div>
-            <br><br><br><br>
-        </div>
-    </section>
-    <!-- profile section -->
+
 
 {% endblock %}

@@ -9,6 +9,8 @@
             <p class="modal-closes"><span id="register-close">&times;</span></p>
             <header class="header">Register</header>
             <form action="/register" method="post" id="form" class="topBefore">
+
+                <!-- Display registration form errors -->
                 {% if register_form.errors %}
                     <script>
                         document.getElementById('register-modal').style.display = "block";
@@ -23,13 +25,25 @@
                         <br>
                     </ul>
                 {% endif %}
-                {% if register_form.unique == False %}
+                <!-- End display registration form errors-->
+
+                {% if register_form.unique_user == False %}
                     <script>
                         document.getElementById('register-modal').style.display = "block";
                     </script>
 
                     <ul class="errors">
                         <li style="color: #e84545;"><b>username</b>: already exists</li>
+                    </ul>
+                    <br>
+                {% endif %}
+                {% if register_form.unique_email == False %}
+                    <script>
+                        document.getElementById('register-modal').style.display = "block";
+                    </script>
+
+                    <ul class="errors">
+                        <li style="color: #e84545;"><b>email</b>: already exists</li>
                     </ul>
                     <br>
                 {% endif %}

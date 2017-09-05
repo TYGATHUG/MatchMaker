@@ -130,6 +130,7 @@ ul li {
 
 #header .logo {
     float: left;
+    padding-top: 2.5px;
 }
 
 #header.fixed {
@@ -138,7 +139,8 @@ ul li {
 
 #header.fixed .header-content {
     border-bottom: 0;
-    padding: 25px 0;
+    /*padding: 25px 0;*/
+    padding: 10px 0 19px 0;
 }
 
 #header.fixed .nav-toggle {
@@ -166,7 +168,6 @@ ul li {
     color: rgba(255, 255, 255, 0.75);
     font-size: 13px;
     font-weight: 400;
-    margin-left: 40px;
     letter-spacing: 3px;
     text-transform: uppercase;
 }
@@ -325,6 +326,7 @@ ul li {
     transform: translateY(0) rotate(-45deg);
 }
 
+
 /* ------------------------------------------------------------------------------
 	 Banner
 -------------------------------------------------------------------------------*/
@@ -336,7 +338,7 @@ ul li {
     -o-background-size: cover;
     -webkit-background-size: cover;
     background-size: cover;
-    min-height: 81px;
+    min-height: 40px;
     background-color: rgba(0, 0, 0, 1);
 }
 
@@ -743,7 +745,7 @@ textarea:hover {
     width: 470px;
     padding: 0;
     margin: -5px 0px 0px 0px;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Oxygen', sans-serif;
     font-size: 1em;
     color: rgba(49, 41, 43, 1);
     outline: none;
@@ -751,12 +753,15 @@ textarea:hover {
     border: solid 1px #e84545;
     border-top: solid 1px #6c7279;
     letter-spacing: 1px;
-    background: #e84545;
+    background: #f14444 !important;
+    color: #fff;
+    font-weight: bold !important;
 }
 
 #submit:hover {
-    background: #f14444;
+    background: #3D3D3D !important;
     color: #fff;
+    border: 1px solid #3D3D3D !important;
 }
 
 /* ------------------------------------------------------------------------------
@@ -768,6 +773,7 @@ textarea:hover {
     margin: 0 auto !important;
     position: relative !important;
     align-content: center !important;
+    padding: 75px !important;
 }
 
 .site-info h1 {
@@ -782,4 +788,12 @@ textarea:hover {
 
 .site-info p {
     color: rgba(0, 0, 0, 1) !important;
+}
+
+blockquote.site-info {
+    max-width: 1024px;
+}
+
+div.container-fluid {
+    background-image: url(../images/Elegant_Background-7.jpg);
 }

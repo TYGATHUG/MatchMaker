@@ -5,12 +5,11 @@
     {% with messages=get_flashed_messages() %}
         {% if messages %}
             {% for message in messages %}
-{#                <div style="margin-bottom: 100px !important;">#}
                     <script>
                         toastr.options = {
                             "closeButton": true,
                             "debug": false,
-                            "newestOnTop": false,
+                            "newestOnTop": true,
                             "progressBar": true,
                             "positionClass": "toast-top-center",
                             "preventDuplicates": true,
@@ -27,8 +26,6 @@
                         }
                         toastr["success"]("Welcome {{ name }} !", "{{ message }}")
                     </script>
-{#                </div>#}
-
             {% endfor %}
         {% endif %}
     {% endwith %}
@@ -37,7 +34,7 @@
         <div class="container-fluid">
             <blockquote class="site-info">
                 <h1>Home</h1>
-
+                <br><br>
 
                 <div class="tab">
                     <button class="tablinks" onclick="openCity(event, 'match')" id="defaultOpen">Match</button>
@@ -48,6 +45,13 @@
                 <div id="match" class="tabcontent">
                     <img src="../static/images/match_demo.png" width="100%">
                     <p><b>Need to add expand div here to show matches profile</b></p>
+
+                    <h1>user</h1>
+                    {% for user in highest_match_users %}
+                        {{ user }}
+                    {% endfor %}
+
+
                 </div>
 
                 <div id="chat" class="tabcontent">
@@ -59,6 +63,7 @@
                     <img src="../static/images/settings_demo.jpg" width="100%">
                     <p><b>Quick setting toggles will go here (Age/Gender Preference)</b></p>
                 </div>
+
 
                 <script>
                     // Content Area
@@ -79,13 +84,9 @@
                     // Get the element with id="defaultOpen" and click on it
                     document.getElementById("defaultOpen").click();
                 </script>
+
                 <br><br><br><br>
             </blockquote>
-            <h1>user</h1>
-                {% for user in highest_match_users %}
-                    {{ user }}
-                {% endfor %}
-
         </div>
     </section>
 
