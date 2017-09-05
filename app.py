@@ -431,7 +431,6 @@ def login():
     else:
         globals()['PREVIOUS_SAVED_ROUTE'] = previous_route
 
-    print "here"
     return render_template(previous_route, register_form=register_form, login_form=login_form)
 
 
