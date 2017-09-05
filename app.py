@@ -234,29 +234,29 @@ def member():
             print '\n'
 
 
-    # get the number of fields that match for each user
-    up = 0
-    down = 1000
-    for match in matched_users:
-        num_match = len(matched_users[match])
-        matched_users[match].append({'num_match': num_match} )
-        if num_match > up:
-            up = num_match
-        if num_match < down:
-            down = num_match
+        # get the number of fields that match for each user
+        up = 0
+        down = 1000
+        for match in matched_users:
+            num_match = len(matched_users[match])
+            matched_users[match].append({'num_match': num_match} )
+            if num_match > up:
+                up = num_match
+            if num_match < down:
+                down = num_match
 
-    # return the highest matched users
-    highest_match_users = []
-    for match in matched_users:
-        for data in matched_users[match]:
-            try:
-                if data['num_match'] == up:
-                    highest_match_users.append(matched_users[match])
+        # return the highest matched users
+        highest_match_users = []
+        for match in matched_users:
+            for data in matched_users[match]:
+                try:
+                    if data['num_match'] == up:
+                        highest_match_users.append(matched_users[match])
 
-            except:
-                nothing = ""
+                except:
+                    nothing = ""
 
-    print highest_match_users
+        print highest_match_users
 
     return render_template('member.html', name=current_user.username, highest_match_users=highest_match_users)
 
