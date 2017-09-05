@@ -16,7 +16,6 @@ import api
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 
-
 # ---------------------------------------------------------------------------------
 #   Initialisation / Settings
 # -------------------------------------------------------------------------------*/
@@ -41,6 +40,7 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024
 
+
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -58,6 +58,7 @@ class User(UserMixin, db.Model):
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
 
 class Match(db.Model):
     __tablename__ = 'Match'
@@ -108,7 +109,7 @@ class MatchForm(FlaskForm):
     image = FileField('image', validators=[FileRequired(), FileAllowed(ALLOWED_EXTENSIONS)])
     name = StringField('name', validators=[InputRequired(), Length(min=1, max=20)])
     age = StringField('age', validators=[InputRequired(), Length(min=1, max=3)])
-    gender = StringField('gender', validators=[InputRequired(), Length(min=1, max =10)])
+    gender = StringField('gender', validators=[InputRequired(), Length(min=1, max=10)])
     height = StringField('height', validators=[InputRequired(), Length(min=1, max=5)])
     location = StringField('location', validators=[InputRequired(), Length(min=1)])
     education = StringField('education', validators=[InputRequired(), Length(min=1, max=20)])
@@ -123,7 +124,6 @@ class MatchForm(FlaskForm):
     q6 = StringField('q6', validators=[InputRequired(), Length(min=15, max=255)])
     q7 = StringField('q7', validators=[InputRequired(), Length(min=15, max=255)])
     q8 = StringField('q8', validators=[InputRequired(), Length(min=15, max=255)])
-
 
 
 # ---------------------------------------------------------------------------------
@@ -145,8 +145,8 @@ def home():
 @app.route('/member')
 @login_required
 def member():
-    #user = User.query.filter_by(username=login_form.username.data).first()
-
+    # user = User.query.filter_by(username=login_form.username.data).first()
+    highest_match_users = ''
     # current user data
     matched_users = ""
     highest_match_users = ""
@@ -168,14 +168,13 @@ def member():
             username = user.username
             matched_users.update({user.username: []})
 
-
         for user in users:
 
             up = user.practicality + 10
             down = user.practicality - 10
             if not curr_user.practicality > up:
                 if not curr_user.practicality < down:
-                    matched_users[user.username].append({'practicality': user.practicality} )
+                    matched_users[user.username].append({'practicality': user.practicality})
                     print "!!!!Match prac: "
                     print curr_user.practicality
                     print user.practicality
@@ -185,7 +184,7 @@ def member():
             down = user.love - 10
             if not curr_user.love > up:
                 if not curr_user.love < down:
-                    matched_users[user.username].append({'love': user.love} )
+                    matched_users[user.username].append({'love': user.love})
                     print "!!!!Match love: "
                     print curr_user.love
                     print user.love
@@ -195,7 +194,7 @@ def member():
             down = user.excitment - 10
             if not curr_user.excitment > up:
                 if not curr_user.excitment < down:
-                    matched_users[user.username].append({'excitment': user.excitment} )
+                    matched_users[user.username].append({'excitment': user.excitment})
                     print "!!!!Match exc: "
                     print curr_user.excitment
                     print user.excitment
@@ -231,16 +230,14 @@ def member():
                     print user.live_music
                     print '\n'
 
-
             print '\n'
-
 
         # get the number of fields that match for each user
         up = 0
         down = 1000
         for match in matched_users:
             num_match = len(matched_users[match])
-            matched_users[match].append({'num_match': num_match} )
+            matched_users[match].append({'num_match': num_match})
             if num_match > up:
                 up = num_match
             if num_match < down:
@@ -345,14 +342,15 @@ def profile():
 
         new_match = Match(username=username, name=match_form.name.data, image=filename, \
                           gender=match_form.gender.data, age=match_form.age.data, height=match_form.height.data, \
-                          location=match_form.location.data, education=match_form.education.data, ethnicity=match_form.ethnicity.data, \
-                          religion=match_form.religion.data, bio=match_form.bio.data, practicality=practicality,\
+                          location=match_form.location.data, education=match_form.education.data,
+                          ethnicity=match_form.ethnicity.data, \
+                          religion=match_form.religion.data, bio=match_form.bio.data, practicality=practicality, \
                           love=love, excitment=excitment, challenge=challenge, \
                           closeness=closeness, structure=structure, live_music=live_music, \
                           spare_moment_purchases=spare_moment_purchases, gym_member=gym_member, \
                           outdoors=outdoors, volunteering=volunteering, \
                           entreprenuer=entreprenuer, reading=reading \
-                    )
+                          )
 
         db.session.add(new_match)
         db.session.commit()
@@ -400,6 +398,7 @@ def about():
 # Global Variables
 PREVIOUS_SAVED_ROUTE = "welcome.html"
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     login_form = LoginForm()
@@ -413,6 +412,11 @@ def login():
                 login_user(user, remember=login_form.remember.data)
                 flash("Login Successful !")
                 return redirect(url_for('member'))
+            else:
+                login_form.password.errors.append('Incorrect Password')
+        else:
+            login_form.username.errors.append('Invalid Username')
+
 
     previous_route = str(request.referrer.split("/", 2)[2].split('/')[1]) + ".html"
 
@@ -427,6 +431,7 @@ def login():
     else:
         globals()['PREVIOUS_SAVED_ROUTE'] = previous_route
 
+    print "here"
     return render_template(previous_route, register_form=register_form, login_form=login_form)
 
 
@@ -435,26 +440,34 @@ def register():
     login_form = LoginForm()
     register_form = RegisterForm()
 
-    user = User.query.filter_by(username=login_form.username.data).first()
+    user = User.query.filter_by(username=register_form.username.data).first()
+    email = User.query.filter_by(email=register_form.email.data).first()
     print user
     if not user:
-        if register_form.validate_on_submit():
-            hashed_password = generate_password_hash(register_form.password.data, method='sha256')
-            new_user = User(username=register_form.username.data, email=register_form.email.data, password=hashed_password)
-            db.session.add(new_user)
-            db.session.commit()
+        if not email:
+            if register_form.validate_on_submit():
+                hashed_password = generate_password_hash(register_form.password.data, method='sha256')
+                new_user = User(username=register_form.username.data, email=register_form.email.data,
+                                password=hashed_password)
+                db.session.add(new_user)
+                db.session.commit()
 
-            login_user(new_user)
-            flash("Registration Successful !")
-            register_form.unique = True
-            return redirect(url_for('member'))
-    
+                login_user(new_user)
+                flash("Registration Successful !")
+                register_form.unique = True
+                return redirect(url_for('member'))
+
+        # else:
+        #     register_form = list(register_form)
+        #     register_form.append('Email already registered')
+        #     register_form = tuple(register_form)
+
     else:
         hashed_password = generate_password_hash(register_form.password.data, method='sha256')
         new_user = User(username=register_form.username.data, email=register_form.email.data, password=hashed_password)
         register_form.unique = False
 
-    previous_route = str(request.referrer.split("/",2)[2].split('/')[1]) + ".html"
+    previous_route = str(request.referrer.split("/", 2)[2].split('/')[1]) + ".html"
     if previous_route == ".html":
         previous_route = PREVIOUS_SAVED_ROUTE
     elif previous_route == "#.html":
