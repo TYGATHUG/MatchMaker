@@ -473,7 +473,7 @@ def register():
     register_form = RegisterForm()
 
     user = User.query.filter_by(username=register_form.username.data).first()
-    email = User.query.filter_by(email=register_form.email.data.lower()).first()
+    email = User.query.filter_by(email=register_form.email.data).first()
     print user
     if not user:
         if not email:
