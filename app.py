@@ -49,6 +49,7 @@ def allowed_file(filename):
 #   Classes Databases
 # -------------------------------------------------------------------------------*/
 class User(UserMixin, db.Model):
+    __tablename__ = 'User'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(15), unique=True)
     email = db.Column(db.String(50), unique=True)
@@ -63,6 +64,7 @@ def load_user(user_id):
 class Match(db.Model):
     __tablename__ = 'Match'
     username = db.Column(db.String(15), primary_key=True, unique=True)
+    setup = db.Column(db.Boolean())
     view_count = db.Column(db.Integer())
     image = db.Column(db.String(120))
     name = db.Column(db.String(20))
