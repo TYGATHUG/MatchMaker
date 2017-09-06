@@ -54,6 +54,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(15), unique=True)
     email = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(80))
+    setup = db.Column(db.Boolean())
 
 
 @login_manager.user_loader
@@ -64,7 +65,6 @@ def load_user(user_id):
 class Match(db.Model):
     __tablename__ = 'Match'
     username = db.Column(db.String(15), primary_key=True, unique=True)
-    setup = db.Column(db.Boolean())
     view_count = db.Column(db.Integer())
     image = db.Column(db.String(120))
     name = db.Column(db.String(20))
@@ -475,15 +475,15 @@ def register():
     register_form = RegisterForm()
 
     user = User.query.filter_by(username=register_form.username.data).first()
-    email = User.query.filter_by(email=register_form.email.data).first()
-    # email = User.query.filter_by(email=register_form.email.data).lower().first()
+    # email = User.query.filter_by(email=register_form.email.data).first()
+    email = User.query.filter_by(email=register_form.email.data.lower()).first()
     print user
     if not user:
         if not email:
             if register_form.validate_on_submit():
                 hashed_password = generate_password_hash(register_form.password.data, method='sha256')
                 new_user = User(username=register_form.username.data, email=register_form.email.data,
-                                password=hashed_password)
+                                password=hashed_password, setup=False)
                 db.session.add(new_user)
                 db.session.commit()
 
