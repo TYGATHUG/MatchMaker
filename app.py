@@ -125,6 +125,7 @@ class MatchForm(FlaskForm):
     q6 = StringField('q6', validators=[InputRequired(), Length(min=15, max=255)])
     q7 = StringField('q7', validators=[InputRequired(), Length(min=15, max=255)])
     q8 = StringField('q8', validators=[InputRequired(), Length(min=15, max=255)])
+    setup = BooleanField()
 
 
 # ---------------------------------------------------------------------------------
@@ -282,6 +283,7 @@ def member():
 @login_required
 def profile():
     match_form = MatchForm()
+
     # instatiate API for getting Watson data
     personality_results = api.MatchAPI()
 
@@ -339,9 +341,7 @@ def profile():
         outdoors = results['consumption'][0]['outdoors']
         reading = results['reading']
 
-        # capitalize the first char of the username
         username = current_user.username
-
         new_match = Match(username=username, view_count=0, name=match_form.name.data, image=filename, \
                           gender=match_form.gender.data, age=match_form.age.data, height=match_form.height.data, \
                           location=match_form.location.data, education=match_form.education.data,
@@ -355,6 +355,12 @@ def profile():
                           )
 
         db.session.add(new_match)
+        db.session.commit()
+
+        # update the setup value
+        update = User.query.filter_by(username=username).first()
+        update.setup = True
+        db.session.merge(update)
         db.session.commit()
 
         return redirect(url_for('member'))
