@@ -22,4 +22,4 @@ private.py
 
 data/*
 
-*.db
+app.db
