@@ -1,5 +1,4 @@
 from sqlalchemy import *
-from sqlalchemy.ext.declarative import declarative_base
 from flask import Flask
 import os
 from flask_sqlalchemy import SQLAlchemy
@@ -11,20 +10,22 @@ from werkzeug.security import generate_password_hash
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret'
-###### get pwd function
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////' + os.path.join(basedir, 'app.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-Base = declarative_base()
+
 db = SQLAlchemy(app)
 conn = sqlite3.connect('app.db')
 c = conn.cursor()
+
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(15), unique=True)
     email = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(80))
+    setup = db.Column(db.Boolean())
+
 
 class Match(db.Model):
     __tablename__ = 'Match'
@@ -54,15 +55,23 @@ class Match(db.Model):
     entreprenuer = db.Column(db.Integer())
     reading = db.Column(db.Integer())
 
+
+# if current tables exist then drop them
 def check_existing_tables():
     c.executescript('DROP TABLE IF EXISTS match')
     c.executescript('DROP TABLE IF EXISTS user')
 
 
-
+# main logic for entering randomised data
 def data_entry():
+
     imageExtension = ".jpg"
     emailExtension = "@gmail.com"
+
+    # for user table
+    idCounter = 1;
+    password = 'password'
+    test_passwordHash = generate_password_hash(password, method='sha256')
 
     usernames = ["Jerrell", "Stan", "Ross", "Cesar", "Fredric", "Henry", "Anderson", "Alec", "Jon", "Noel", "Fidel"
         , "Brady", "Wallace", "Gayle", "Neil", "Horacio", "Florencio", "Hassan", "Raphael", "Jay", "Ali", "Lynn"
@@ -74,11 +83,9 @@ def data_entry():
         , "Shavonda", "Millicent", "Yan", "Nanci", "Lecia", "Dinah", "Adele", "Mindy", "Tori", "Monica", "Agripina"
         , "Myesha", "Rebecka", "Crista", "Shu", "Kasandra", "Tierra", "Merly", "Evia", "Hae", "Yer", "Sun", "Dahlia", "Marianna"
                  ]
-    #image
-    #name (same as usernames)
+
     gender = ["Male", "Female"]
-    #age
-    #height
+
     location = ["Melbourne", "Sydney", "Perth", "ACT", "Adelaide", "Hobart", "ACT", "Darwin", "Brisbane"]
     education = ["Certificate", "Diploma", "Associate Degree", "Bachelor", "Master", "Doctoral"]
     ethnicity = ["American Indian", "Asian", "African", "Pacific Islander", "White", "Hispanic", "Middle Eastern"]
@@ -93,27 +100,8 @@ def data_entry():
            ]
     experienceValues = [0, 0.5, 1]
 
-    # randName = random.choice(usernames)
-    # imageName = randName + imageExtension
-    # #same as randName
-    # randGender = random.choice(gender)
-    # randAge = (randint(18, 70))
-    # randHeight = (randint(145, 213))
-    # randLocation = random.choice(location)
-    # randEducation = random.choice(education)
-    # randEthnicity = random.choice(ethnicity)
-    # randReligion = random.choice(religion)
-    # randBio = random.choice(bio)
-
-    personalityTraits = (randint(1, 100))
-    experienceTraits = random.choice(experienceValues)
-
-    # for user table
-    idCounter = 1;
-    password = 'password'
-    test_passwordHash = generate_password_hash(password, method='sha256')
-
     initialLengthOfNames = len(usernames)
+
     for x in range(0,initialLengthOfNames):
 
         # for Match table
@@ -129,22 +117,23 @@ def data_entry():
         # for user table
         emailName = randName + emailExtension
 
-        conn.execute('''INSERT INTO Match (username, image, name, gender, age, height, location, education, ethnicity,
+        conn.execute('''INSERT INTO Match (username, view_count, image, name, gender, age, height, location, education, ethnicity,
                      religion, bio, practicality, love, excitment, challenge, closeness, structure, live_music, 
                      spare_moment_purchases, gym_member, outdoors, volunteering, entreprenuer, reading) 
-                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-                     (randName, imageName.lower(), randName, randGender, (randint(18, 70)), (randint(145, 213)), randLocation,
+                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                     (randName.lower(), 0, imageName.lower(), randName, randGender, (randint(18, 70)), (randint(145, 213)), randLocation,
                      randEducation, randEthnicity, randReligion, randBio, (randint(1, 100)), (randint(1, 100)),
                      (randint(1, 100)), (randint(1, 100)), (randint(1, 100)), (randint(1, 100)), random.choice(experienceValues),
                      random.choice(experienceValues), random.choice(experienceValues), random.choice(experienceValues),
                      random.choice(experienceValues), random.choice(experienceValues), random.choice(experienceValues)))
 
-        conn.execute('''INSERT INTO user (id, username, email, password) VALUES (?, ?, ?, ?)''',
-                     (idCounter, randName, emailName.lower(), test_passwordHash))
+        conn.execute('''INSERT INTO user (id, username, email, password, setup) VALUES (?, ?, ?, ?, ?)''',
+                     (idCounter, randName, emailName.lower(), test_passwordHash, True))
         conn.commit()
 
         usernames.remove(randName)
         idCounter += 1;
+
     c.close()
     conn.close()
 
@@ -153,10 +142,9 @@ if __name__ == "__main__":
 
     check_existing_tables()
 
+    # sqlalchemys database connection object
     engine = create_engine('sqlite:////' + os.path.join(basedir, 'app.db'))
-    #
+    # create all table database definitions
     db.metadata.create_all(bind=engine)
-
-
 
     data_entry()
