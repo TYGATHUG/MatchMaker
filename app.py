@@ -91,35 +91,35 @@ class Match(db.Model):
     # create a python object of Match
     # keep here for now, I will delete later if it's useless - alex
 
-    def __init__(self, username, view_count, image, name, gender, age, height, location, education,
-                 ethnicity, religion, bio, practicality, love, excitment, challenge, closeness,
-                 structure, live_music, spare_moment_purchases, gym_member, outdoors, volunteering,
-                 entreprenuer, reading):
-        self.username = username
-        self.view_count = view_count
-        self.image = image
-        self.name = name
-        self.gender = gender
-        self.age = age
-        self.height = height
-        self.location = location
-        self.education = education
-        self.ethnicity = ethnicity
-        self.religion = religion
-        self.bio = bio
-        self.practicality = practicality
-        self.love = love
-        self.excitment = excitment
-        self.challenge = challenge
-        self.closeness = closeness
-        self.structure = structure
-        self.live_music = live_music
-        self.spare_moment_purchases = spare_moment_purchases
-        self.gym_member = gym_member
-        self.outdoors = outdoors
-        self.volunteering = volunteering
-        self.entreprenuer = entreprenuer
-        self.reading = reading
+    # def __init__(self, username, view_count, image, name, gender, age, height, location, education,
+    #              ethnicity, religion, bio, practicality, love, excitment, challenge, closeness,
+    #              structure, live_music, spare_moment_purchases, gym_member, outdoors, volunteering,
+    #              entreprenuer, reading):
+    #     self.username = username
+    #     self.view_count = view_count
+    #     self.image = image
+    #     self.name = name
+    #     self.gender = gender
+    #     self.age = age
+    #     self.height = height
+    #     self.location = location
+    #     self.education = education
+    #     self.ethnicity = ethnicity
+    #     self.religion = religion
+    #     self.bio = bio
+    #     self.practicality = practicality
+    #     self.love = love
+    #     self.excitment = excitment
+    #     self.challenge = challenge
+    #     self.closeness = closeness
+    #     self.structure = structure
+    #     self.live_music = live_music
+    #     self.spare_moment_purchases = spare_moment_purchases
+    #     self.gym_member = gym_member
+    #     self.outdoors = outdoors
+    #     self.volunteering = volunteering
+    #     self.entreprenuer = entreprenuer
+    #     self.reading = reading
 
 # ---------------------------------------------------------------------------------
 #   Classes Forms
@@ -292,14 +292,14 @@ def member():
 
                     user = Match.query.filter_by(name=match).first()
                     print 'here'
-                    highest_match_users.append([
-                        {'name': user.name},
-                        {'image': user.image},
-                        {'age': user.age},
-                        {'bio': user.bio}
-                    ])
+                    # highest_match_users.append([
+                    #     {'name': user.name},
+                    #     {'image': user.image},
+                    #     {'age': user.age},
+                    #     {'bio': user.bio}
+                    # ])
 
-                    print user.image
+                    # print user.image
                     print '\n'
 
 
@@ -371,7 +371,7 @@ def profile():
         reading = results['reading']
 
         # capitalize the first char of the username
-        username = match_form.data.title()
+        username = current_user.username
 
         new_match = Match(username=username, name=match_form.name.data, image=filename, \
                           gender=match_form.gender.data, age=match_form.age.data, height=match_form.height.data, \
@@ -474,6 +474,7 @@ def register():
 
     user = User.query.filter_by(username=register_form.username.data).first()
     email = User.query.filter_by(email=register_form.email.data).first()
+    # email = User.query.filter_by(email=register_form.email.data).lower().first()
     print user
     if not user:
         if not email:
