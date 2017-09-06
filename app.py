@@ -41,7 +41,6 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024
 
-
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -305,7 +304,8 @@ def profile():
         filename = ""
         file = request.files['image']
         if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
+            filename_temp = file.filename.split('.')[1]
+            filename = secure_filename(current_user.username + "." + filename_temp)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
         q1 = str(match_form.q1.data)
@@ -342,7 +342,7 @@ def profile():
         # capitalize the first char of the username
         username = current_user.username
 
-        new_match = Match(username=username, name=match_form.name.data, image=filename, \
+        new_match = Match(username=username, view_count=0, name=match_form.name.data, image=filename, \
                           gender=match_form.gender.data, age=match_form.age.data, height=match_form.height.data, \
                           location=match_form.location.data, education=match_form.education.data,
                           ethnicity=match_form.ethnicity.data, \
