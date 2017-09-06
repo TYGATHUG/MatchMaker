@@ -19,7 +19,3 @@ private.py
 .idea/workspace.xml
 
 .data/app.db
-
-data/*
-
-app.db

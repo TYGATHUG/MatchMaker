@@ -90,39 +90,6 @@ class Match(db.Model):
     entreprenuer = db.Column(db.Integer())
     reading = db.Column(db.Integer())
 
-    # create a python object of Match
-    # keep here for now, I will delete later if it's useless - alex
-
-    # def __init__(self, username, view_count, image, name, gender, age, height, location, education,
-    #              ethnicity, religion, bio, practicality, love, excitment, challenge, closeness,
-    #              structure, live_music, spare_moment_purchases, gym_member, outdoors, volunteering,
-    #              entreprenuer, reading):
-    #     self.username = username
-    #     self.view_count = view_count
-    #     self.image = image
-    #     self.name = name
-    #     self.gender = gender
-    #     self.age = age
-    #     self.height = height
-    #     self.location = location
-    #     self.education = education
-    #     self.ethnicity = ethnicity
-    #     self.religion = religion
-    #     self.bio = bio
-    #     self.practicality = practicality
-    #     self.love = love
-    #     self.excitment = excitment
-    #     self.challenge = challenge
-    #     self.closeness = closeness
-    #     self.structure = structure
-    #     self.live_music = live_music
-    #     self.spare_moment_purchases = spare_moment_purchases
-    #     self.gym_member = gym_member
-    #     self.outdoors = outdoors
-    #     self.volunteering = volunteering
-    #     self.entreprenuer = entreprenuer
-    #     self.reading = reading
-
 # ---------------------------------------------------------------------------------
 #   Classes Forms
 # -------------------------------------------------------------------------------*/
