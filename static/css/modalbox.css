@@ -141,7 +141,7 @@ div.tab button {
     font-size: 17px;
     text-transform: uppercase !important;
     letter-spacing: 3px !important;
-    border: 1px solid #ccc;
+    border-right: 0.5px solid #ccc;
     border-left: none;
     border-bottom: none;
 }
@@ -164,7 +164,7 @@ div.tab button.active {
 .tabcontent {
     display: none;
     padding: 6px 12px;
-    border: 1px solid #ccc;
+    /*border: 1px solid #ccc;*/
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     border-top: none;

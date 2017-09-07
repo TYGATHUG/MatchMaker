@@ -144,7 +144,7 @@ ul li {
 }
 
 #header.fixed .nav-toggle {
-    top: 18px;
+    top: 8.5px;
 }
 
 .navigation.open {
@@ -154,6 +154,11 @@ ul li {
     -o-transition: opacity 0.5s;
     -webkit-transition: opacity 0.5s;
     transition: opacity 0.5s;
+}
+
+.navigation.open .svg-wrapper {
+    display: inline;
+    float: none;
 }
 
 .navigation {
