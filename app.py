@@ -373,8 +373,8 @@ def profile():
     if curr_user_table.setup == True:
         curr_match_table = Match.query.filter_by(username=current_user.username).first()
         return render_template('profile.html', name=current_user.username, match_form=match_form, curr_user_table=curr_user_table, curr_match_table=curr_match_table)
-
-    return render_template('profile.html', name=current_user.username, match_form=match_form)
+    else:
+        return render_template('profile.html', name=current_user.username, match_form=match_form, curr_user_table=curr_user_table)
 
 
 @app.route('/terms', methods=['GET', 'POST'])
