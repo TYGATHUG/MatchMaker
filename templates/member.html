@@ -32,8 +32,8 @@
 
 
     {% if curr_user_table.setup == False %}
-        <section id="intro" class="section intro no-padding" style="background-color: rgba(0, 0, 0, 0.71);">
-        <div class="container-fluid">
+        <section id="intro" class="section intro no-padding">
+        <div class="container-fluid" style="background: linear-gradient(rgba(255, 0, 0, 0.45),rgba(255, 0, 0, 0.45)),url(../static/images/other/Elegant_Background-7.jpg)">
             <blockquote class="site-info" style="height: 640px !important;">
                 <h2 style="text-align: center">Welcome aboard the love train !</h2>
                 <h1>Please set up your profile to begin.</h1>
@@ -51,12 +51,8 @@
     </section>
     {% else %}
         <section id="intro" class="section intro no-padding">
-        <div class="container-fluid">
+        <div class="container-fluid" style="background: linear-gradient(rgba(51,70,92,0.91),rgba(51,70,92,0.91)),url(../static/images/other/Elegant_Background-7.jpg)">
             <blockquote class="site-info">
-                <h1>Home</h1>
-                <br><br>
-
-
                 <div class="tab">
                     <button class="tablinks" onclick="openCity(event, 'match')" id="defaultOpen" style="border-left: 1px solid #ccc;">Match</button>
                     <button class="tablinks" onclick="openCity(event, 'chat')">Chat</button>
