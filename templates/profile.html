@@ -8,182 +8,376 @@
                 <h1>Profile Setup</h1>
                 <br><br>
 
-                {% if match_form.errors %}
-                    <ul class="errors">
-                        {% for field_name, field_errors in match_form.errors|dictsort if field_errors %}
-                            {% for error in field_errors %}
-                                <li style="color: #e84545;">{{ match_form[field_name].label }}: {{ error }}</li>
+                {% if curr_user_table.setup == True %}
+                    {% if match_form.errors %}
+                        <ul class="errors">
+                            {% for field_name, field_errors in match_form.errors|dictsort if field_errors %}
+                                {% for error in field_errors %}
+                                    <li style="color: #e84545;">{{ match_form[field_name].label }}: {{ error }}</li>
+                                {% endfor %}
                             {% endfor %}
-                        {% endfor %}
-                        <br>
-                    </ul>
-                {% endif %}
+                            <br>
+                        </ul>
+                    {% endif %}
 
-                <!-- Start of MatchForm -->
-                <form role="form" method="POST" action="/profile" enctype="multipart/form-data">
+                    <!-- Start of MatchForm -->
+                    <form role="form" method="POST" action="/profile" enctype="multipart/form-data">
 
-                    {{ match_form.hidden_tag() }}
-                    <div id="profile-form-modal-1">
-                        <a href="#" class="inactive-btn">&#8678 Back</a>
-                        <a href="#" id="profile-next-btn">Next &#8680</a>
+                        {{ match_form.hidden_tag() }}
+                        <div id="profile-form-modal-1">
+                            <a href="#" class="inactive-btn">&#8678 Back</a>
+                            <a href="#" id="profile-next-btn">Next &#8680</a>
 
-                        <p class="sub-heading" style="font-style: normal; font-size: 20px; color: #3C6478 !important;">
-                            &#9473 The following fields will form your profile, Viewable by other users. &#9473
-                        </p>
-                        <br>
+                            <p class="sub-heading"
+                               style="font-style: normal; font-size: 20px; color: #3C6478 !important;">
+                                &#9473 The following fields will form your profile, Viewable by other users. &#9473
+                            </p>
+                            <br>
 
-                        <div class="form-group col_1_of_1">
-                            <label for="imageUpload" id="imageUpload-btn">
-                                <span>Click to Upload Photo</span><br>
-                                <span id="image-file-name-display" style="font-size: 15px; font-weight: normal;">No File Selected</span>
-                            </label>
-                            <script>
-                                function displayFilename() {
-                                    var filename = $('#imageUpload')[0].files[0];
-                                    document.getElementById("image-file-name-display").innerHTML = filename.name;
-                                }
-                            </script>
-                            {{ match_form.image(id="image-file-name", id="imageUpload", class="form-control", placeholder="image", onchange="displayFilename()", style="display:none;") }}
-                        </div>
-                        <br><br><br>
-
-                        <div class="form-group col_1_of_2">
-                            <label>Name</label>
-                            {{ match_form.name(class="form-control", placeholder="Name") }}
-                        </div>
-
-                        <div class="form-group col_1_of_2">
-                            <label>Age</label>
-                            {{ match_form.age(class="form-control", placeholder="Age") }}
-                        </div>
-
-                        <div class="form-double-input">
-                            <div class="form-group col_1_of_2">
-                                <label>Gender</label>
-                                {{ match_form.gender(class="form-control", placeholder="Gender") }}
-                            </div>
-                            <div class="form-group col_1_of_2">
-                                <label>Location</label>
-                                {{ match_form.location(class="form-control", placeholder="Location") }}
-                            </div>
-                        </div>
-
-                        <div class="form-double-input">
-                            <div class="form-group col_1_of_2">
-                                <label>Height (cm)</label>
-                                {{ match_form.height(class="form-control", placeholder="Height") }}
-                            </div>
-
-                            <div class="form-group col_1_of_2">
-                                <label>Education Level</label>
-                                {{ match_form.education(class="form-control", placeholder="Education") }}
-                            </div>
-                        </div>
-
-                        <div class="form-double-input">
-                            <div class="form-group col_1_of_2">
-                                <label>Ethnicity</label>
-                                {{ match_form.ethnicity(class="form-control", placeholder="Ethnicity") }}
-                            </div>
-
-                            <div class="form-group col_1_of_2">
-                                <label>Religion</label>
-                                {{ match_form.religion(class="form-control", placeholder="Religion") }}
-                            </div>
-                        </div>
-
-                        <div class="form-single-input">
                             <div class="form-group col_1_of_1">
-                                <label>About Me</label>
-                                {{ match_form.bio(class="form-control", placeholder="About Me") }}
-                            </div>
-                        </div>
-
-                        <div class="form-single-input">
-                            <div class="form-group col_1_of_1" style="margin-bottom: 100px;">
-                                <button type="button" id="profile-next-btn-2" class="btn btn-default" style="letter-spacing: 1px;">Next</button>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div id="profile-form-modal-2">
-                        <a href="#" id="profile-back-btn">&#8678 Back</a>
-                        <a href="#" id="profile-next-btn" class="inactive-btn">Next &#8680</a>
-
-                        <p class="sub-heading" style="font-style: normal; font-size: 20px; color: #3C6478 !important;">
-                            &#9473 The following questions are used to match you with other users. &#9473
-                        </p>
-                        <br>
-
-                        <div class="form-single-input">
-                            <div class="form-group col_1_of_1">
-                                <label for="q1">Tell me about yourself.</label>
-                                {{ match_form.q1(class="form-control", placeholder="Question 1") }}
-                            </div>
-                        </div>
-
-                        <div class="form-single-input">
-                            <div class="form-group col_1_of_1">
-                                <label for="q2">What is your ideal holiday?.</label>
-                                {{ match_form.q2(class="form-control", placeholder="Question 2") }}
-                            </div>
-                        </div>
-
-                        <div class="form-single-input">
-                            <div class="form-group col_1_of_1">
-                                <label for="q3">Describe your most recent shopping experience.</label>
-                                {{ match_form.q3(class="form-control", placeholder="Question 3") }}
-                            </div>
-
-                        </div>
-
-                        <div class="form-single-input">
-                            <div class="form-group col_1_of_1">
-                                <label for="q4">
-                                    Describe your expirence with going to the gym and if you have never attended
-                                    a gym whatdo you think of them?
+                                <label for="imageUpload" id="imageUpload-btn">
+                                    <span>Click to Upload Photo</span><br>
+                                    <span id="image-file-name-display" style="font-size: 15px; font-weight: normal;">No File Selected</span>
                                 </label>
-                                {{ match_form.q4(class="form-control", placeholder="Question 4") }}
+                                <script>
+                                    function displayFilename() {
+                                        var filename = $('#imageUpload')[0].files[0];
+                                        document.getElementById("image-file-name-display").innerHTML = filename.name;
+                                    }
+                                </script>
+                                {{ match_form.image(id="image-file-name", id="imageUpload", class="form-control", placeholder="image", onchange="displayFilename()", style="display:none;") }}
+                            </div>
+                            <br><br><br>
+
+                            <div class="form-group col_1_of_2">
+                                <label>Name</label>
+                                {{ match_form.name(class="form-control", placeholder="Name", value=curr_match_table.name) }}
+                            </div>
+
+                            <div class="form-group col_1_of_2">
+                                <label>Age</label>
+                                {{ match_form.age(class="form-control", placeholder="Age", value=curr_match_table.age) }}
+                            </div>
+
+                            <div class="form-double-input">
+                                <div class="form-group col_1_of_2">
+                                    <label>Gender</label>
+                                    {{ match_form.gender(class="form-control", placeholder="Gender", value=curr_match_table.gender) }}
+                                </div>
+                                <div class="form-group col_1_of_2">
+                                    <label>Location</label>
+                                    {{ match_form.location(class="form-control", placeholder="Location", value=curr_match_table.location) }}
+                                </div>
+                            </div>
+
+                            <div class="form-double-input">
+                                <div class="form-group col_1_of_2">
+                                    <label>Height (cm)</label>
+                                    {{ match_form.height(class="form-control", placeholder="Height", value=curr_match_table.height) }}
+                                </div>
+
+                                <div class="form-group col_1_of_2">
+                                    <label>Education Level</label>
+                                    {{ match_form.education(class="form-control", placeholder="Education", value=curr_match_table.education) }}
+                                </div>
+                            </div>
+
+                            <div class="form-double-input">
+                                <div class="form-group col_1_of_2">
+                                    <label>Ethnicity</label>
+                                    {{ match_form.ethnicity(class="form-control", placeholder="Ethnicity", value=curr_match_table.ethnicity) }}
+                                </div>
+
+                                <div class="form-group col_1_of_2">
+                                    <label>Religion</label>
+                                    {{ match_form.religion(class="form-control", placeholder="Religion", value=curr_match_table.religion) }}
+                                </div>
+                            </div>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1">
+                                    <label>About Me</label>
+                                    {{ match_form.bio(class="form-control", placeholder="About Me", value=curr_match_table.bio) }}
+                                </div>
+                            </div>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1" style="margin-bottom: 80px;">
+                                    <button type="button" id="profile-next-btn-2" class="btn btn-default"
+                                            style="letter-spacing: 1px;">Next
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="form-single-input">
+
+                        <div id="profile-form-modal-2">
+                            <a href="#" id="profile-back-btn">&#8678 Back</a>
+                            <a href="#" id="profile-next-btn" class="inactive-btn">Next &#8680</a>
+
+                            <p class="sub-heading"
+                               style="font-style: normal; font-size: 20px; color: #3C6478 !important;">
+                                &#9473 The following questions are used to match you with other users. &#9473
+                            </p>
+                            <br>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1">
+                                    <label for="q1">Tell me about yourself.</label>
+                                    {{ match_form.q1(class="form-control", placeholder="Question 1") }}
+                                </div>
+                            </div>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1">
+                                    <label for="q2">What is your ideal holiday?.</label>
+                                    {{ match_form.q2(class="form-control", placeholder="Question 2") }}
+                                </div>
+                            </div>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1">
+                                    <label for="q3">Describe your most recent shopping experience.</label>
+                                    {{ match_form.q3(class="form-control", placeholder="Question 3") }}
+                                </div>
+
+                            </div>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1">
+                                    <label for="q4">
+                                        Describe your expirence with going to the gym and if you have never attended
+                                        a gym whatdo you think of them?
+                                    </label>
+                                    {{ match_form.q4(class="form-control", placeholder="Question 4") }}
+                                </div>
+                            </div>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1">
+                                    <label for="q5">What does being outdoor mean to you?</label>
+                                    {{ match_form.q5(class="form-control", placeholder="Question 5") }}
+                                </div>
+                            </div>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1">
+                                    <label for="q6">Describe the last time you expirience being in nature.</label>
+                                    {{ match_form.q6(class="form-control", placeholder="Question 6") }}
+                                </div>
+                            </div>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1">
+                                    <label for="q7">Describe a time when you did something entreprenuerial.</label>
+                                    {{ match_form.q7(class="form-control", placeholder="Question 7") }}
+                                </div>
+                            </div>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1">
+                                    <label for="q8">What do you think of volunteering and have you ever
+                                        volunteered?</label>
+                                    {{ match_form.q8(class="form-control", placeholder="Question 8") }}
+                                </div>
+                            </div>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1" style="margin-bottom: 80px;">
+                                    <button type="submit" class="btn btn-default" style="letter-spacing: 1px;">Submit
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+
+                {% else %}
+
+                    {% if match_form.errors %}
+                        <ul class="errors">
+                            {% for field_name, field_errors in match_form.errors|dictsort if field_errors %}
+                                {% for error in field_errors %}
+                                    <li style="color: #e84545;">{{ match_form[field_name].label }}: {{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                            <br>
+                        </ul>
+                    {% endif %}
+
+                    <!-- Start of MatchForm -->
+                    <form role="form" method="POST" action="/profile" enctype="multipart/form-data">
+
+                        {{ match_form.hidden_tag() }}
+                        <div id="profile-form-modal-1">
+                            <a href="#" class="inactive-btn">&#8678 Back</a>
+                            <a href="#" id="profile-next-btn">Next &#8680</a>
+
+                            <p class="sub-heading"
+                               style="font-style: normal; font-size: 20px; color: #3C6478 !important;">
+                                &#9473 The following fields will form your profile, Viewable by other users. &#9473
+                            </p>
+                            <br>
+
                             <div class="form-group col_1_of_1">
-                                <label for="q5">What does being outdoor mean to you?</label>
-                                {{ match_form.q5(class="form-control", placeholder="Question 5") }}
+                                <label for="imageUpload" id="imageUpload-btn">
+                                    <span>Click to Upload Photo</span><br>
+                                    <span id="image-file-name-display" style="font-size: 15px; font-weight: normal;">No File Selected</span>
+                                </label>
+                                <script>
+                                    function displayFilename() {
+                                        var filename = $('#imageUpload')[0].files[0];
+                                        document.getElementById("image-file-name-display").innerHTML = filename.name;
+                                    }
+                                </script>
+                                {{ match_form.image(id="image-file-name", id="imageUpload", class="form-control", placeholder="image", onchange="displayFilename()", style="display:none;") }}
+                            </div>
+                            <br><br><br>
+
+                            <div class="form-group col_1_of_2">
+                                <label>Name</label>
+                                {{ match_form.name(class="form-control", placeholder="Name") }}
+                            </div>
+
+                            <div class="form-group col_1_of_2">
+                                <label>Age</label>
+                                {{ match_form.age(class="form-control", placeholder="Age") }}
+                            </div>
+
+                            <div class="form-double-input">
+                                <div class="form-group col_1_of_2">
+                                    <label>Gender</label>
+                                    {{ match_form.gender(class="form-control", placeholder="Gender") }}
+                                </div>
+                                <div class="form-group col_1_of_2">
+                                    <label>Location</label>
+                                    {{ match_form.location(class="form-control", placeholder="Location") }}
+                                </div>
+                            </div>
+
+                            <div class="form-double-input">
+                                <div class="form-group col_1_of_2">
+                                    <label>Height (cm)</label>
+                                    {{ match_form.height(class="form-control", placeholder="Height") }}
+                                </div>
+
+                                <div class="form-group col_1_of_2">
+                                    <label>Education Level</label>
+                                    {{ match_form.education(class="form-control", placeholder="Education") }}
+                                </div>
+                            </div>
+
+                            <div class="form-double-input">
+                                <div class="form-group col_1_of_2">
+                                    <label>Ethnicity</label>
+                                    {{ match_form.ethnicity(class="form-control", placeholder="Ethnicity") }}
+                                </div>
+
+                                <div class="form-group col_1_of_2">
+                                    <label>Religion</label>
+                                    {{ match_form.religion(class="form-control", placeholder="Religion") }}
+                                </div>
+                            </div>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1">
+                                    <label>About Me</label>
+                                    {{ match_form.bio(class="form-control", placeholder="About Me") }}
+                                </div>
+                            </div>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1" style="margin-bottom: 80px;">
+                                    <button type="button" id="profile-next-btn-2" class="btn btn-default"
+                                            style="letter-spacing: 1px;">Next
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="form-single-input">
-                            <div class="form-group col_1_of_1">
-                                <label for="q6">Describe the last time you expirience being in nature.</label>
-                                {{ match_form.q6(class="form-control", placeholder="Question 6") }}
+
+                        <div id="profile-form-modal-2">
+                            <a href="#" id="profile-back-btn">&#8678 Back</a>
+                            <a href="#" id="profile-next-btn" class="inactive-btn">Next &#8680</a>
+
+                            <p class="sub-heading"
+                               style="font-style: normal; font-size: 20px; color: #3C6478 !important;">
+                                &#9473 The following questions are used to match you with other users. &#9473
+                            </p>
+                            <br>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1">
+                                    <label for="q1">Tell me about yourself.</label>
+                                    {{ match_form.q1(class="form-control", placeholder="Question 1") }}
+                                </div>
+                            </div>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1">
+                                    <label for="q2">What is your ideal holiday?.</label>
+                                    {{ match_form.q2(class="form-control", placeholder="Question 2") }}
+                                </div>
+                            </div>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1">
+                                    <label for="q3">Describe your most recent shopping experience.</label>
+                                    {{ match_form.q3(class="form-control", placeholder="Question 3") }}
+                                </div>
+
+                            </div>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1">
+                                    <label for="q4">
+                                        Describe your expirence with going to the gym and if you have never attended
+                                        a gym whatdo you think of them?
+                                    </label>
+                                    {{ match_form.q4(class="form-control", placeholder="Question 4") }}
+                                </div>
+                            </div>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1">
+                                    <label for="q5">What does being outdoor mean to you?</label>
+                                    {{ match_form.q5(class="form-control", placeholder="Question 5") }}
+                                </div>
+                            </div>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1">
+                                    <label for="q6">Describe the last time you expirience being in nature.</label>
+                                    {{ match_form.q6(class="form-control", placeholder="Question 6") }}
+                                </div>
+                            </div>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1">
+                                    <label for="q7">Describe a time when you did something entreprenuerial.</label>
+                                    {{ match_form.q7(class="form-control", placeholder="Question 7") }}
+                                </div>
+                            </div>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1">
+                                    <label for="q8">What do you think of volunteering and have you ever
+                                        volunteered?</label>
+                                    {{ match_form.q8(class="form-control", placeholder="Question 8") }}
+                                </div>
+                            </div>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1" style="margin-bottom: 80px;">
+                                    <button type="submit" class="btn btn-default" style="letter-spacing: 1px;">Submit
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="form-single-input">
-                            <div class="form-group col_1_of_1">
-                                <label for="q7">Describe a time when you did something entreprenuerial.</label>
-                                {{ match_form.q7(class="form-control", placeholder="Question 7") }}
-                            </div>
-                        </div>
+                    </form>
 
-                        <div class="form-single-input">
-                            <div class="form-group col_1_of_1">
-                                <label for="q8">What do you think of volunteering and have you ever volunteered?</label>
-                                {{ match_form.q8(class="form-control", placeholder="Question 8") }}
-                            </div>
-                        </div>
-
-                        <div class="form-single-input">
-                            <div class="form-group col_1_of_1" style="margin-bottom: 100px;">
-                                <button type="submit" class="btn btn-default" style="letter-spacing: 1px;">Submit</button>
-                            </div>
-                        </div>
-                    </div>
-
-                </form>
+                {% endif %}
 
             </blockquote>
         </div>
