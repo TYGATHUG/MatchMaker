@@ -19,7 +19,6 @@
                     </ul>
                 {% endif %}
 
-
                 <!-- Start of MatchForm -->
                 <form role="form" method="POST" action="/profile" enctype="multipart/form-data">
 
@@ -71,12 +70,12 @@
 
                         <div class="form-double-input">
                             <div class="form-group col_1_of_2">
-                                <label>Height</label>
+                                <label>Height (cm)</label>
                                 {{ match_form.height(class="form-control", placeholder="Height") }}
                             </div>
 
                             <div class="form-group col_1_of_2">
-                                <label>Education</label>
+                                <label>Education Level</label>
                                 {{ match_form.education(class="form-control", placeholder="Education") }}
                             </div>
                         </div>

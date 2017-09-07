@@ -129,7 +129,7 @@ def data_entry():
                      random.choice(experienceValues), random.choice(experienceValues), random.choice(experienceValues)))
 
         conn.execute('''INSERT INTO user (id, username, email, password, setup) VALUES (?, ?, ?, ?, ?)''',
-                     (idCounter, randName, emailName.lower(), test_passwordHash, True))
+                     (idCounter, randName.lower(), emailName.lower(), test_passwordHash, True))
         conn.commit()
 
         usernames.remove(randName)

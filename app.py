@@ -93,38 +93,38 @@ class Match(db.Model):
 #   Classes Forms
 # -------------------------------------------------------------------------------*/
 class LoginForm(FlaskForm):
-    username = StringField('username', validators=[InputRequired(), Length(min=3, max=15)])
-    password = PasswordField('password', validators=[InputRequired(), Length(min=4, max=80)])
-    remember = BooleanField('remember me')
+    username = StringField('Username', validators=[InputRequired(), Length(min=3, max=15)])
+    password = PasswordField('Password', validators=[InputRequired(), Length(min=4, max=80)])
+    remember = BooleanField('Remember Me')
 
 
 class RegisterForm(FlaskForm):
-    email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), Length(min=3, max=50)])
-    username = StringField('username', validators=[InputRequired(), Length(min=3, max=15)])
-    password = PasswordField('password', validators=[InputRequired(), Length(min=4, max=80)])
+    email = StringField('Email', validators=[InputRequired(), Email(message='Invalid email'), Length(min=3, max=50)])
+    username = StringField('Username', validators=[InputRequired(), Length(min=3, max=15)])
+    password = PasswordField('Password', validators=[InputRequired(), Length(min=4, max=80)])
     unique_user = BooleanField('unique_user')
     unique_email = BooleanField('unique_email')
 
 
 class MatchForm(FlaskForm):
-    image = FileField('image', validators=[FileRequired(), FileAllowed(ALLOWED_EXTENSIONS)])
-    name = StringField('name', validators=[InputRequired(), Length(min=1, max=20)])
-    age = StringField('age', validators=[InputRequired(), Length(min=1, max=3)])
-    gender = StringField('gender', validators=[InputRequired(), Length(min=1, max=10)])
-    height = StringField('height', validators=[InputRequired(), Length(min=1, max=5)])
-    location = StringField('location', validators=[InputRequired(), Length(min=1)])
-    education = StringField('education', validators=[InputRequired(), Length(min=1, max=20)])
-    ethnicity = StringField('ethnicity', validators=[InputRequired(), Length(min=1, max=20)])
-    religion = StringField('religion', validators=[InputRequired(), Length(min=1, max=20)])
-    bio = StringField('bio', validators=[InputRequired(), Length(min=1, max=255)])
-    q1 = StringField('q1', validators=[InputRequired(), Length(min=15, max=255)])
-    q2 = StringField('q2', validators=[InputRequired(), Length(min=15, max=255)])
-    q3 = StringField('q3', validators=[InputRequired(), Length(min=15, max=255)])
-    q4 = StringField('q4', validators=[InputRequired(), Length(min=15, max=255)])
-    q5 = StringField('q5', validators=[InputRequired(), Length(min=15, max=255)])
-    q6 = StringField('q6', validators=[InputRequired(), Length(min=15, max=255)])
-    q7 = StringField('q7', validators=[InputRequired(), Length(min=15, max=255)])
-    q8 = StringField('q8', validators=[InputRequired(), Length(min=15, max=255)])
+    image = FileField('Image', validators=[FileRequired(), FileAllowed(ALLOWED_EXTENSIONS)])
+    name = StringField('Name', validators=[InputRequired(), Length(min=1, max=20)])
+    age = StringField('Age', validators=[InputRequired(), Length(min=1, max=3)])
+    gender = StringField('Gender', validators=[InputRequired(), Length(min=1, max=10)])
+    height = StringField('Height', validators=[InputRequired(), Length(min=1, max=5)])
+    location = StringField('Location', validators=[InputRequired(), Length(min=1)])
+    education = StringField('Education', validators=[InputRequired(), Length(min=1, max=20)])
+    ethnicity = StringField('Ethnicity', validators=[InputRequired(), Length(min=1, max=20)])
+    religion = StringField('Religion', validators=[InputRequired(), Length(min=1, max=20)])
+    bio = StringField('Bio', validators=[InputRequired(), Length(min=1, max=255)])
+    q1 = StringField('Question 1', validators=[InputRequired(), Length(min=15, max=255)])
+    q2 = StringField('Question 2', validators=[InputRequired(), Length(min=15, max=255)])
+    q3 = StringField('Question 3', validators=[InputRequired(), Length(min=15, max=255)])
+    q4 = StringField('Question 4', validators=[InputRequired(), Length(min=15, max=255)])
+    q5 = StringField('Question 5', validators=[InputRequired(), Length(min=15, max=255)])
+    q6 = StringField('Question 6', validators=[InputRequired(), Length(min=15, max=255)])
+    q7 = StringField('Question 7', validators=[InputRequired(), Length(min=15, max=255)])
+    q8 = StringField('Question 8', validators=[InputRequired(), Length(min=15, max=255)])
     setup = BooleanField()
 
 
@@ -455,7 +455,7 @@ def register():
         if not email:
             if register_form.validate_on_submit():
                 hashed_password = generate_password_hash(register_form.password.data, method='sha256')
-                new_user = User(username=register_form.username.data, email=register_form.email.data,
+                new_user = User(username=register_form.username.data.lower(), email=register_form.email.data.lower(),
                                 password=hashed_password, setup=False)
                 db.session.add(new_user)
                 db.session.commit()

@@ -120,12 +120,15 @@ div.tab {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     background-color: #f1f1f1;
+    width: 720px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Style the buttons inside the tab */
 div.tab button {
     background-color: inherit;
-    width: 33.33%;
+    width: 240px;
     float: left;
     border: none;
     outline: none;
@@ -163,6 +166,8 @@ div.tab button.active {
     border-bottom-right-radius: 5px;
     border-top: none;
     min-height: 600px;
-    max-width: 873px;
+    max-width: 720px;
     background: #ffffff;
+    margin-left: auto;
+    margin-right: auto;
 }
