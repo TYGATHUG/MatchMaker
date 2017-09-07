@@ -792,6 +792,7 @@ textarea:hover {
 
 blockquote.site-info {
     max-width: 1024px;
+    min-width: 500px;
 }
 
 div.container-fluid {

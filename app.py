@@ -154,6 +154,9 @@ def member():
     highest_match_users = ""
     username = current_user.username.title()
     curr_user = Match.query.filter_by(username=username).first()
+
+    curr_user_table = User.query.filter_by(username=username.lower()).first()
+
     if curr_user:
         print "username: "
         print curr_user.username
@@ -276,7 +279,7 @@ def member():
 
         print highest_match_users
 
-    return render_template('member.html', name=current_user.username, highest_match_users=highest_match_users)
+    return render_template('member.html', name=current_user.username, highest_match_users=highest_match_users, curr_user_table=curr_user_table)
 
 
 @app.route('/profile', methods=['GET', 'POST'])

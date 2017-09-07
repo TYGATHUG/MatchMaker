@@ -30,11 +30,32 @@
         {% endif %}
     {% endwith %}
 
-    <section id="intro" class="section intro no-padding">
+
+    {% if curr_user_table.setup == False %}
+        <section id="intro" class="section intro no-padding">
+        <div class="container-fluid">
+            <blockquote class="site-info" style="height: 640px !important;">
+                <h2 style="text-align: center">Welcome aboard the love train !</h2>
+                <h1>Please set up your profile to begin.</h1>
+
+                <form action="/profile">
+                    <div class="form-single-input">
+                        <div class="form-group col_1_of_1" style="margin-bottom: 100px;">
+                            <button type="submit" class="btn btn-default" style="letter-spacing: 1px;">Setup Profile</button>
+                        </div>
+                    </div>
+                </form>
+
+            </blockquote>
+        </div>
+    </section>
+    {% else %}
+        <section id="intro" class="section intro no-padding">
         <div class="container-fluid">
             <blockquote class="site-info">
                 <h1>Home</h1>
                 <br><br>
+
 
                 <div class="tab">
                     <button class="tablinks" onclick="openCity(event, 'match')" id="defaultOpen" style="border-left: 1px solid #ccc;">Match</button>
@@ -50,7 +71,6 @@
                     {% for user in highest_match_users %}
                         {{ user }}
                     {% endfor %}
-
 
                 </div>
 
@@ -89,6 +109,6 @@
             </blockquote>
         </div>
     </section>
-
+    {% endif %}
 
 {% endblock %}
