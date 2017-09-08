@@ -108,10 +108,14 @@
 
                                            <h1>Match Data</h1>
                                             {% for user in highest_match_users %}
-                                                {{ user }}
+
+                                                {% for value in user %}
+                            
+                                                    {{ value.age }}
+                                                {% endfor %}
                                             {% endfor %}
 
-                    </div>
+
 
                     <div id="chat" class="tabcontent">
                         <img src="../static/images/other/chat_demo.png" width="100%">

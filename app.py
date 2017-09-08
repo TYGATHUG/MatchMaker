@@ -153,8 +153,8 @@ def member():
 
     curr_user = Match.query.filter_by(username=username.lower()).first()    # get current user by matching session and Match DB
 
-    #curr_user_table = User.query.filter_by(username=current_user.username).first()
-    #curr_match_table = Match.query.filter_by(username=current_user.username).first()
+    curr_user_table = User.query.filter_by(username=current_user.username).first()
+    curr_match_table = Match.query.filter_by(username=current_user.username).first()
 
     if curr_user:    # if curr user has made a profile we can match them
 
@@ -236,7 +236,7 @@ def member():
                     user_match = 0
 
                 if user_match >= match_level:
-                    highest_match_users.append(matched_users[match])
+                    #highest_match_users.append(matched_users[match])
 
                     user = Match.query.filter_by(username=match).first()
 
