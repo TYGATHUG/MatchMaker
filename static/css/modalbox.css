@@ -49,13 +49,16 @@
 
 #profile-back-btn {
     font-weight: bold;
+    font-family: "Oxygen", "Source Sans Pro";
 }
 
 #profile-next-btn {
     float:right;
     clear: left;
     font-weight: bold;
+    font-family: "Oxygen", "Source Sans Pro";
 }
+
 
 .inactive-btn {
     color: black;
