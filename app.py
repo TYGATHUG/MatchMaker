@@ -256,7 +256,12 @@ def member():
                     highest_match_users.append([
                         {'username': user.username},
                         {'image': user.image},
+                        {'name': user.name},
+                        {'gender': user.gender},
                         {'age': user.age},
+                        {'height': user.height},
+                        {'location': user.location},
+                        {'education': user.education},
                         {'bio': user.bio}
                     ])
                     break;
