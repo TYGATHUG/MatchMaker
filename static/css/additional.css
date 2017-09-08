@@ -172,7 +172,7 @@ ul li {
 
 .navigation a {
     color: rgba(255, 255, 255, 0.75);
-    font-size: 13px;
+    font-size: 15px !important;
     font-weight: 400;
     letter-spacing: 3px;
     text-transform: uppercase;
@@ -358,7 +358,7 @@ ul li {
 
 .banner-text h1 {
     color: #fff;
-    font-family: "Source Sans Pro";
+    font-family: "Source Sans Pro" !important;
     font-size: 53px;
     letter-spacing: 20px;
     font-weight: 700;
@@ -689,7 +689,7 @@ ul li {
 @import url(https://fonts.googleapis.com/css?family=Lato:100,300,400);
 
 body {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Lato', sans-serif !important;
     background: #e9eaed;
 }
 
