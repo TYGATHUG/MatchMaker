@@ -41,7 +41,6 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024
 
-
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -49,10 +48,12 @@ def allowed_file(filename):
 #   Classes Databases
 # -------------------------------------------------------------------------------*/
 class User(UserMixin, db.Model):
+    __tablename__ = 'User'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(15), unique=True)
     email = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(80))
+    setup = db.Column(db.Boolean())
 
 
 @login_manager.user_loader
@@ -88,75 +89,43 @@ class Match(db.Model):
     entreprenuer = db.Column(db.Integer())
     reading = db.Column(db.Integer())
 
-    # create a python object of Match
-    # keep here for now, I will delete later if it's useless - alex
-
-    # def __init__(self, username, view_count, image, name, gender, age, height, location, education,
-    #              ethnicity, religion, bio, practicality, love, excitment, challenge, closeness,
-    #              structure, live_music, spare_moment_purchases, gym_member, outdoors, volunteering,
-    #              entreprenuer, reading):
-    #     self.username = username
-    #     self.view_count = view_count
-    #     self.image = image
-    #     self.name = name
-    #     self.gender = gender
-    #     self.age = age
-    #     self.height = height
-    #     self.location = location
-    #     self.education = education
-    #     self.ethnicity = ethnicity
-    #     self.religion = religion
-    #     self.bio = bio
-    #     self.practicality = practicality
-    #     self.love = love
-    #     self.excitment = excitment
-    #     self.challenge = challenge
-    #     self.closeness = closeness
-    #     self.structure = structure
-    #     self.live_music = live_music
-    #     self.spare_moment_purchases = spare_moment_purchases
-    #     self.gym_member = gym_member
-    #     self.outdoors = outdoors
-    #     self.volunteering = volunteering
-    #     self.entreprenuer = entreprenuer
-    #     self.reading = reading
-
 # ---------------------------------------------------------------------------------
 #   Classes Forms
 # -------------------------------------------------------------------------------*/
 class LoginForm(FlaskForm):
-    username = StringField('username', validators=[InputRequired(), Length(min=3, max=15)])
-    password = PasswordField('password', validators=[InputRequired(), Length(min=4, max=80)])
-    remember = BooleanField('remember me')
+    username = StringField('Username', validators=[InputRequired(), Length(min=3, max=15)])
+    password = PasswordField('Password', validators=[InputRequired(), Length(min=4, max=80)])
+    remember = BooleanField('Remember Me')
 
 
 class RegisterForm(FlaskForm):
-    email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), Length(min=3, max=50)])
-    username = StringField('username', validators=[InputRequired(), Length(min=3, max=15)])
-    password = PasswordField('password', validators=[InputRequired(), Length(min=4, max=80)])
+    email = StringField('Email', validators=[InputRequired(), Email(message='Invalid email'), Length(min=3, max=50)])
+    username = StringField('Username', validators=[InputRequired(), Length(min=3, max=15)])
+    password = PasswordField('Password', validators=[InputRequired(), Length(min=4, max=80)])
     unique_user = BooleanField('unique_user')
     unique_email = BooleanField('unique_email')
 
 
 class MatchForm(FlaskForm):
-    image = FileField('image', validators=[FileRequired(), FileAllowed(ALLOWED_EXTENSIONS)])
-    name = StringField('name', validators=[InputRequired(), Length(min=1, max=20)])
-    age = StringField('age', validators=[InputRequired(), Length(min=1, max=3)])
-    gender = StringField('gender', validators=[InputRequired(), Length(min=1, max=10)])
-    height = StringField('height', validators=[InputRequired(), Length(min=1, max=5)])
-    location = StringField('location', validators=[InputRequired(), Length(min=1)])
-    education = StringField('education', validators=[InputRequired(), Length(min=1, max=20)])
-    ethnicity = StringField('ethnicity', validators=[InputRequired(), Length(min=1, max=20)])
-    religion = StringField('religion', validators=[InputRequired(), Length(min=1, max=20)])
-    bio = StringField('bio', validators=[InputRequired(), Length(min=1, max=255)])
-    q1 = StringField('q1', validators=[InputRequired(), Length(min=15, max=255)])
-    q2 = StringField('q2', validators=[InputRequired(), Length(min=15, max=255)])
-    q3 = StringField('q3', validators=[InputRequired(), Length(min=15, max=255)])
-    q4 = StringField('q4', validators=[InputRequired(), Length(min=15, max=255)])
-    q5 = StringField('q5', validators=[InputRequired(), Length(min=15, max=255)])
-    q6 = StringField('q6', validators=[InputRequired(), Length(min=15, max=255)])
-    q7 = StringField('q7', validators=[InputRequired(), Length(min=15, max=255)])
-    q8 = StringField('q8', validators=[InputRequired(), Length(min=15, max=255)])
+    image = FileField('Image', validators=[FileRequired(), FileAllowed(ALLOWED_EXTENSIONS)])
+    name = StringField('Name', validators=[InputRequired(), Length(min=1, max=20)])
+    age = StringField('Age', validators=[InputRequired(), Length(min=1, max=3)])
+    gender = StringField('Gender', validators=[InputRequired(), Length(min=1, max=10)])
+    height = StringField('Height', validators=[InputRequired(), Length(min=1, max=5)])
+    location = StringField('Location', validators=[InputRequired(), Length(min=1)])
+    education = StringField('Education', validators=[InputRequired(), Length(min=1, max=20)])
+    ethnicity = StringField('Ethnicity', validators=[InputRequired(), Length(min=1, max=20)])
+    religion = StringField('Religion', validators=[InputRequired(), Length(min=1, max=20)])
+    bio = StringField('Bio', validators=[InputRequired(), Length(min=1, max=255)])
+    q1 = StringField('Question 1', validators=[InputRequired(), Length(min=15, max=255)])
+    q2 = StringField('Question 2', validators=[InputRequired(), Length(min=15, max=255)])
+    q3 = StringField('Question 3', validators=[InputRequired(), Length(min=15, max=255)])
+    q4 = StringField('Question 4', validators=[InputRequired(), Length(min=15, max=255)])
+    q5 = StringField('Question 5', validators=[InputRequired(), Length(min=15, max=255)])
+    q6 = StringField('Question 6', validators=[InputRequired(), Length(min=15, max=255)])
+    q7 = StringField('Question 7', validators=[InputRequired(), Length(min=15, max=255)])
+    q8 = StringField('Question 8', validators=[InputRequired(), Length(min=15, max=255)])
+    setup = BooleanField()
 
 
 # ---------------------------------------------------------------------------------
@@ -170,7 +139,7 @@ def home():
     globals()['PREVIOUS_SAVED_ROUTE'] = "welcome.html"
 
     if current_user.is_authenticated:
-        return render_template('member.html')
+        return member()
     else:
         return render_template('welcome.html', register_form=register_form, login_form=login_form)
 
@@ -185,6 +154,10 @@ def member():
     highest_match_users = ""
     username = current_user.username.title()
     curr_user = Match.query.filter_by(username=username).first()
+
+    curr_user_table = User.query.filter_by(username=current_user.username).first()
+    curr_match_table = Match.query.filter_by(username=current_user.username).first()
+
     if curr_user:
         print "username: "
         print curr_user.username
@@ -288,32 +261,31 @@ def member():
                     user_match = 0
 
                 if user_match == up:
-                    #highest_match_users.append(matched_users[match])
+                    highest_match_users.append(matched_users[match])
 
                     user = Match.query.filter_by(name=match).first()
                     print 'here'
-                    # highest_match_users.append([
-                    #     {'name': user.name},
-                    #     {'image': user.image},
-                    #     {'age': user.age},
-                    #     {'bio': user.bio}
-                    # ])
+                    highest_match_users.append([
+                        {'name': user.name},
+                        {'image': user.image},
+                        {'age': user.age},
+                        {'bio': user.bio}
+                    ])
 
                     # print user.image
                     print '\n'
-
-
                     break;
 
         print highest_match_users
 
-    return render_template('member.html', name=current_user.username, highest_match_users=highest_match_users)
+    return render_template('member.html', name=current_user.username, highest_match_users=highest_match_users, curr_user_table=curr_user_table, curr_match_table=curr_match_table)
 
 
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
     match_form = MatchForm()
+
     # instatiate API for getting Watson data
     personality_results = api.MatchAPI()
 
@@ -336,7 +308,8 @@ def profile():
         filename = ""
         file = request.files['image']
         if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
+            filename_temp = file.filename.split('.')[1]
+            filename = secure_filename(current_user.username + "." + filename_temp)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
         q1 = str(match_form.q1.data)
@@ -370,10 +343,8 @@ def profile():
         outdoors = results['consumption'][0]['outdoors']
         reading = results['reading']
 
-        # capitalize the first char of the username
         username = current_user.username
-
-        new_match = Match(username=username, name=match_form.name.data, image=filename, \
+        new_match = Match(username=username, view_count=0, name=match_form.name.data, image=filename, \
                           gender=match_form.gender.data, age=match_form.age.data, height=match_form.height.data, \
                           location=match_form.location.data, education=match_form.education.data,
                           ethnicity=match_form.ethnicity.data, \
@@ -388,9 +359,21 @@ def profile():
         db.session.add(new_match)
         db.session.commit()
 
+        # update the setup value
+        update = User.query.filter_by(username=username).first()
+        update.setup = True
+        db.session.merge(update)
+        db.session.commit()
+
         return redirect(url_for('member'))
 
-    return render_template('profile.html', name=current_user.username, match_form=match_form)
+    # partially repopulate fields
+    curr_user_table = User.query.filter_by(username=current_user.username).first()
+    if curr_user_table.setup == True:
+        curr_match_table = Match.query.filter_by(username=current_user.username).first()
+        return render_template('profile.html', name=current_user.username, match_form=match_form, curr_user_table=curr_user_table, curr_match_table=curr_match_table)
+    else:
+        return render_template('profile.html', name=current_user.username, match_form=match_form, curr_user_table=curr_user_table)
 
 
 @app.route('/terms', methods=['GET', 'POST'])
@@ -473,15 +456,15 @@ def register():
     register_form = RegisterForm()
 
     user = User.query.filter_by(username=register_form.username.data).first()
-    email = User.query.filter_by(email=register_form.email.data).first()
-    # email = User.query.filter_by(email=register_form.email.data).lower().first()
+    # email = User.query.filter_by(email=register_form.email.data).first()
+    email = User.query.filter_by(email=register_form.email.data.lower()).first()
     print user
     if not user:
         if not email:
             if register_form.validate_on_submit():
                 hashed_password = generate_password_hash(register_form.password.data, method='sha256')
-                new_user = User(username=register_form.username.data, email=register_form.email.data,
-                                password=hashed_password)
+                new_user = User(username=register_form.username.data.lower(), email=register_form.email.data.lower(),
+                                password=hashed_password, setup=False)
                 db.session.add(new_user)
                 db.session.commit()
 

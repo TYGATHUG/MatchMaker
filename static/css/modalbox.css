@@ -120,11 +120,17 @@ div.tab {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     background-color: #f1f1f1;
+    max-width: 720px;
+    min-width: 390px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Style the buttons inside the tab */
 div.tab button {
     background-color: inherit;
+    max-width: 240px;
+    min-width: 130px;
     width: 33.33%;
     float: left;
     border: none;
@@ -135,7 +141,7 @@ div.tab button {
     font-size: 17px;
     text-transform: uppercase !important;
     letter-spacing: 3px !important;
-    border: 1px solid #ccc;
+    border-right: 0.5px solid #ccc;
     border-left: none;
     border-bottom: none;
 }
@@ -158,11 +164,28 @@ div.tab button.active {
 .tabcontent {
     display: none;
     padding: 6px 12px;
-    border: 1px solid #ccc;
+    /*border: 1px solid #ccc;*/
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     border-top: none;
     min-height: 600px;
-    max-width: 873px;
+    max-width: 720px;
+    min-width: 390px;
     background: #ffffff;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* ------------------------------------------------------------------------------
+	 Member page
+-------------------------------------------------------------------------------*/
+.like-dislike-btn {
+    width: 100%;
+    margin-top: 10px;
+    float: left;
+}
+.like-dislike-btn button {
+    letter-spacing: 2px;
+    width: 49.5%;
 }
