@@ -89,6 +89,14 @@ class Match(db.Model):
     entreprenuer = db.Column(db.Integer())
     reading = db.Column(db.Integer())
 
+
+class Matched(db.Model):
+    __tablename__ = 'Matched'
+    username = db.Column(db.String(15), primary_key=True, unique=True)
+    likes = db.Column(db.String(1200))
+    dislikes = db.Column(db.String(1200))
+
+
 # ---------------------------------------------------------------------------------
 #   Classes Forms
 # -------------------------------------------------------------------------------*/
@@ -151,6 +159,7 @@ def member():
     if request.method == "POST":
         print "Posted"
         like = request.form['feeling']
+
         print like
 
 
