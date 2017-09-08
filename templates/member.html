@@ -69,10 +69,14 @@
                     <div id="match" class="tabcontent" style="overflow: hidden;">
                         <div class="match-user">
 
-                            <img class="mySlides w3-animate-left" src="../static/images/profiles/{{ curr_match_table.image }}" style="width:100%;">
-                            <img class="mySlides w3-animate-left" src="../static/images/profiles/adriane.jpg" style="width:100%;">
-                            <img class="mySlides w3-animate-left" src="../static/images/profiles/agripina.jpg" style="width:100%;">
-                            <img class="mySlides w3-animate-left" src="../static/images/profiles/alise.jpg" style="width:100%;">
+                            <img class="mySlides w3-animate-left"
+                                 src="../static/images/profiles/{{ curr_match_table.image }}" style="width:100%;">
+                            <img class="mySlides w3-animate-left" src="../static/images/profiles/adriane.jpg"
+                                 style="width:100%;">
+                            <img class="mySlides w3-animate-left" src="../static/images/profiles/agripina.jpg"
+                                 style="width:100%;">
+                            <img class="mySlides w3-animate-left" src="../static/images/profiles/alise.jpg"
+                                 style="width:100%;">
 
                             <div class="like-dislike-btn">
                                 <button class="w3-button w3-blue" onclick="plusDivs(-1)">DISLIKE</button>
@@ -81,8 +85,15 @@
 
                         </div>
 
+                        <button class="accordion">Show Info</button>
+                        <div class="panel">
+                            <p>Lorem ipsum...asdsadsddsd</p>
+                            <h1>Gekki</h1>
+                            <h2>ouaihjsdoisj</h2>
+                        </div>
 
                         <script>
+                            // Image section
                             var slideIndex = 1;
                             showDivs(slideIndex);
 
@@ -103,6 +114,22 @@
                                     x[i].style.display = "none";
                                 }
                                 x[slideIndex - 1].style.display = "block";
+                            }
+
+                            // Accordian
+                            var acc = document.getElementsByClassName("accordion");
+                            var i;
+
+                            for (i = 0; i < acc.length; i++) {
+                                acc[i].onclick = function () {
+                                    this.classList.toggle("active");
+                                    var panel = this.nextElementSibling;
+                                    if (panel.style.maxHeight) {
+                                        panel.style.maxHeight = null;
+                                    } else {
+                                        panel.style.maxHeight = panel.scrollHeight + "px";
+                                    }
+                                }
                             }
                         </script>
 
