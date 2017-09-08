@@ -158,9 +158,11 @@ def member():
 
     if request.method == "POST":
         print "Posted"
-        like = request.form['feeling']
+        feeling = request.form['feeling']
 
-        print like
+        if "like" in feeling:
+            print feeling
+            #matched_user = Matched()
 
 
     highest_match_users = ""

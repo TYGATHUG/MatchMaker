@@ -78,8 +78,8 @@
                             {% endfor %}
 
                             <div class="like-dislike-btn">
-                                <button id="dislike" class="w3-button w3-blue" onclick="plusDivs(-1)" name="dislike">DISLIKE</button>
-                                <button id="like" class="w3-button w3-pink" onclick="plusDivs(1)" name="like">LIKE</button>
+                                <button id="dislike" class="w3-button w3-blue" onclick="plusDivs(-1)" name="dislike" value="dislike">DISLIKE</button>
+                                <button id="like" class="w3-button w3-pink" onclick="plusDivs(1)" name="like" value="like">LIKE</button>
                             </div>
 
 
@@ -88,11 +88,12 @@
                         <script>
                         $(function() {
                             $('#like').click(function() {
+                                var like = document.getElementById('like').value;
                                 console.log("function");
                                 $.ajax({
                                     type: 'POST',
                                     url: '/member',
-                                    data: {feeling: 'like'},
+                                    data: {feeling: like},
                                     success: function(response) {
                                         console.log('success');
                                     }
