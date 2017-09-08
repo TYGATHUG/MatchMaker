@@ -144,9 +144,15 @@ def home():
         return render_template('welcome.html', register_form=register_form, login_form=login_form)
 
 
-@app.route('/member')
+@app.route('/member', methods=['GET', 'POST'])
 @login_required
 def member():
+
+    if request.method == "POST":
+        print "Posted"
+        like = request.form['feeling']
+        print like
+
 
     highest_match_users = ""
     username = current_user.username.title()    # get session based username
@@ -163,7 +169,6 @@ def member():
 
 
         for user in users:   # get all uses usernames to store in dict
-            print user.username
             username = user.username
             matched_users.update({user.username: []})
 
@@ -224,9 +229,8 @@ def member():
         # return the highest matched users currently set to half of num items that match / 2 + 1
         highest_match_users = []
         match_level = up / 2 + 1
-        print match_level
 
-        for match in matched_users: # get the match data to return to member page
+        for match in matched_users:    # get the match data to return to member page
             for data in matched_users[match]:
 
                 user_match = 0
@@ -246,12 +250,9 @@ def member():
                         {'age': user.age},
                         {'bio': user.bio}
                     ])
-
-                    # print user.image
-                    print '\n'
                     break;
 
-        print highest_match_users
+
 
     return render_template('member.html', name=current_user.username, highest_match_users=highest_match_users, curr_user_table=curr_user_table, curr_match_table=curr_match_table)
 
@@ -381,6 +382,7 @@ def about():
     login_form = LoginForm()
 
     return render_template('about.html', register_form=register_form, login_form=login_form)
+
 
 
 # ---------------------------------------------------------------------------------

@@ -79,11 +79,42 @@
                                  style="width:100%;">
 
                             <div class="like-dislike-btn">
-                                <button class="w3-button w3-blue" onclick="plusDivs(-1)">DISLIKE</button>
-                                <button class="w3-button w3-pink" onclick="plusDivs(1)">LIKE</button>
+                                <button id="dislike" class="w3-button w3-blue" onclick="plusDivs(-1)" name="dislike">DISLIKE</button>
+                                <button id="like" class="w3-button w3-pink" onclick="plusDivs(1)" name="like">LIKE</button>
                             </div>
 
+
                         </div>
+
+                        <script>
+                        $(function() {
+                            $('#like').click(function() {
+                                console.log("function");
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/member',
+                                    data: {feeling: 'like'},
+                                    success: function(response) {
+                                        console.log('success');
+                                    }
+                                });
+                            });
+                        });
+
+                         $(function() {
+                            $('#dislike').click(function() {
+                                console.log("function");
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/member',
+                                    data: {feeling: 'dislike'},
+                                    success: function(response) {
+                                        console.log('success');
+                                    }
+                                });
+                            });
+                        });
+                        </script>
 
                         <button class="accordion">Show Info</button>
                         <div class="panel">
