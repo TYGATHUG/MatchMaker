@@ -147,96 +147,67 @@ def home():
 @app.route('/member')
 @login_required
 def member():
-    # user = User.query.filter_by(username=login_form.username.data).first()
-    highest_match_users = ''
-    # current user data
-    matched_users = ""
+
     highest_match_users = ""
-    username = current_user.username.title()
-    curr_user = Match.query.filter_by(username=username).first()
+    username = current_user.username.title()    # get session based username
 
-    curr_user_table = User.query.filter_by(username=current_user.username).first()
-    curr_match_table = Match.query.filter_by(username=current_user.username).first()
+    curr_user = Match.query.filter_by(username=username.lower()).first()    # get current user by matching session and Match DB
 
-    if curr_user:
-        print "username: "
-        print curr_user.username
-        """
-        print cu_match.practicality
-        print cu_match.love
-        print cu_match.excitment
-        print '\n'
-        """
+    #curr_user_table = User.query.filter_by(username=current_user.username).first()
+    #curr_match_table = Match.query.filter_by(username=current_user.username).first()
+
+    if curr_user:    # if curr user has made a profile we can match them
+
         matched_users = {}
-        # match user data
-        users = Match.query.all()
-        for user in users:
+        users = Match.query.all()  # get all the match profiles
+
+
+        for user in users:   # get all uses usernames to store in dict
+            print user.username
             username = user.username
             matched_users.update({user.username: []})
 
-        for user in users:
+        for user in users:   # get all the matches within a range and store in dict against name
 
             up = user.practicality + 10
             down = user.practicality - 10
             if not curr_user.practicality > up:
                 if not curr_user.practicality < down:
                     matched_users[user.username].append({'practicality': user.practicality})
-                    print "!!!!Match prac: "
-                    print curr_user.practicality
-                    print user.practicality
-                    print '\n'
 
             up = user.love + 10
             down = user.love - 10
             if not curr_user.love > up:
                 if not curr_user.love < down:
                     matched_users[user.username].append({'love': user.love})
-                    print "!!!!Match love: "
-                    print curr_user.love
-                    print user.love
-                    print '\n'
 
             up = user.excitment + 10
             down = user.excitment - 10
             if not curr_user.excitment > up:
                 if not curr_user.excitment < down:
                     matched_users[user.username].append({'excitment': user.excitment})
-                    print "!!!!Match exc: "
-                    print curr_user.excitment
-                    print user.excitment
-                    print '\n'
 
             up = user.challenge + 10
             down = user.challenge - 10
             if not curr_user.challenge > up:
                 if not curr_user.challenge < down:
-                    print "!!!!Match challenge: "
-                    print user.challenge
-                    print '\n'
+                    matched_users[user.username].append({'challenge': user.challenge})
 
             up = user.closeness + 10
             down = user.closeness - 10
             if not curr_user.closeness > up:
                 if not curr_user.closeness < down:
-                    print "!!!!Match closeness: "
-                    print user.closeness
-                    print '\n'
+                    matched_users[user.username].append({'closeness': user.closeness})
 
             up = user.structure + 10
             down = user.structure - 10
             if not curr_user.structure > up:
                 if not curr_user.structure < down:
-                    print "!!!!Match structure: "
-                    print user.structure
-                    print '\n'
+                    matched_users[user.username].append({'structure': user.structure})
 
             if not curr_user.live_music == 0:
                 if not user.live_music == 0:
-                    print "!!!!Match music: "
-                    print user.live_music
-                    print '\n'
-
-            print '\n'
+                   matched_users[user.username].append({'structure': user.live_music})
 
         # get the number of fields that match for each user
         up = 0
@@ -249,9 +220,13 @@ def member():
             if num_match < down:
                 down = num_match
 
-        # return the highest matched users
+
+        # return the highest matched users currently set to half of num items that match / 2 + 1
         highest_match_users = []
-        for match in matched_users:
+        match_level = up / 2 + 1
+        print match_level
+
+        for match in matched_users: # get the match data to return to member page
             for data in matched_users[match]:
 
                 user_match = 0
@@ -260,13 +235,13 @@ def member():
                 except:
                     user_match = 0
 
-                if user_match == up:
+                if user_match >= match_level:
                     highest_match_users.append(matched_users[match])
 
-                    user = Match.query.filter_by(name=match).first()
-                    print 'here'
+                    user = Match.query.filter_by(username=match).first()
+
                     highest_match_users.append([
-                        {'name': user.name},
+                        {'username': user.username},
                         {'image': user.image},
                         {'age': user.age},
                         {'bio': user.bio}
