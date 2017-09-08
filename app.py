@@ -268,7 +268,7 @@ def member():
                     ])
                     break;
 
-
+    print highest_match_users
 
     return render_template('member.html', name=current_user.username, highest_match_users=highest_match_users, curr_user_table=curr_user_table, curr_match_table=curr_match_table)
 

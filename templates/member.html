@@ -71,29 +71,34 @@
 
                             {% for user in highest_match_users %}
                                 {% for value in user %}
+
+                                        <button id="{{ value.username }}" class="w3-button w3-pink" onclick="plusDivs(1)" name="name" style="visibility: hidden" value="{{ value.username }}">{{ value.username }}</button>
+
+
                                     {% if value.image %}
                                         <img class="mySlides w3-animate-left" src="../static/images/profiles/{{ value.image }}" style="width:100%;">
+
                                     {% endif %}
                                 {% endfor %}
                             {% endfor %}
-
                             <div class="like-dislike-btn">
                                 <button id="dislike" class="w3-button w3-blue" onclick="plusDivs(-1)" name="dislike" value="dislike">DISLIKE</button>
                                 <button id="like" class="w3-button w3-pink" onclick="plusDivs(1)" name="like" value="like">LIKE</button>
                             </div>
 
-
-                        </div>
-
-                        <script>
+<script>
                         $(function() {
                             $('#like').click(function() {
                                 var like = document.getElementById('like').value;
+                                var matched_username = document.getElementById('test');
+                                console.log(matched_username);
+
                                 console.log("function");
                                 $.ajax({
                                     type: 'POST',
                                     url: '/member',
-                                    data: {feeling: like},
+                                    data: {feeling: like,
+                                           },
                                     success: function(response) {
                                         console.log('success');
                                     }
@@ -103,6 +108,9 @@
 
                          $(function() {
                             $('#dislike').click(function() {
+                                var like = document.getElementById('like').value;
+                                var matched_username = document.getElementById('matched_username');
+                                console.log(matched_username.textContent);
                                 console.log("function");
                                 $.ajax({
                                     type: 'POST',
@@ -115,6 +123,9 @@
                             });
                         });
                         </script>
+
+
+
 
                         <button class="accordion">Show Info</button>
                         <div class="panel">
@@ -159,7 +170,7 @@
                                     {% endif %}
 
                                     {% if value.username %}
-                                        <span name="username" value="{{ value.username }}" style="visibility: hidden">Username: {{ value.username }}</span>
+                                        <span id="matched_username" name="username" value="{{ value.username }}" style="visibility: hidden">{{ value.username }}</span>
                                     {% endif %}
 
                                 {% endfor %}
