@@ -71,12 +71,13 @@
 
                             {% for user in highest_match_users %}
                                 {% for value in user %}
+                                    {% if value.username %}
 
-                                        <button id="{{ value.username }}" class="w3-button w3-pink" onclick="plusDivs(1)" name="name" style="visibility: hidden" value="{{ value.username }}">{{ value.username }}</button>
+                                       <span class="matched_username">{{ value.username }}</span>
+                                    {% endif %}
 
-
-                                    {% if value.image %}
-                                        <img class="mySlides w3-animate-left" src="../static/images/profiles/{{ value.image }}" style="width:100%;">
+                                {% if value.image %}
+                                    <img class="mySlides w3-animate-left" src="../static/images/profiles/{{ value.image }}" style="width:100%;">
 
                                     {% endif %}
                                 {% endfor %}
@@ -86,43 +87,9 @@
                                 <button id="like" class="w3-button w3-pink" onclick="plusDivs(1)" name="like" value="like">LIKE</button>
                             </div>
 
-<script>
-                        $(function() {
-                            $('#like').click(function() {
-                                var like = document.getElementById('like').value;
-                                var matched_username = document.getElementById('test');
-                                console.log(matched_username);
 
-                                console.log("function");
-                                $.ajax({
-                                    type: 'POST',
-                                    url: '/member',
-                                    data: {feeling: like,
-                                           },
-                                    success: function(response) {
-                                        console.log('success');
-                                    }
-                                });
-                            });
-                        });
 
-                         $(function() {
-                            $('#dislike').click(function() {
-                                var like = document.getElementById('like').value;
-                                var matched_username = document.getElementById('matched_username');
-                                console.log(matched_username.textContent);
-                                console.log("function");
-                                $.ajax({
-                                    type: 'POST',
-                                    url: '/member',
-                                    data: {feeling: 'dislike'},
-                                    success: function(response) {
-                                        console.log('success');
-                                    }
-                                });
-                            });
-                        });
-                        </script>
+
 
 
 
@@ -170,7 +137,7 @@
                                     {% endif %}
 
                                     {% if value.username %}
-                                        <span id="matched_username" name="username" value="{{ value.username }}" style="visibility: hidden">{{ value.username }}</span>
+
                                     {% endif %}
 
                                 {% endfor %}
@@ -178,6 +145,7 @@
 
                         </div>
                     </div>
+
 
                         <script>
                             // Image section
@@ -201,7 +169,33 @@
                                     x[i].style.display = "none";
                                 }
                                 x[slideIndex - 1].style.display = "block";
+                                console.log('herre');
+                                console.log(slideIndex);
+
+
+
+                                $(function() {
+                                $('#like').click(function() {
+                                var like = document.getElementById('like').value;
+                                var matched_username = document.getElementsByClassName("matched_username");
+
+                                matched_username = (matched_username[slideIndex].textContent);
+
+                                console.log("function");
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/member',
+                                    data: {feeling: matched_username,
+                                           },
+                                    success: function(response) {
+                                        console.log('success');
+                                    }
+                                });
+                            });
+                        });
                             }
+
+
 
                             // Accordian
                             var acc = document.getElementsByClassName("accordion");
