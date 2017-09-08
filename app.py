@@ -139,7 +139,7 @@ def home():
     globals()['PREVIOUS_SAVED_ROUTE'] = "welcome.html"
 
     if current_user.is_authenticated:
-        return render_template('member.html')
+        return member()
     else:
         return render_template('welcome.html', register_form=register_form, login_form=login_form)
 
