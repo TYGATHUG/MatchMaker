@@ -69,14 +69,13 @@
                     <div id="match" class="tabcontent" style="overflow: hidden;">
                         <div class="match-user">
 
-                            <img class="mySlides w3-animate-left"
-                                 src="../static/images/profiles/{{ curr_match_table.image }}" style="width:100%;">
-                            <img class="mySlides w3-animate-left" src="../static/images/profiles/adriane.jpg"
-                                 style="width:100%;">
-                            <img class="mySlides w3-animate-left" src="../static/images/profiles/agripina.jpg"
-                                 style="width:100%;">
-                            <img class="mySlides w3-animate-left" src="../static/images/profiles/alise.jpg"
-                                 style="width:100%;">
+                            {% for user in highest_match_users %}
+                                {% for value in user %}
+                                    {% if value.image %}
+                                        <img class="mySlides w3-animate-left" src="../static/images/profiles/{{ value.image }}" style="width:100%;">
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
 
                             <div class="like-dislike-btn">
                                 <button id="dislike" class="w3-button w3-blue" onclick="plusDivs(-1)" name="dislike">DISLIKE</button>
@@ -121,7 +120,46 @@
                             <p>Lorem ipsum...asdsadsddsd</p>
                             <h1>Gekki</h1>
                             <h2>ouaihjsdoisj</h2>
+                            <button class="accordion">Show Info</button>
+                            <div class="panel">
+                                {% for user in highest_match_users %}
+                                    {% for value in user %}
+                                        {% if value.name %}
+                                            <p>Name: {{ value.name }}</p>
+                                        {% endif %}
+                                        {% if value.gender %}
+                                            <p>Gender: {{ value.gender }}</p>
+                                        {% endif %}
+                                        {% if value.age %}
+                                            <p>Age: {{ value.age }}</p>
+                                        {% endif %}
+                                        {% if value.height %}
+                                            <p>Height: {{ value.height }}</p>
+                                        {% endif %}
+                                        {% if value.location %}
+                                            <p>Location: {{ value.location }}</p>
+                                        {% endif %}
+                                        {% if value.education %}
+                                            <p>Education: {{ value.education }}</p>
+                                        {% endif %}
+                                        {% if value.ethnicity %}
+                                            <p>Ethnicity: {{ value.ethnicity }}</p>
+                                        {% endif %}
+                                        {% if value.religion %}
+                                            <p>Religion: {{ value.religion }}</p>
+                                        {% endif %}
+                                        {% if value.bio %}
+                                            <p>Bio: {{ value.bio }}</p>
+                                        {% endif %}
+
+
+
+                                    {% endfor %}
+                                {% endfor %}
+                            </div>
+
                         </div>
+                    </div>
 
                         <script>
                             // Image section
@@ -164,17 +202,6 @@
                             }
                         </script>
 
-                                           <h1>Match Data</h1>
-                                            {% for user in highest_match_users %}
-
-                                                {% for value in user %}
-                            
-                                                    {{ value.age }}
-                                                {% endfor %}
-                                            {% endfor %}
-
-
-
                     <div id="chat" class="tabcontent">
                         <img src="../static/images/other/chat_demo.png" width="100%">
                         <p><b>Need to figure out the format of chats with multiple users...</b></p>
@@ -184,7 +211,6 @@
                         <img src="../static/images/other/settings_demo.jpg" width="100%">
                         <p><b>Quick setting toggles will go here (Age/Gender Preference)</b></p>
                     </div>
-
 
                     <script>
                         // Content Area

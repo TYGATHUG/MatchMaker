@@ -181,6 +181,12 @@ div.tab button.active {
 /* ------------------------------------------------------------------------------
 	 Member page
 -------------------------------------------------------------------------------*/
+@media screen and (max-width: 1024px) {
+    .like-dislike-btn button {
+        width: 49% !important;
+    }
+}
+
 .like-dislike-btn {
     width: 100%;
     margin-top: 10px;
@@ -188,7 +194,7 @@ div.tab button.active {
 }
 .like-dislike-btn button {
     letter-spacing: 2px;
-    width: 49.5% !important;
+    width: 49.5%;
 }
 
 .like-dislike-btn button:hover {
