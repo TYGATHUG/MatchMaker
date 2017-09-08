@@ -4,6 +4,9 @@
 # Description: A matchmaking website
 
 # Members:
+- Ben Diep
+- Damon Toumbourou
+- Alex Cheong
 
 # Installation:
  - install virtual env

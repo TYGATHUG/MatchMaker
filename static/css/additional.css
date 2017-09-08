@@ -697,8 +697,8 @@ body {
     position: relative;
     font-size: 2.3em;
     text-align: center;
-    font-family: "Source Sans Pro";
-    letter-spacing: 4px;
+    font-family: 'Oxygen',"Source Sans Pro";
+    letter-spacing: 1px;
     font-weight: 700;
     text-transform: uppercase;
     color: rgba(0, 0, 0, 1);

@@ -175,3 +175,17 @@ div.tab button.active {
     margin-left: auto;
     margin-right: auto;
 }
+
+
+/* ------------------------------------------------------------------------------
+	 Member page
+-------------------------------------------------------------------------------*/
+.like-dislike-btn {
+    width: 100%;
+    margin-top: 10px;
+    float: left;
+}
+.like-dislike-btn button {
+    letter-spacing: 2px;
+    width: 49.5%;
+}

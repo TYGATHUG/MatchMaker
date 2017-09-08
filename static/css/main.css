@@ -699,7 +699,7 @@ body {
     font-size: 2.3em;
     text-align: center;
     font-family: 'Oxygen', "Source Sans Pro";
-    letter-spacing: 4px;
+    letter-spacing: 1px;
     font-weight: 700;
     text-transform: uppercase;
     color: rgba(0, 0, 0, 1);
@@ -780,3 +780,4 @@ textarea:hover {
     top: -62px;
     visibility: hidden;
 }
+
