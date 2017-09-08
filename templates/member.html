@@ -117,14 +117,9 @@
 
                         <button class="accordion">Show Info</button>
                         <div class="panel">
-                            <p>Lorem ipsum...asdsadsddsd</p>
-                            <h1>Gekki</h1>
-                            <h2>ouaihjsdoisj</h2>
-                            <button class="accordion">Show Info</button>
-                            <div class="panel">
+
                                 {% for user in highest_match_users %}
 
-{#                                    {{ user }}#}
                                     {% for value in user %}
                                         {% if value.name %}
                                             <p>Name: {{ value.name }}</p>
@@ -164,7 +159,6 @@
 
                                     {% endfor %}
                                 {% endfor %}
-                            </div>
 
                         </div>
                     </div>
