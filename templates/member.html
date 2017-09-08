@@ -121,6 +121,7 @@
                                 {% for user in highest_match_users %}
 
                                     {% for value in user %}
+
                                         {% if value.name %}
                                             <p>Name: {{ value.name }}</p>
                                         {% endif %}
@@ -155,6 +156,10 @@
 
                                         {% if value.bio %}
                                             <p>Bio: {{ value.bio }}</p>
+                                        {% endif %}
+
+                                        {% if value.username %}
+                                            <span name="username" value="{{ value.username }}" style="visibility: hidden">Username: {{ value.username }}</span>
                                         {% endif %}
 
                                     {% endfor %}
@@ -202,6 +207,8 @@
                                     }
                                 }
                             }
+
+
                         </script>
 
                     <div id="chat" class="tabcontent">
