@@ -118,52 +118,51 @@
                         <button class="accordion">Show Info</button>
                         <div class="panel">
 
-                                {% for user in highest_match_users %}
+                            {% for user in highest_match_users %}
 
-                                    {% for value in user %}
+                                {% for value in user %}
+                                    {% if value.name %}
+                                        <p>Name: {{ value.name }}</p>
+                                    {% endif %}
 
-                                        {% if value.name %}
-                                            <p>Name: {{ value.name }}</p>
-                                        {% endif %}
+                                    {% if value.gender %}
+                                        <p>Gender: {{ value.gender }}</p>
+                                    {% endif %}
 
-                                        {% if value.gender %}
-                                            <p>Gender: {{ value.gender }}</p>
-                                        {% endif %}
+                                    {% if value.age %}
+                                        <p>Age: {{ value.age }}</p>
+                                    {% endif %}
 
-                                        {% if value.age %}
-                                            <p>Age: {{ value.age }}</p>
-                                        {% endif %}
+                                    {% if value.height %}
+                                        <p>Height: {{ value.height }}</p>
+                                    {% endif %}
 
-                                        {% if value.height %}
-                                            <p>Height: {{ value.height }}</p>
-                                        {% endif %}
+                                    {% if value.location %}
+                                        <p>Location: {{ value.location }}</p>
+                                    {% endif %}
 
-                                        {% if value.location %}
-                                            <p>Location: {{ value.location }}</p>
-                                        {% endif %}
+                                    {% if value.education %}
+                                        <p>Education: {{ value.education }}</p>
+                                    {% endif %}
 
-                                        {% if value.education %}
-                                            <p>Education: {{ value.education }}</p>
-                                        {% endif %}
+                                    {% if value.ethnicity %}
+                                        <p>Ethnicity: {{ value.ethnicity }}</p>
+                                    {% endif %}
 
-                                        {% if value.ethnicity %}
-                                            <p>Ethnicity: {{ value.ethnicity }}</p>
-                                        {% endif %}
+                                    {% if value.religion %}
+                                        <p>Religion: {{ value.religion }}</p>
+                                    {% endif %}
 
-                                        {% if value.religion %}
-                                            <p>Religion: {{ value.religion }}</p>
-                                        {% endif %}
+                                    {% if value.bio %}
+                                        <p>Bio: {{ value.bio }}</p>
+                                    {% endif %}
 
-                                        {% if value.bio %}
-                                            <p>Bio: {{ value.bio }}</p>
-                                        {% endif %}
+                                    {% if value.username %}
+                                        <span name="username" value="{{ value.username }}" style="visibility: hidden">Username: {{ value.username }}</span>
+                                    {% endif %}
 
-                                        {% if value.username %}
-                                            <span name="username" value="{{ value.username }}" style="visibility: hidden">Username: {{ value.username }}</span>
-                                        {% endif %}
-
-                                    {% endfor %}
                                 {% endfor %}
+                            {% endfor %}
 
                         </div>
                     </div>
@@ -207,8 +206,7 @@
                                     }
                                 }
                             }
-
-
+                            
                         </script>
 
                     <div id="chat" class="tabcontent">
