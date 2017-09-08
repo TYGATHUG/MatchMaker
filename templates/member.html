@@ -156,6 +156,8 @@
                                 showDivs(slideIndex += n);
                             }
 
+
+
                             function showDivs(n) {
                                 var i;
                                 var x = document.getElementsByClassName("mySlides");
@@ -169,32 +171,26 @@
                                     x[i].style.display = "none";
                                 }
                                 x[slideIndex - 1].style.display = "block";
-                                console.log('herre');
-                                console.log(slideIndex);
+                            }
 
+                            var matched_username = document.getElementsByClassName("matched_username");
+                            matched_username = (matched_username[slideIndex -1 ].textContent);
 
-
-                                $(function() {
-                                $('#like').click(function() {
+                            $('#like').click(function() {
                                 var like = document.getElementById('like').value;
                                 var matched_username = document.getElementsByClassName("matched_username");
+                                matched_username = (matched_username[slideIndex -1 ].textContent);
 
-                                matched_username = (matched_username[slideIndex].textContent);
-
-                                console.log("function");
-                                $.ajax({
-                                    type: 'POST',
-                                    url: '/member',
-                                    data: {feeling: matched_username,
-                                           },
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/member',
+                                        data: {feeling: matched_username,
+                                    },
                                     success: function(response) {
                                         console.log('success');
                                     }
                                 });
                             });
-                        });
-                            }
-
 
 
                             // Accordian
