@@ -130,7 +130,8 @@ ul li {
 
 #header .logo {
     float: left;
-    padding-top: 2.5px;
+    padding-top: 8px;
+    margin-left: 5%;
 }
 
 #header.fixed {
