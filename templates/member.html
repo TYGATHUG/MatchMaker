@@ -81,13 +81,13 @@
 
                                     {% if value.image %}
                                         <img class="mySlides w3-animate-left"
-                                             src="../static/images/profiles/{{ value.image }}" style="width:100%;">
+                                             src="../static/images/profiles/{{ value.image }}" style="width:100%; max-height: 500px; min-height: 500px; overflow: hidden;">
                                     {% endif %}
 
                                 {% endfor %}
                             {% endfor %}
                             <div class="like-dislike-btn">
-                                <button id="dislike" class="w3-button w3-blue" onclick="plusDivs(-1)" name="dislike"
+                                <button id="dislike" class="w3-button w3-blue" onclick="plusDivs(1)" name="dislike"
                                         value="dislike">DISLIKE
                                 </button>
                                 <button id="like" class="w3-button w3-pink" onclick="plusDivs(1)" name="like"
@@ -145,6 +145,22 @@
 
                     function plusDivs(n) {
                         showDivs(slideIndex += n);
+
+                        var accordion = document.getElementsByClassName("accordion");
+                        if (accordion[0].classList.contains("active") == true) {
+                            accordion[0].click();
+                            accordion[0].classList.remove("active");
+                        }
+
+                        accordion[0].innerHTML = "SHOW INFO";
+
+                        document.getElementsByClassName('panel-name')[slideIndex-2].style.display = "none";
+                        document.getElementsByClassName('panel-gender')[slideIndex-2].style.display = "none";
+                        document.getElementsByClassName('panel-age')[slideIndex-2].style.display = "none";
+                        document.getElementsByClassName('panel-height')[slideIndex-2].style.display = "none";
+                        document.getElementsByClassName('panel-location')[slideIndex-2].style.display = "none";
+                        document.getElementsByClassName('panel-education')[slideIndex-2].style.display = "none";
+                        document.getElementsByClassName('panel-bio')[slideIndex-2].style.display = "none";
                     }
 
                     function showDivs(n) {
@@ -158,14 +174,14 @@
                         }
                         for (i = 0; i < x.length; i++) {
                             x[i].style.display = "none";
-                            document.getElementsByClassName('panel-name')[slideIndex-1].style.display = "none";
-                            document.getElementsByClassName('panel-gender')[slideIndex-1].style.display = "none";
-                            document.getElementsByClassName('panel-age')[slideIndex-1].style.display = "none";
-                            document.getElementsByClassName('panel-height')[slideIndex-1].style.display = "none";
-                            document.getElementsByClassName('panel-location')[slideIndex-1].style.display = "none";
-                            document.getElementsByClassName('panel-education')[slideIndex-1].style.display = "none";
-                            document.getElementsByClassName('panel-bio')[slideIndex-1].style.display = "none";
-                    }
+{#                            document.getElementsByClassName('panel-name')[slideIndex-1].style.display = "none";#}
+{#                            document.getElementsByClassName('panel-gender')[slideIndex-1].style.display = "none";#}
+{#                            document.getElementsByClassName('panel-age')[slideIndex-1].style.display = "none";#}
+{#                            document.getElementsByClassName('panel-height')[slideIndex-1].style.display = "none";#}
+{#                            document.getElementsByClassName('panel-location')[slideIndex-1].style.display = "none";#}
+{#                            document.getElementsByClassName('panel-education')[slideIndex-1].style.display = "none";#}
+{#                            document.getElementsByClassName('panel-bio')[slideIndex-1].style.display = "none";#}
+                        }
                         console.log(slideIndex - 1);
                         x[slideIndex - 1].style.display = "block";
                     }
@@ -181,7 +197,6 @@
                             console.log('yep');
                             likeIndex = 7;
                         }
-
 
                         var like = document.getElementById('like').value;
                         var matched_username = document.getElementsByClassName("matched_username");
