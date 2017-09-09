@@ -81,7 +81,7 @@
 
                                     {% if value.image %}
                                         <img class="mySlides w3-animate-left"
-                                             src="../static/images/profiles/{{ value.image }}" style="width:100%; max-height: 500px; min-height: 500px; overflow: hidden;">
+                                             src="../static/images/profiles/{{ value.image }}" style="margin: auto; max-width:696px; min-height:600px ;max-height:600px; overflow: hidden;">
                                     {% endif %}
 
                                 {% endfor %}
@@ -103,31 +103,31 @@
                                     {% for value in user %}
 
                                         {% if value.name %}
-                                            <p class="panel-name" style="display:none;"><b>Name: </b>{{ value.name }}</p>
+                                            <p class="panel-name" style="display:none; margin-top: 5px; margin-bottom: 5px;"><b>Name: </b>{{ value.name }}</p>
                                         {% endif %}
 
                                         {% if value.gender %}
-                                            <p class="panel-gender" style="display:none;"><b>Gender: </b>{{ value.gender }}</p>
+                                            <p class="panel-gender" style="display:none; margin-top: 5px; margin-bottom: 5px"><b>Gender: </b>{{ value.gender }}</p>
                                         {% endif %}
 
                                         {% if value.age %}
-                                            <p class="panel-age" style="display:none;"><b>Age: </b>{{ value.age }}</p>
+                                            <p class="panel-age" style="display:none; margin-top: 5px; margin-bottom: 5px;"><b>Age: </b>{{ value.age }}</p>
                                         {% endif %}
 
                                         {% if value.height %}
-                                            <p class="panel-height" style="display:none;"><b>Height: </b>{{ value.height }} cm</p>
+                                            <p class="panel-height" style="display:none; margin-top: 5px; margin-bottom: 5px;"><b>Height: </b>{{ value.height }} cm</p>
                                         {% endif %}
 
                                         {% if value.location %}
-                                            <p class="panel-location" style="display:none;"><b>Location: </b>{{ value.location }}</p>
+                                            <p class="panel-location" style="display:none; margin-top: 5px; margin-bottom: 5px;"><b>Location: </b>{{ value.location }}</p>
                                         {% endif %}
 
                                         {% if value.education %}
-                                            <p class="panel-education" style="display:none;"><b>Education: </b>{{ value.education }}</p>
+                                            <p class="panel-education" style="display:none; margin-top: 5px; margin-bottom: 5px;"><b>Education: </b>{{ value.education }}</p>
                                         {% endif %}
 
                                         {% if value.bio %}
-                                            <p class="panel-bio" style="display:none;"><b>Bio: </b>{{ value.bio }}</p>
+                                            <p class="panel-bio" style="display:none; margin-top: 5px; margin-bottom: 5px;"><b>Bio: </b>{{ value.bio }}</p>
                                         {% endif %}
 
                                     {% endfor %}
@@ -239,7 +239,6 @@
 
 
                     <div id="matched" class="tabcontent">
-                        <p><b>Need to figure out the format of chats with multiple users...</b></p>
                          {% for user in mutual_likes %}
                             {% for value in user %}
 
@@ -260,6 +259,7 @@
                                 {% endif %}
 
                             {% endfor %}
+                             <p></p>
                         {% endfor %}
                     </div>
 
