@@ -185,6 +185,11 @@ div.tab button.active {
     overflow: auto;
 }
 
+.panel-title {
+    font-weight: bold;
+    font-size: 12px;
+    text-transform: uppercase;
+}
 /* ------------------------------------------------------------------------------
 	 Recommended Section
 -------------------------------------------------------------------------------*/
