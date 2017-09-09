@@ -75,13 +75,11 @@
                             {% for user in highest_match_users %}
                                 {% for value in user %}
                                     {% if value.username %}
-
                                        <span class="matched_username">{{ value.username }}</span>
                                     {% endif %}
 
-                                {% if value.image %}
-                                    <img class="mySlides w3-animate-left" src="../static/images/profiles/{{ value.image }}" style="width:100%;">
-
+                                    {% if value.image %}
+                                        <img class="mySlides w3-animate-left" src="../static/images/profiles/{{ value.image }}" style="width:100%;">
                                     {% endif %}
                                 {% endfor %}
                             {% endfor %}
@@ -89,8 +87,6 @@
                                 <button id="dislike" class="w3-button w3-blue" onclick="plusDivs(-1)" name="dislike" value="dislike">DISLIKE</button>
                                 <button id="like" class="w3-button w3-pink" onclick="plusDivs(1)" name="like" value="like">LIKE</button>
                             </div>
-
-
 
                         <button class="accordion">Show Info</button>
                         <div class="panel">
@@ -143,13 +139,12 @@
 
                         </div>
                     </div>
-
                         
                         <script>  <!-- Javascript for Image slider -->
+
                             // Image section
                             var slideIndex = 1;
                             showDivs(slideIndex);
-
                             function plusDivs(n) {
                                 showDivs(slideIndex += n);
                             }
@@ -170,14 +165,13 @@
                             }
 
                             <!-- POST LIKES HERE  -->
+
                             var matched_username = document.getElementsByClassName("matched_username");
                             matched_username = (matched_username[slideIndex -1 ].textContent);
-
                             $('#like').click(function() {
                                 var like = document.getElementById('like').value;
                                 var matched_username = document.getElementsByClassName("matched_username");
                                 matched_username = (matched_username[slideIndex -1 ].textContent);
-
                                     $.ajax({
                                         type: 'POST',
                                         url: '/member',
@@ -188,13 +182,10 @@
                                     }
                                 });
                             });
-
-
                             // Accordian
                             var acc = document.getElementsByClassName("accordion");
                             var i;
-
-                            for (i = 0; i < acc.length; i++) {
+                            for (i = -1; i < acc.length; i++) {
                                 acc[i].onclick = function () {
                                     this.classList.toggle("active");
                                     var panel = this.nextElementSibling;
@@ -233,7 +224,6 @@
                             document.getElementById(pageName).style.display = "block";
                             evt.currentTarget.className += " active";
                         }
-
                         // Get the element with id="defaultOpen" and click on it
                         document.getElementById("defaultOpen").click();
                     </script>
