@@ -16,6 +16,7 @@ import api
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
 from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
 
 # ---------------------------------------------------------------------------------
 #   Initialisation / Settings
@@ -41,6 +42,10 @@ ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024
 
+# Admin configurations
+admin = Admin(app)
+
+
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
@@ -55,6 +60,7 @@ class User(UserMixin, db.Model):
     password = db.Column(db.String(80))
     setup = db.Column(db.Boolean())
 
+admin.add_view(ModelView(User, db.session)) # create User view for current session
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -403,7 +409,6 @@ def about():
 
 @app.route('/admin')
 def admin():
-    #admin = Admin(app, name='microblog', template_mode='bootstrap3')
 
     return render_template('admin.html')
 
