@@ -239,16 +239,18 @@
 
 
                     <div id="matched" class="tabcontent">
+
                          {% for user in mutual_likes %}
                             {% for value in user %}
+
+                                {% if value.image %}
+                                    <img src="../static/images/profiles/{{ value.image }}" width="70%">
+                                {% endif %}
 
                                 {% if value.username %}
                                     {{ value.username }}
                                 {% endif %}
 
-                                {% if value.age %}
-                                    {{ value.age }}
-                                {% endif %}
 
                                 {% if value.bio %}
                                     {{ value.bio }}
@@ -261,11 +263,12 @@
                             {% endfor %}
                              <p></p>
                         {% endfor %}
+
                     </div>
 
 
                     <div id="setting" class="tabcontent">
-                        <img src="../static/images/other/settings_demo.jpg" width="100%">
+
                         <p><b>Quick setting toggles will go here (Age/Gender Preference)</b></p>
                     </div>
 

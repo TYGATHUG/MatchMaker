@@ -1,7 +1,7 @@
 # ---------------------------------------------------------------------------------
 #   Imports
 # -------------------------------------------------------------------------------*/
-# encoding=utf8
+# -*- coding: utf-8 -*-
 import os
 from flask import Flask, render_template, url_for, g, redirect, request, flash
 from flask_bootstrap import Bootstrap
@@ -74,12 +74,14 @@ class Match(db.Model):
     image = db.Column(db.String(120))
     name = db.Column(db.String(20))
     gender = db.Column(db.String(20))
+    pref_gender = db.Column(db.String(20))
     age = db.Column(db.Integer())
+    pref_age_min = db.Column(db.Integer())
+    pref_age_max = db.Column(db.Integer())
     height = db.Column(db.Integer())
     location = db.Column(db.String(30))
+    pref_location = db.Column(db.String(1200))
     education = db.Column(db.String(30))
-    ethnicity = db.Column(db.String(30))
-    religion = db.Column(db.String(30))
     bio = db.Column(db.String(255))
     practicality = db.Column(db.Integer())
     love = db.Column(db.Integer())
@@ -136,8 +138,6 @@ class MatchForm(FlaskForm):
     height = StringField('Height', validators=[InputRequired(), Length(min=1, max=5)])
     location = StringField('Location', validators=[InputRequired(), Length(min=1)])
     education = StringField('Education', validators=[InputRequired(), Length(min=1, max=20)])
-    ethnicity = StringField('Ethnicity', validators=[InputRequired(), Length(min=1, max=20)])
-    religion = StringField('Religion', validators=[InputRequired(), Length(min=1, max=20)])
     bio = StringField('Bio', validators=[InputRequired(), Length(min=1, max=255)])
     q1 = StringField('Question 1', validators=[InputRequired(), Length(min=15, max=255)])
     q2 = StringField('Question 2', validators=[InputRequired(), Length(min=15, max=255)])
@@ -275,8 +275,6 @@ def profile():
         new_match = Match(username=username, view_count=0, name=match_form.name.data, image=filename, \
                           gender=match_form.gender.data, age=match_form.age.data, height=match_form.height.data, \
                           location=match_form.location.data, education=match_form.education.data,
-                          ethnicity=match_form.ethnicity.data, \
-                          religion=match_form.religion.data, bio=match_form.bio.data, practicality=practicality, \
                           love=love, excitment=excitment, challenge=challenge, \
                           closeness=closeness, structure=structure, live_music=live_music, \
                           spare_moment_purchases=spare_moment_purchases, gym_member=gym_member, \
@@ -451,19 +449,21 @@ def match_users_watson(curr_user):
 
         matched_users = {}
         users = Match.query.all()  # get all the match profiles
-
+        print
 
         for user in users:   # get all uses usernames to store in dict
             username = user.username
             matched_users.update({user.username: []})
 
         for user in users:   # get all the matches within a range and store in dict against name
+            print 'erer'
 
-            up = user.practicality + 10
-            down = user.practicality - 10
-            if not curr_user.practicality > up:
-                if not curr_user.practicality < down:
-                    matched_users[user.username].append({'practicality': user.practicality})
+            if user.practicality:
+                up = user.practicality + 10
+                down = user.practicality - 10
+                if not curr_user.practicality > up:
+                    if not curr_user.practicality < down:
+                        matched_users[user.username].append({'practicality': user.practicality})
 
             up = user.love + 10
             down = user.love - 10

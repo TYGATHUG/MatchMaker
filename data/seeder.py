@@ -35,12 +35,14 @@ class Match(db.Model):
     image = db.Column(db.String(120))
     name = db.Column(db.String(20))
     gender = db.Column(db.String(20))
+    pref_gender = db.Column(db.String(20))
     age = db.Column(db.Integer())
+    pref_age_min = db.Column(db.Integer())
+    pref_age_max = db.Column(db.Integer())
     height = db.Column(db.Integer())
     location = db.Column(db.String(30))
+    pref_location = db.Column(db.String(1200))
     education = db.Column(db.String(30))
-    ethnicity = db.Column(db.String(30))
-    religion = db.Column(db.String(30))
     bio = db.Column(db.String(255))
     practicality = db.Column(db.Integer())
     love = db.Column(db.Integer())
@@ -55,6 +57,21 @@ class Match(db.Model):
     volunteering = db.Column(db.Integer())
     entreprenuer = db.Column(db.Integer())
     reading = db.Column(db.Integer())
+
+
+class Like(db.Model):
+    __tablename__ = 'Like'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(15))
+    liked_user = db.Column(db.String(15))
+
+
+class Dislike(db.Model):
+    __tablename__ = 'Dislike'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(15))
+    disliked_user = db.Column(db.String(15))
+
 
 
 # if current tables exist then drop them
@@ -91,19 +108,20 @@ def data_entry():
 
     location = ["Melbourne", "Sydney", "Perth", "ACT", "Adelaide", "Hobart", "ACT", "Darwin", "Brisbane"]
     education = ["Certificate", "Diploma", "Associate Degree", "Bachelor", "Master", "Doctoral"]
-    ethnicity = ["American Indian", "Asian", "African", "Pacific Islander", "White", "Hispanic", "Middle Eastern"]
-    religion = ["Christian", "Islam", "Buddhism", "Confucianism", "Catholic", "Atheist", "Agnostic", "Hinduism", "Judaism"]
-    bio = ["Lorem ipsum dolor sit amet, consectetur adipiscing elit.", "Quisque et tellus rhoncus, eleifend massa vel, condimentum lacus.",
-           "Nullam laoreet neque nec justo hendrerit sagittis.", "Duis laoreet dolor ut nisl pharetra laoreet.",
-           "In id ligula sit amet sem gravida scelerisque.", "Ut sed nulla vitae orci pharetra lacinia.",
+    
+    bio = ["I like to fly model aircraft.", "I like pizza and walks on beach at sunset.",
+           "I like to play minecraft.", "I like horror movies and fast cars.",
+           "My ideal date is walk on beach and enjoy the sunset.", "I love to travel and see other cultures.",
            "Duis efficitur diam sit amet augue mollis fermentum.", "Aliquam sed diam at sapien aliquet pellentesque.",
            "Morbi malesuada ipsum sit amet interdum pellentesque.", "Phasellus nec lacus vel elit iaculis ullamcorper at consequat lectus.",
            "Maecenas venenatis urna sed lectus vehicula pellentesque.", "Fusce placerat sem eu quam vestibulum imperdiet.",
            "Maecenas congue mauris id leo volutpat posuere.", "Nullam posuere risus non eros porttitor, quis cursus erat finibus."
            ]
+
     experienceValues = [0, 0.5, 1]
 
     initialLengthOfNames = len(usernames)
+
 
     for x in range(0,initialLengthOfNames):
 
@@ -113,19 +131,18 @@ def data_entry():
         randGender = random.choice(gender)
         randLocation = random.choice(location)
         randEducation = random.choice(education)
-        randEthnicity = random.choice(ethnicity)
-        randReligion = random.choice(religion)
         randBio = random.choice(bio)
 
         # for user table
         emailName = randName + emailExtension
 
-        conn.execute('''INSERT INTO Match (username, view_count, image, name, gender, age, height, location, education, ethnicity,
-                     religion, bio, practicality, love, excitment, challenge, closeness, structure, live_music, 
+        conn.execute('''INSERT INTO Match (username, view_count, image, name, gender, pref_gender,
+                     age, pref_age_min, pref_age_max, height, location, pref_location, education,
+                     bio, practicality, love, excitment, challenge, closeness, structure, live_music, 
                      spare_moment_purchases, gym_member, outdoors, volunteering, entreprenuer, reading) 
-                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-                     (randName.lower(), 0, imageName.lower(), randName, randGender, (randint(18, 70)), (randint(145, 213)), randLocation,
-                     randEducation, randEthnicity, randReligion, randBio, (randint(1, 100)), (randint(1, 100)),
+                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                     (randName.lower(), 0, imageName.lower(), randName, randGender, "", (randint(18, 70)), 0, 0,
+                     (randint(145, 213)), randLocation, "", randEducation, randBio, (randint(1, 100)), (randint(1, 100)),
                      (randint(1, 100)), (randint(1, 100)), (randint(1, 100)), (randint(1, 100)), random.choice(experienceValues),
                      random.choice(experienceValues), random.choice(experienceValues), random.choice(experienceValues),
                      random.choice(experienceValues), random.choice(experienceValues), random.choice(experienceValues)))
