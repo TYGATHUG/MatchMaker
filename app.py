@@ -15,7 +15,6 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 import api
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
-from flask_admin import Admin
 
 # ---------------------------------------------------------------------------------
 #   Initialisation / Settings
@@ -168,21 +167,15 @@ def member():
 
     # take care of likes / dislikes
     if request.method == "POST":
-        print "Posted"
         like_dislike = request.form['like_dislike']
         liked_user = request.form['liked_user']
-        print like_dislike
-        print liked_user
 
         if "like" in like_dislike:
-            print "added liked user"
-            print curr_user.username
             like = Like(username=curr_user.username, liked_user=liked_user)
             db.session.add(like)
             db.session.commit()
 
         if "dislike" in like_dislike:
-            print "added dislike user"
             dislike = Dislike(username=curr_user.username, disliked_user=liked_user)
             db.session.add(dislike)
             db.session.commit()
@@ -518,7 +511,6 @@ def match_users_watson(curr_user):
                 except:
                     user_match = 0
 
-                print curr_user.username
                 if (user_match >= match_level) & (user_match != curr_user.username):
                     #highest_match_users.append(matched_users[match])
 
@@ -538,6 +530,7 @@ def match_users_watson(curr_user):
                     break;
 
     return highest_match_users
+
 
 
 

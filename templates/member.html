@@ -1,11 +1,11 @@
 {% extends 'main.html' %}
 
 {% block body %}
-    <!-- Display Validation errors-->
-    {% with messages=get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-                <script>
+<!-- Display Validation errors-->
+{% with messages=get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<script>
                     toastr.options = {
                         "closeButton": true,
                         "debug": false,
@@ -25,85 +25,92 @@
                         "closeMethod": "fadeOut"
                     }
                     toastr["success"]("Welcome {{ name }} !", "{{ message }}")
-                </script>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-    <!-- End Display Validation errors-->
 
-    <!-- If user has not set up a match profile -->
-    {% if curr_user_table.setup == False %}
-        <section id="intro" class="section intro no-padding">
-            <div class="container-fluid"
-                 style="background: linear-gradient(rgba(255, 0, 0, 0.45),rgba(255, 0, 0, 0.45)),url(../static/images/other/Elegant_Background-7.jpg)">
-                <blockquote class="site-info" style="height: 640px !important;">
-                    <h2 style="text-align: center">Welcome aboard the love train !</h2>
-                    <h1>Please set up your profile to begin.</h1>
 
-                    <form action="/profile">
-                        <div class="form-single-input">
-                            <div class="form-group col_1_of_1" style="margin-bottom: 100px;">
-                                <button type="submit" class="btn btn-default" style="letter-spacing: 1px;">Setup
-                                    Profile
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+</script>
+{% endfor %}
+{% endif %}
+{% endwith %}
+<!-- End Display Validation errors-->
 
-                </blockquote>
+<!-- If user has not set up a match profile -->
+{% if curr_user_table.setup == False %}
+<section id="intro" class="section intro no-padding">
+    <div class="container-fluid"
+         style="background: linear-gradient(rgba(255, 0, 0, 0.45),rgba(255, 0, 0, 0.45)),url(../static/images/other/Elegant_Background-7.jpg)">
+        <blockquote class="site-info" style="height: 640px !important;">
+            <h2 style="text-align: center">Welcome aboard the love train !</h2>
+            <h1>Please set up your profile to begin.</h1>
+
+            <form action="/profile">
+                <div class="form-single-input">
+                    <div class="form-group col_1_of_1" style="margin-bottom: 100px;">
+                        <button type="submit" class="btn btn-default" style="letter-spacing: 1px;">Setup
+                            Profile
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </blockquote>
+    </div>
+</section>
+
+<!-- If is has setup a profile display match profiles -->
+{% else %}
+<section id="intro" class="section intro no-padding">
+    <div class="container-fluid"
+         style="background: linear-gradient(rgba(51,70,92,0.91),rgba(51,70,92,0.91)),url(../static/images/other/Elegant_Background-7.jpg)">
+        <blockquote class="site-info">
+            <h1></h1>
+            <div class="tab">
+                <button class="tablinks" onclick="openCity(event, 'recommended')" id="defaultOpen">Recommend</button>
+                <button class="tablinks" onclick="openCity(event, 'matched')">Matched</button>
+                <button class="tablinks" onclick="openCity(event, 'setting')" style="border-right: none">Settings
+                </button>
             </div>
-        </section>
 
-    <!-- If is has setup a profile display match profiles -->
-    {% else %}
-        <section id="intro" class="section intro no-padding">
-            <div class="container-fluid"
-                 style="background: linear-gradient(rgba(51,70,92,0.91),rgba(51,70,92,0.91)),url(../static/images/other/Elegant_Background-7.jpg)">
-                <blockquote class="site-info">
-                    <h1></h1>
-                    <div class="tab">
-                        <button class="tablinks" onclick="openCity(event, 'match')" id="defaultOpen">Recommend</button>
-                        <button class="tablinks" onclick="openCity(event, 'chat')">Matched</button>
-                        <button class="tablinks" onclick="openCity(event, 'setting')" style="border-right: none">
-                            Settings
+            <!-- Start Recommend Tab -->
+            <div id="recommended" class="tabcontent" style="overflow: hidden;">
+                <div class="match-user">
+
+                    {% for user in highest_match_users %}
+                    {% for value in user %}
+
+                    {% if value.username %}
+                    <span class="matched_username" style="display:none;">{{ value.username }}</span>
+                    {% endif %}
+
+                    {% if value.image %}
+                    <img class="mySlides w3-animate-left" src="../static/images/profiles/{{ value.image }}"
+                         style="width:100%;">
+                    {% endif %}
+
+                    {% endfor %}
+                    {% endfor %}
+                    <div class="like-dislike-btn">
+                        <button id="dislike" class="w3-button w3-blue" onclick="plusDivs(-1)" name="dislike"
+                                value="dislike">DISLIKE
+                        </button>
+                        <button id="like" class="w3-button w3-pink" onclick="plusDivs(1)" name="like" value="like">
+                            LIKE
                         </button>
                     </div>
 
-                    <div id="match" class="tabcontent" style="overflow: hidden;">
-                        <div class="match-user">
+                    <button class="accordion">Show Info</button>
+                    <div class="panel">
 
-                            {% for user in highest_match_users %}
-                                {% for value in user %}
-
-                                    {% if value.username %}
-                                       <span class="matched_username" style="display:none;">{{ value.username }}</span>
-                                    {% endif %}
-
-                                    {% if value.image %}
-                                        <img class="mySlides w3-animate-left" src="../static/images/profiles/{{ value.image }}" style="width:100%;">
-                                    {% endif %}
-
-                                {% endfor %}
-                            {% endfor %}
-                            <div class="like-dislike-btn">
-                                <button id="dislike" class="w3-button w3-blue" onclick="plusDivs(-1)" name="dislike" value="dislike">DISLIKE</button>
-                                <button id="like" class="w3-button w3-pink" onclick="plusDivs(1)" name="like" value="like">LIKE</button>
-                            </div>
-
-                        <button class="accordion">Show Info</button>
-                        <div class="panel">
-
-                            <p><b>Name: </b><span id="panel-name">Something</span></p>
-                            <p><b>Gender: </b><span id="panel-gender">Something</span></p>
-                            <p><b>Age: </b><span id="panel-age">Something</span></p>
-                            <p><b>Height: </b><span id="panel-height">Something</span></p>
-                            <p><b>Location: </b><span id="panel-location">Something</span></p>
-                            <p><b>Education: </b><span id="panel-education">Something</span></p>
-                            <p><b>Bio:</b><span id="panel-bio">Something</span></p>
-                        </div>
+                        <p><b>Name: </b><span id="panel-name">Something</span></p>
+                        <p><b>Gender: </b><span id="panel-gender">Something</span></p>
+                        <p><b>Age: </b><span id="panel-age">Something</span></p>
+                        <p><b>Height: </b><span id="panel-height">Something</span></p>
+                        <p><b>Location: </b><span id="panel-location">Something</span></p>
+                        <p><b>Education: </b><span id="panel-education">Something</span></p>
+                        <p><b>Bio:</b><span id="panel-bio">Something</span></p>
                     </div>
 
-                        <script>  <!-- Javascript for Image slider -->
+
+                    <script>  <!-- Javascript for Image slider -->
 
                             // Image section
                             var slideIndex = 1;
@@ -183,19 +190,31 @@
                                 }
                             }
 
-                        </script> <!-- Javascript for Image slider -->
 
-                    <div id="chat" class="tabcontent">
-                        <img src="../static/images/other/chat_demo.png" width="100%">
-                        <p><b>Need to figure out the format of chats with multiple users...</b></p>
-                    </div>
 
-                    <div id="setting" class="tabcontent">
-                        <img src="../static/images/other/settings_demo.jpg" width="100%">
-                        <p><b>Quick setting toggles will go here (Age/Gender Preference)</b></p>
-                    </div>
+                    </script> <!-- End Javascript for Image slider -->
+                </div>
+            </div>
 
-                    <script>
+            <!-- Start Tab for Matched content -->
+            <div id="matched" class="tabcontent" style="overflow: hidden;">
+
+                <img src="../static/images/other/chat_demo.png" width="100%">
+                <p><b>afsfawddwa...</b></p>
+                <h1>ssaddsdds</h1>
+
+            </div>
+            <!-- End Tab for Matched content -->
+
+
+            <!-- Start Tab for Settings content -->
+            <div id="setting" class="tabcontent">
+                <img src="../static/images/other/settings_demo.jpg" width="100%">
+                <p><b>Quick setting toggles will go here (Age/Gender Preference)</b></p>
+            </div>
+            <!-- End Tab for Settings content -->
+
+            <script>
                         // Content Area
                         function openCity(evt, pageName) {
                             var i, tabcontent, tablinks;
@@ -212,11 +231,14 @@
                         }
                         // Get the element with id="defaultOpen" and click on it
                         document.getElementById("defaultOpen").click();
-                    </script>
 
-                </blockquote>
-            </div>
-        </section>
-    {% endif %}
+
+            </script>
+
+
+        </blockquote>
+    </div>
+</section>
+{% endif %}
 
 {% endblock %}
