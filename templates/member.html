@@ -74,15 +74,15 @@
 
                             {% for user in highest_match_users %}
                                 {% for value in user %}
+
                                     {% if value.username %}
-
-                                       <span class="matched_username">{{ value.username }}</span>
+                                       <span class="matched_username" style="display:none;">{{ value.username }}</span>
                                     {% endif %}
 
-                                {% if value.image %}
-                                    <img class="mySlides w3-animate-left" src="../static/images/profiles/{{ value.image }}" style="width:100%;">
-
+                                    {% if value.image %}
+                                        <img class="mySlides w3-animate-left" src="../static/images/profiles/{{ value.image }}" style="width:100%;">
                                     {% endif %}
+
                                 {% endfor %}
                             {% endfor %}
                             <div class="like-dislike-btn">
@@ -144,7 +144,7 @@
                         </div>
                     </div>
 
-                        
+
                         <script>  <!-- Javascript for Image slider -->
                             // Image section
                             var slideIndex = 1;
@@ -166,28 +166,37 @@
                                 for (i = 0; i < x.length; i++) {
                                     x[i].style.display = "none";
                                 }
+                                console.log(slideIndex-1)
                                 x[slideIndex - 1].style.display = "block";
                             }
 
-                            <!-- POST LIKES HERE  -->
-                            var matched_username = document.getElementsByClassName("matched_username");
-                            matched_username = (matched_username[slideIndex -1 ].textContent);
-
+                            // POST likes / dislikes here
                             $('#like').click(function() {
+                                var likeIndex = slideIndex;
+
+                                if ( likeIndex-2 == -1) {
+                                    console.log('yep')
+                                    likeIndex = 7;
+                                };
+
                                 var like = document.getElementById('like').value;
                                 var matched_username = document.getElementsByClassName("matched_username");
-                                matched_username = (matched_username[slideIndex -1 ].textContent);
+                                matched_username = (matched_username[likeIndex - 2].textContent);
+                                console.log(matched_username)
 
                                     $.ajax({
                                         type: 'POST',
                                         url: '/member',
-                                        data: {feeling: matched_username,
+                                        data: {
+                                            like_dislike: like,
+                                            liked_user: matched_username
                                     },
                                     success: function(response) {
                                         console.log('success');
                                     }
                                 });
                             });
+                            likeIndex  = 1
 
 
                             // Accordian
