@@ -23,7 +23,7 @@
                         "showMethod": "fadeIn",
                         "hideMethod": "fadeOut",
                         "closeMethod": "fadeOut"
-                    }
+                    };
                     toastr["success"]("Welcome {{ name }} !", "{{ message }}")
                 </script>
             {% endfor %}
@@ -43,7 +43,7 @@
                     <form action="/profile">
                         <div class="form-single-input">
                             <div class="form-group col_1_of_1" style="margin-bottom: 100px;">
-                                <button type="submit" class="btn btn-default" style="letter-spacing: 1px;">Setup
+                                <button class="btn btn-default" style="letter-spacing: 1px;">Setup
                                     Profile
                                 </button>
                             </div>
@@ -54,7 +54,7 @@
             </div>
         </section>
 
-    <!-- If is has setup a profile display match profiles -->
+        <!-- If is has setup a profile display match profiles -->
     {% else %}
         <section id="intro" class="section intro no-padding">
             <div class="container-fluid"
@@ -76,145 +76,157 @@
                                 {% for value in user %}
 
                                     {% if value.username %}
-                                       <span class="matched_username" style="display:none;">{{ value.username }}</span>
+                                        <span class="matched_username" style="display:none;">{{ value.username }}</span>
                                     {% endif %}
 
                                     {% if value.image %}
-                                        <img class="mySlides w3-animate-left" src="../static/images/profiles/{{ value.image }}" style="width:100%;">
+                                        <img class="mySlides w3-animate-left"
+                                             src="../static/images/profiles/{{ value.image }}" style="width:100%;">
                                     {% endif %}
 
                                 {% endfor %}
                             {% endfor %}
                             <div class="like-dislike-btn">
-                                <button id="dislike" class="w3-button w3-blue" onclick="plusDivs(-1)" name="dislike" value="dislike">DISLIKE</button>
-                                <button id="like" class="w3-button w3-pink" onclick="plusDivs(1)" name="like" value="like">LIKE</button>
+                                <button id="dislike" class="w3-button w3-blue" onclick="plusDivs(-1)" name="dislike"
+                                        value="dislike">DISLIKE
+                                </button>
+                                <button id="like" class="w3-button w3-pink" onclick="plusDivs(1)" name="like"
+                                        value="like">LIKE
+                                </button>
                             </div>
 
-                        <button class="accordion">Show Info</button>
-                        <div class="panel">
-                            {% for user in highest_match_users %}
+                            <button class="accordion">Show Info</button>
+                            <div class="panel">
 
-                                {% for value in user %}
-                                    {% if value.name %}
-                                        <p>Name: {{ value.name }}</p>
-                                    {% endif %}
+                                {% for user in highest_match_users %}
 
-                                    {% if value.gender %}
-                                        <p>Gender: {{ value.gender }}</p>
-                                    {% endif %}
+                                    {% for value in user %}
 
-                                    {% if value.age %}
-                                        <p>Age: {{ value.age }}</p>
-                                    {% endif %}
+                                        {% if value.name %}
+                                            <p class="panel-name" style="display:none;"><b>Name: </b>{{ value.name }}</p>
+                                        {% endif %}
 
-                                    {% if value.height %}
-                                        <p>Height: {{ value.height }}</p>
-                                    {% endif %}
+                                        {% if value.gender %}
+                                            <p class="panel-gender" style="display:none;"><b>Gender: </b>{{ value.gender }}</p>
+                                        {% endif %}
 
-                                    {% if value.location %}
-                                        <p>Location: {{ value.location }}</p>
-                                    {% endif %}
+                                        {% if value.age %}
+                                            <p class="panel-age" style="display:none;"><b>Age: </b>{{ value.age }}</p>
+                                        {% endif %}
 
-                                    {% if value.education %}
-                                        <p>Education: {{ value.education }}</p>
-                                    {% endif %}
+                                        {% if value.height %}
+                                            <p class="panel-height" style="display:none;"><b>Height: </b>{{ value.height }}</p>
+                                        {% endif %}
 
-                                    {% if value.ethnicity %}
-                                        <p>Ethnicity: {{ value.ethnicity }}</p>
-                                    {% endif %}
+                                        {% if value.location %}
+                                            <p class="panel-location" style="display:none;"><b>Location: </b>{{ value.location }}</p>
+                                        {% endif %}
 
-                                    {% if value.religion %}
-                                        <p>Religion: {{ value.religion }}</p>
-                                    {% endif %}
+                                        {% if value.education %}
+                                            <p class="panel-bio" style="display:none;"><b>Bio: </b>{{ value.education }}</p>
+                                        {% endif %}
 
-                                    {% if value.bio %}
-                                        <p>Bio: {{ value.bio }}</p>
-                                    {% endif %}
+                                        {% if value.bio %}
+                                            <p class="panel-education" style="display:none;"><b>Education: </b>{{ value.bio }}</p>
+                                        {% endif %}
 
-                                    {% if value.username %}
-
-                                    {% endif %}
+                                    {% endfor %}
 
                                 {% endfor %}
-                            {% endfor %}
-
+                            </div>
                         </div>
                     </div>
 
-                        <script>  <!-- Javascript for Image slider -->
+                    <script>  <!-- Javascript for Image slider -->
 
-                            // Image section
-                            var slideIndex = 1;
-                            showDivs(slideIndex);
-                            function plusDivs(n) {
-                                showDivs(slideIndex += n);
+                    // Image section
+                    var slideIndex = 1;
+                    showDivs(slideIndex);
+
+                    function plusDivs(n) {
+                        showDivs(slideIndex += n);
+                    }
+
+                    function showDivs(n) {
+                        var i;
+                        var x = document.getElementsByClassName("mySlides");
+                        if (n > x.length) {
+                            slideIndex = 1;
+                        }
+                        if (n < 1) {
+                            slideIndex = x.length;
+                        }
+                        for (i = 0; i < x.length; i++) {
+                            x[i].style.display = "none";
+                            document.getElementsByClassName('panel-name')[slideIndex-1].style.display = "none";
+                            document.getElementsByClassName('panel-gender')[slideIndex-1].style.display = "none";
+                            document.getElementsByClassName('panel-age')[slideIndex-1].style.display = "none";
+                            document.getElementsByClassName('panel-height')[slideIndex-1].style.display = "none";
+                            document.getElementsByClassName('panel-location')[slideIndex-1].style.display = "none";
+                            document.getElementsByClassName('panel-education')[slideIndex-1].style.display = "none";
+                            document.getElementsByClassName('panel-bio')[slideIndex-1].style.display = "none";
+                    }
+                        console.log(slideIndex - 1);
+                        x[slideIndex - 1].style.display = "block";
+                    }
+
+                    // POST likes / dislikes here
+
+                    var matched_username = document.getElementsByClassName("matched_username");
+                    matched_username = (matched_username[slideIndex - 1].textContent);
+                    $('#like').click(function () {
+                        var likeIndex = slideIndex;
+
+                        if (likeIndex - 2 == -1) {
+                            console.log('yep');
+                            likeIndex = 7;
+                        }
+
+
+                        var like = document.getElementById('like').value;
+                        var matched_username = document.getElementsByClassName("matched_username");
+                        matched_username = (matched_username[likeIndex - 2].textContent);
+                        console.log(matched_username);
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/member',
+                            data: {
+                                like_dislike: like,
+                                liked_user: matched_username
+                            },
+                            success: function (response) {
+                                console.log('success');
                             }
+                        });
+                    });
+                    likeIndex = 1
 
-                            function showDivs(n) {
-                                var i;
-                                var x = document.getElementsByClassName("mySlides");
-                                if (n > x.length) {
-                                    slideIndex = 1
-                                }
-                                if (n < 1) {
-                                    slideIndex = x.length
-                                }
-                                for (i = 0; i < x.length; i++) {
-                                    x[i].style.display = "none";
-                                }
-                                console.log(slideIndex-1)
-                                x[slideIndex - 1].style.display = "block";
+                    // Accordian
+                    var acc = document.getElementsByClassName("accordion");
+                    var i;
+                    for (i = 0; i < acc.length; i++) {
+                        acc[i].onclick = function () {
+                            this.classList.toggle("active");
+                            var panel = this.nextElementSibling;
+                            if (panel.style.maxHeight) {
+                                document.getElementsByClassName("accordion")[0].innerHTML = "SHOW INFO";
+                                panel.style.maxHeight = null;
+                            } else {
+                                document.getElementsByClassName("accordion")[0].innerHTML = "HIDE INFO";
+                                document.getElementsByClassName('panel-name')[slideIndex-1].style.display = "block";
+                                document.getElementsByClassName('panel-gender')[slideIndex-1].style.display = "block";
+                                document.getElementsByClassName('panel-age')[slideIndex-1].style.display = "block";
+                                document.getElementsByClassName('panel-height')[slideIndex-1].style.display = "block";
+                                document.getElementsByClassName('panel-location')[slideIndex-1].style.display = "block";
+                                document.getElementsByClassName('panel-education')[slideIndex-1].style.display = "block";
+                                document.getElementsByClassName('panel-bio')[slideIndex-1].style.display = "block";
+                                panel.style.maxHeight = panel.scrollHeight + "px";
                             }
+                        }
+                    }
 
-                            // POST likes / dislikes here
-
-                            var matched_username = document.getElementsByClassName("matched_username");
-                            matched_username = (matched_username[slideIndex -1 ].textContent);
-                            $('#like').click(function() {
-                                var likeIndex = slideIndex;
-
-                                if ( likeIndex-2 == -1) {
-                                    console.log('yep')
-                                    likeIndex = 7;
-                                };
-
-                                var like = document.getElementById('like').value;
-                                var matched_username = document.getElementsByClassName("matched_username");
-                                matched_username = (matched_username[likeIndex - 2].textContent);
-                                console.log(matched_username)
-
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: '/member',
-                                        data: {
-                                            like_dislike: like,
-                                            liked_user: matched_username
-                                    },
-                                    success: function(response) {
-                                        console.log('success');
-                                    }
-                                });
-                            });
-                            likeIndex  = 1
-
-                            // Accordian
-                            var acc = document.getElementsByClassName("accordion");
-                            var i;
-                            for (i = 0; i < acc.length; i++) {
-                                acc[i].onclick = function () {
-                                    this.classList.toggle("active");
-                                    var panel = this.nextElementSibling;
-                                    if (panel.style.maxHeight) {
-                                        document.getElementsByClassName("accordion")[0].innerHTML = "SHOW INFO";
-                                        panel.style.maxHeight = null;
-                                    } else {
-                                        document.getElementsByClassName("accordion")[0].innerHTML = "HIDE INFO";
-                                        panel.style.maxHeight = panel.scrollHeight + "px";
-                                    }
-                                }
-                            }
-
-                        </script> <!-- Javascript for Image slider -->
+                    </script> <!-- Javascript for Image slider -->
 
                     <div id="chat" class="tabcontent">
                         <img src="../static/images/other/chat_demo.png" width="100%">
@@ -241,6 +253,7 @@
                             document.getElementById(pageName).style.display = "block";
                             evt.currentTarget.className += " active";
                         }
+
                         // Get the element with id="defaultOpen" and click on it
                         document.getElementById("defaultOpen").click();
                     </script>

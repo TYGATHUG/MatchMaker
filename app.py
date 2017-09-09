@@ -98,9 +98,17 @@ class Match(db.Model):
 
 class Like(db.Model):
     __tablename__ = 'Like'
-    username = db.Column(db.String(15), primary_key=True, unique=True)
-    like = db.Column(db.String(1200))
-    dislike = db.Column(db.String(1200))
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(15))
+    liked_user = db.Column(db.String(15))
+
+
+class Dislike(db.Model):
+    __tablename__ = 'Dislike'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(15))
+    disliked_user = db.Column(db.String(15))
+
 
 
 # ---------------------------------------------------------------------------------
@@ -162,7 +170,9 @@ def home():
 @login_required
 def member():
     username = current_user.username.title()    # get session based username
+    curr_user = Match.query.filter_by(username=username.lower()).first()    # get current user by matching session and Match DB
 
+    # take care of likes / dislikes
     if request.method == "POST":
         print "Posted"
         like_dislike = request.form['like_dislike']
@@ -171,111 +181,28 @@ def member():
         print liked_user
 
         if "like" in like_dislike:
-            print like_dislike
+            print "added liked user"
+            print curr_user.username
+            like = Like(username=curr_user.username, liked_user=liked_user)
+            db.session.add(like)
+            db.session.commit()
+
+        if "dislike" in like_dislike:
+            print "added dislike user"
+            dislike = Dislike(username=curr_user.username, disliked_user=liked_user)
+            db.session.add(dislike)
+            db.session.commit()
+
+    # fetch matches using Watson algo
+    if curr_user:
+        highest_match_users = match_users_watson(curr_user)
+    else:
+        highest_match_users = ""
 
 
-
-    highest_match_users = ""
-    curr_user = Match.query.filter_by(username=username.lower()).first()    # get current user by matching session and Match DB
-
+     # take care of matching
     curr_user_table = User.query.filter_by(username=current_user.username).first()
     curr_match_table = Match.query.filter_by(username=current_user.username).first()
-
-    if curr_user:    # if curr user has made a profile we can match them
-
-        matched_users = {}
-        users = Match.query.all()  # get all the match profiles
-
-
-        for user in users:   # get all uses usernames to store in dict
-            username = user.username
-            matched_users.update({user.username: []})
-
-        for user in users:   # get all the matches within a range and store in dict against name
-
-            up = user.practicality + 10
-            down = user.practicality - 10
-            if not curr_user.practicality > up:
-                if not curr_user.practicality < down:
-                    matched_users[user.username].append({'practicality': user.practicality})
-
-            up = user.love + 10
-            down = user.love - 10
-            if not curr_user.love > up:
-                if not curr_user.love < down:
-                    matched_users[user.username].append({'love': user.love})
-
-            up = user.excitment + 10
-            down = user.excitment - 10
-            if not curr_user.excitment > up:
-                if not curr_user.excitment < down:
-                    matched_users[user.username].append({'excitment': user.excitment})
-
-            up = user.challenge + 10
-            down = user.challenge - 10
-            if not curr_user.challenge > up:
-                if not curr_user.challenge < down:
-                    matched_users[user.username].append({'challenge': user.challenge})
-
-            up = user.closeness + 10
-            down = user.closeness - 10
-            if not curr_user.closeness > up:
-                if not curr_user.closeness < down:
-                    matched_users[user.username].append({'closeness': user.closeness})
-
-            up = user.structure + 10
-            down = user.structure - 10
-            if not curr_user.structure > up:
-                if not curr_user.structure < down:
-                    matched_users[user.username].append({'structure': user.structure})
-
-            if not curr_user.live_music == 0:
-                if not user.live_music == 0:
-                   matched_users[user.username].append({'structure': user.live_music})
-
-        # get the number of fields that match for each user
-        up = 0
-        down = 1000
-        for match in matched_users:
-            num_match = len(matched_users[match])
-            matched_users[match].append({'num_match': num_match})
-            if num_match > up:
-                up = num_match
-            if num_match < down:
-                down = num_match
-
-
-        # return the highest matched users currently set to half of num items that match / 2 + 1
-        highest_match_users = []
-        match_level = up / 2 + 1
-
-        for match in matched_users:    # get the match data to return to member page
-            for data in matched_users[match]:
-
-                user_match = 0
-                try:
-                    user_match = data['num_match']
-                except:
-                    user_match = 0
-
-                if user_match >= match_level:
-                    #highest_match_users.append(matched_users[match])
-
-                    user = Match.query.filter_by(username=match).first()
-
-                    highest_match_users.append([
-                        {'username': user.username},
-                        {'image': user.image},
-                        {'name': user.name},
-                        {'gender': user.gender},
-                        {'age': user.age},
-                        {'height': user.height},
-                        {'location': user.location},
-                        {'education': user.education},
-                        {'bio': user.bio}
-                    ])
-                    break;
-
 
 
     return render_template('member.html', name=current_user.username, highest_match_users=highest_match_users, curr_user_table=curr_user_table, curr_match_table=curr_match_table)
@@ -511,6 +438,112 @@ def register():
 def logout():
     logout_user()
     return redirect(url_for('home'))
+
+
+
+# ---------------------------------------------------------------------------------
+#   Handling Functions: put in seperate file later for tidyness
+# -------------------------------------------------------------------------------*/
+def match_users_watson(curr_user):
+    highest_match_users = ""
+    if curr_user:    # if curr user has made a profile we can match them
+
+        matched_users = {}
+        users = Match.query.all()  # get all the match profiles
+
+
+        for user in users:   # get all uses usernames to store in dict
+            username = user.username
+            matched_users.update({user.username: []})
+
+        for user in users:   # get all the matches within a range and store in dict against name
+
+            up = user.practicality + 10
+            down = user.practicality - 10
+            if not curr_user.practicality > up:
+                if not curr_user.practicality < down:
+                    matched_users[user.username].append({'practicality': user.practicality})
+
+            up = user.love + 10
+            down = user.love - 10
+            if not curr_user.love > up:
+                if not curr_user.love < down:
+                    matched_users[user.username].append({'love': user.love})
+
+            up = user.excitment + 10
+            down = user.excitment - 10
+            if not curr_user.excitment > up:
+                if not curr_user.excitment < down:
+                    matched_users[user.username].append({'excitment': user.excitment})
+
+            up = user.challenge + 10
+            down = user.challenge - 10
+            if not curr_user.challenge > up:
+                if not curr_user.challenge < down:
+                    matched_users[user.username].append({'challenge': user.challenge})
+
+            up = user.closeness + 10
+            down = user.closeness - 10
+            if not curr_user.closeness > up:
+                if not curr_user.closeness < down:
+                    matched_users[user.username].append({'closeness': user.closeness})
+
+            up = user.structure + 10
+            down = user.structure - 10
+            if not curr_user.structure > up:
+                if not curr_user.structure < down:
+                    matched_users[user.username].append({'structure': user.structure})
+
+            if not curr_user.live_music == 0:
+                if not user.live_music == 0:
+                   matched_users[user.username].append({'structure': user.live_music})
+
+        # get the number of fields that match for each user
+        up = 0
+        down = 1000
+        for match in matched_users:
+            num_match = len(matched_users[match])
+            matched_users[match].append({'num_match': num_match})
+            if num_match > up:
+                up = num_match
+            if num_match < down:
+                down = num_match
+
+
+        # return the highest matched users currently set to half of num items that match / 2 + 1
+        highest_match_users = []
+        match_level = up / 2 -2
+
+        for match in matched_users:    # get the match data to return to member page
+            for data in matched_users[match]:
+
+                user_match = 0
+                try:
+                    user_match = data['num_match']
+                except:
+                    user_match = 0
+
+                print curr_user.username
+                if (user_match >= match_level) & (user_match != curr_user.username):
+                    #highest_match_users.append(matched_users[match])
+
+                    user = Match.query.filter_by(username=match).first()
+
+                    highest_match_users.append([
+                        {'username': user.username},
+                        {'image': user.image},
+                        {'name': user.name},
+                        {'gender': user.gender},
+                        {'age': user.age},
+                        {'height': user.height},
+                        {'location': user.location},
+                        {'education': user.education},
+                        {'bio': user.bio}
+                    ])
+                    break;
+
+    return highest_match_users
+
 
 
 if __name__ == "__main__":
