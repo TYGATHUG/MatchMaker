@@ -15,7 +15,7 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 import api
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
-import sqlite3
+from flask_admin import Admin
 
 # ---------------------------------------------------------------------------------
 #   Initialisation / Settings
@@ -327,6 +327,12 @@ def about():
     login_form = LoginForm()
 
     return render_template('about.html', register_form=register_form, login_form=login_form)
+
+@app.route('/admin')
+def admin():
+    #admin = Admin(app, name='microblog', template_mode='bootstrap3')
+
+    return render_template('admin.html')
 
 
 

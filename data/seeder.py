@@ -72,7 +72,9 @@ def data_entry():
     # for user table
     idCounter = 1;
     password = 'password'
+    admin_password = 'admin'
     test_passwordHash = generate_password_hash(password, method='sha256')
+    admin_passwordHash = generate_password_hash(password, method='sha256')
 
     usernames = ["Jerrell", "Stan", "Ross", "Cesar", "Fredric", "Henry", "Anderson", "Alec", "Jon", "Noel", "Fidel"
         , "Brady", "Wallace", "Gayle", "Neil", "Horacio", "Florencio", "Hassan", "Raphael", "Jay", "Ali", "Lynn"
@@ -134,6 +136,10 @@ def data_entry():
 
         usernames.remove(randName)
         idCounter += 1;
+
+    conn.execute('''INSERT INTO user (id, username, email, password, setup) VALUES (?, ?, ?, ?, ?)''',
+                 (idCounter, "admin", "admin@gmail.com", admin_passwordHash, True))
+    conn.commit()
 
     c.close()
     conn.close()
