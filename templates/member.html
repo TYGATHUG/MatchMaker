@@ -92,7 +92,6 @@
 
                         <button class="accordion">Show Info</button>
                         <div class="panel">
-
                             {% for user in highest_match_users %}
 
                                 {% for value in user %}
@@ -141,7 +140,6 @@
 
                         </div>
                     </div>
-
 
                         <script>  <!-- Javascript for Image slider -->
 
@@ -199,17 +197,18 @@
                             });
                             likeIndex  = 1
 
-
                             // Accordian
                             var acc = document.getElementsByClassName("accordion");
                             var i;
-                            for (i = -1; i < acc.length; i++) {
+                            for (i = 0; i < acc.length; i++) {
                                 acc[i].onclick = function () {
                                     this.classList.toggle("active");
                                     var panel = this.nextElementSibling;
                                     if (panel.style.maxHeight) {
+                                        document.getElementsByClassName("accordion")[0].innerHTML = "SHOW INFO";
                                         panel.style.maxHeight = null;
                                     } else {
+                                        document.getElementsByClassName("accordion")[0].innerHTML = "HIDE INFO";
                                         panel.style.maxHeight = panel.scrollHeight + "px";
                                     }
                                 }
