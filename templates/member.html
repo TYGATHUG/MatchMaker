@@ -115,7 +115,7 @@
                                         {% endif %}
 
                                         {% if value.height %}
-                                            <p class="panel-height" style="display:none;"><b>Height: </b>{{ value.height }}</p>
+                                            <p class="panel-height" style="display:none;"><b>Height: </b>{{ value.height }} cm</p>
                                         {% endif %}
 
                                         {% if value.location %}
@@ -123,11 +123,11 @@
                                         {% endif %}
 
                                         {% if value.education %}
-                                            <p class="panel-bio" style="display:none;"><b>Bio: </b>{{ value.education }}</p>
+                                            <p class="panel-education" style="display:none;"><b>Education: </b>{{ value.education }}</p>
                                         {% endif %}
 
                                         {% if value.bio %}
-                                            <p class="panel-education" style="display:none;"><b>Education: </b>{{ value.bio }}</p>
+                                            <p class="panel-bio" style="display:none;"><b>Bio: </b>{{ value.bio }}</p>
                                         {% endif %}
 
                                     {% endfor %}
@@ -146,14 +146,6 @@
                     function plusDivs(n) {
                         showDivs(slideIndex += n);
 
-                        var accordion = document.getElementsByClassName("accordion");
-                        if (accordion[0].classList.contains("active") == true) {
-                            accordion[0].click();
-                            accordion[0].classList.remove("active");
-                        }
-
-                        accordion[0].innerHTML = "SHOW INFO";
-
                         document.getElementsByClassName('panel-name')[slideIndex-2].style.display = "none";
                         document.getElementsByClassName('panel-gender')[slideIndex-2].style.display = "none";
                         document.getElementsByClassName('panel-age')[slideIndex-2].style.display = "none";
@@ -161,6 +153,15 @@
                         document.getElementsByClassName('panel-location')[slideIndex-2].style.display = "none";
                         document.getElementsByClassName('panel-education')[slideIndex-2].style.display = "none";
                         document.getElementsByClassName('panel-bio')[slideIndex-2].style.display = "none";
+
+                        document.getElementsByClassName('panel-name')[slideIndex-1].style.display = "block";
+                        document.getElementsByClassName('panel-gender')[slideIndex-1].style.display = "block";
+                        document.getElementsByClassName('panel-age')[slideIndex-1].style.display = "block";
+                        document.getElementsByClassName('panel-height')[slideIndex-1].style.display = "block";
+                        document.getElementsByClassName('panel-location')[slideIndex-1].style.display = "block";
+                        document.getElementsByClassName('panel-education')[slideIndex-1].style.display = "block";
+                        document.getElementsByClassName('panel-bio')[slideIndex-1].style.display = "block";
+
                     }
 
                     function showDivs(n) {
