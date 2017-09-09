@@ -577,7 +577,8 @@ def fetch_mutual_likes(curr_user):
             'bio': liked_user_details.bio,
             'height': liked_user_details.height,
             'location': liked_user_details.location,
-            'education': liked_user_details.education
+            'education': liked_user_details.education,
+            'age': liked_user_details.age
             }
         ])
 

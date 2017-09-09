@@ -180,9 +180,13 @@ div.tab button.active {
     border-bottom: none;
 }
 
+.tabcontent-fixed {
+    height: 735px;
+    overflow: auto;
+}
 
 /* ------------------------------------------------------------------------------
-	 Member page
+	 Recommended Section
 -------------------------------------------------------------------------------*/
 @media screen and (max-width: 1024px) {
     .like-dislike-btn button {
@@ -236,4 +240,34 @@ div.panel {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
+}
+
+/* ------------------------------------------------------------------------------
+	 Matched Section
+-------------------------------------------------------------------------------*/
+.matched-container {
+    padding-top: 10px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #F1F1F1;
+}
+
+.matched-image {
+    width: 10%;
+    height: 10%;
+    max-width: 58px;
+    max-height:58px;
+    min: 58px;
+    min-height:58px;
+    border-radius: 50%;
+    float:left;
+}
+
+.matched-info {
+    margin-left: 15px;
+    vertical-align:top;
+}
+
+.matched-location {
+    margin-left: 15px;
+    vertical-align:top;
 }
