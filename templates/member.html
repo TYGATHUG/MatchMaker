@@ -81,7 +81,13 @@
 
                                     {% if value.image %}
                                         <img class="mySlides w3-animate-left"
-                                             src="../static/images/profiles/{{ value.image }}" style="margin: auto; max-width:696px; min-height:600px ;max-height:600px; overflow: hidden;">
+                                             src="../static/images/profiles/{{ value.image }}"
+                                             style="margin: auto;
+                                             max-width:600px;
+                                             min-height:600px;
+                                             max-height:600px;
+                                             overflow: hidden;
+                                        ">
                                     {% endif %}
 
                                 {% endfor %}
