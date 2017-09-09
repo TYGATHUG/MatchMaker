@@ -277,58 +277,54 @@
                     <!-- Start Settings Tab -->
                     <div id="setting" class="tabcontent">
                         <div class="testbox">
-                            <h1>Registration</h1>
 
-                            <form action="/">
-                                <hr>
-                                <div class="accounttype">
-                                    <input type="radio" value="None" id="radioOne" name="account" checked/>
-                                    <label for="radioOne" class="radio" chec>Personal</label>
-                                    <input type="radio" value="None" id="radioTwo" name="account"/>
-                                    <label for="radioTwo" class="radio">Company</label>
+                            <form>
+                                <label>Preferred Gender:</label><br>
+                                <div class="form-single-input">
+                                    <input type="radio" id="gender" value="female" name="gender">
+                                    <label class="light">Female</label><br>
+                               </div>
+
+                               <div class="form-single-input">
+                                    <input type="radio" id="gender" value="male" name="gender">
+                                    <label class="light">Male</label>
                                 </div>
-                                <hr>
-                                <label id="icon" for="name"><i class="icon-envelope "></i></label>
-                                <input type="text" name="name" id="name" placeholder="Email" required/>
-                                <label id="icon" for="name"><i class="icon-user"></i></label>
-                                <input type="text" name="name" id="name" placeholder="Name" required/>
-                                <label id="icon" for="name"><i class="icon-shield"></i></label>
-                                <input type="password" name="name" id="name" placeholder="Password" required/>
-                                <div class="gender">
-                                    <input type="radio" value="None" id="male" name="gender" checked/>
-                                    <label for="male" class="radio" chec>Male</label>
-                                    <input type="radio" value="None" id="female" name="gender"/>
-                                    <label for="female" class="radio">Female</label>
+
+                                <div class="form-single-input">
+                                    <label>Preferred Age:</label><br>
+                                    <input type="checkbox" id="18" value="18_25" name="age"><label class="light">18-25</label><br>
+                                    <input type="checkbox" id="25" value="25_35" name="age"><label class="light">25-35</label><br>
+                                    <input type="checkbox" id="35" value="35_45" name="age"><label class="light">35-45</label>
                                 </div>
-                                <p>By clicking Register, you agree on our <a href="#">terms and condition</a>.</p>
-                                <a href="#" class="button">Register</a>
+
+                                <div class="form-single-input">
+                                    <div class="form-group col_1_of_1" style="margin-bottom: 80px;">
+                                        <button id="settings" type="submit" class="btn btn-default" style="letter-spacing: 1px;">Submit</button>
+                                    </div>
+                                </div>
                             </form>
                         </div>
-                        <p><b>Quick setting toggles will go here (Age/Gender Preference)</b></p>
                     </div>
                     <script>
-                    $('#like').click(function () {
-                        var likeIndex = slideIndex;
-                        if (likeIndex - 2 == -1) {
-                            console.log('yep');
-                            likeIndex = 7;
-                        }
+                    $(document).ready(function(){
 
-                        var like = document.getElementById('like').value;
-                        var matched_username = document.getElementsByClassName("matched_username");
-                        matched_username = (matched_username[likeIndex - 2].textContent);
-                        console.log(matched_username);
-
-                        $.ajax({
-                            type: 'POST',
-                            url: '/member',
-                            data: {
-                                like_dislike: like,
-                                liked_user: matched_username
-                            },
-                            success: function (response) {
-                                console.log('success');
-                            }
+                        $('#settings').click(function () {
+                            console.log("Gender");
+                            var gender = document.getElementById('gender').value;
+                            var age1 = document.getElementById('18').value;
+                            var age2 = document.getElementById('25').value;
+                            var age3 = document.getElementById('35').value;
+                            console.log(age1);
+                             console.log(age2);
+                            console.log();
+                            $.ajax({
+                                type: 'POST',
+                                url: '/member',
+                                data: {settings: 'male'},
+                                success: function (response) {
+                                    console.log('success');
+                                }
+                            });
                         });
                     });
                     </script>

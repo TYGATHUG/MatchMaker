@@ -6,7 +6,7 @@ import os
 from flask import Flask, render_template, url_for, g, redirect, request, flash
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField
+from wtforms import StringField, PasswordField, BooleanField, IntegerField, validators
 from wtforms.validators import InputRequired, Email, Length
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 from flask_sqlalchemy import SQLAlchemy
@@ -150,6 +150,13 @@ class MatchForm(FlaskForm):
     setup = BooleanField()
 
 
+class SettingsForm(FlaskForm):
+    min_age = IntegerField('Min Age', [validators.Length(min=1, max=3, message="Age can be 3 digits no spaces")])
+    max_age = IntegerField('MAx Age', [validators.Length(min=1, max=3, message="Age can be 3 digits no spaces")])
+    gender = StringField('Gender', validators=[InputRequired(), Length(min=1, max=7)])
+    location = StringField('Location', validators=[InputRequired(), Length(min=1, max=10)])
+
+
 # ---------------------------------------------------------------------------------
 #   Page Routes
 # -------------------------------------------------------------------------------*/
@@ -174,6 +181,13 @@ def member():
 
     # take care of likes / dislikes
     if request.method == "POST":
+
+        # handle settings request
+        settings = request.form['settings']
+        print "settings"
+        print settings
+
+        # handle like requests
         like_dislike = request.form['like_dislike']
         liked_user = request.form['liked_user']
 
@@ -199,14 +213,17 @@ def member():
         mutual_likes = fetch_mutual_likes(curr_user)
     else:
         mutual_likes = ""
-    print mutual_likes
+
 
     # take care of matching
     curr_user_table = User.query.filter_by(username=current_user.username).first()
     curr_match_table = Match.query.filter_by(username=current_user.username).first()
 
+    # instasiate SettingsForm
+    settings_form = SettingsForm()
 
-    return render_template('member.html', name=current_user.username, highest_match_users=highest_match_users, curr_user_table=curr_user_table, curr_match_table=curr_match_table, mutual_likes=mutual_likes)
+
+    return render_template('member.html', settings_form=settings_form, name=current_user.username, highest_match_users=highest_match_users, curr_user_table=curr_user_table, curr_match_table=curr_match_table, mutual_likes=mutual_likes)
 
 
 @app.route('/profile', methods=['GET', 'POST'])
@@ -333,11 +350,11 @@ def about():
 
     return render_template('about.html', register_form=register_form, login_form=login_form)
 
+
 @app.route('/admin')
 def admin():
 
     return render_template('admin.html')
-
 
 
 # ---------------------------------------------------------------------------------
@@ -457,8 +474,6 @@ def match_users_watson(curr_user):
 
         for user in users:   # get all the matches within a range and store in dict against name
 
-            print user.practicality
-
             if user.practicality:
                 up = user.practicality + 10
                 down = user.practicality - 10
@@ -524,7 +539,7 @@ def match_users_watson(curr_user):
                     user_match = data['num_match']
                 except:
                     user_match = 0
-                print match
+
                 if (user_match >= match_level) & (match != curr_user.username):
                     #highest_match_users.append(matched_users[match])
 
