@@ -1,11 +1,11 @@
 {% extends 'main.html' %}
 
 {% block body %}
-<!-- Display Validation errors-->
-{% with messages=get_flashed_messages() %}
-{% if messages %}
-{% for message in messages %}
-<script>
+    <!-- Display Validation errors-->
+    {% with messages=get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <script>
                     toastr.options = {
                         "closeButton": true,
                         "debug": false,
@@ -23,198 +23,235 @@
                         "showMethod": "fadeIn",
                         "hideMethod": "fadeOut",
                         "closeMethod": "fadeOut"
-                    }
+                    };
                     toastr["success"]("Welcome {{ name }} !", "{{ message }}")
+                </script>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <!-- End Display Validation errors-->
 
+    <!-- If user has not set up a match profile -->
+    {% if curr_user_table.setup == False %}
+        <section id="intro" class="section intro no-padding">
+            <div class="container-fluid"
+                 style="background: linear-gradient(rgba(255, 0, 0, 0.45),rgba(255, 0, 0, 0.45)),url(../static/images/other/Elegant_Background-7.jpg)">
+                <blockquote class="site-info" style="height: 640px !important;">
+                    <h2 style="text-align: center">Welcome aboard the love train !</h2>
+                    <h1>Please set up your profile to begin.</h1>
 
-</script>
-{% endfor %}
-{% endif %}
-{% endwith %}
-<!-- End Display Validation errors-->
+                    <form action="/profile">
+                        <div class="form-single-input">
+                            <div class="form-group col_1_of_1" style="margin-bottom: 100px;">
+                                <button class="btn btn-default" style="letter-spacing: 1px;">Setup
+                                    Profile
+                                </button>
+                            </div>
+                        </div>
+                    </form>
 
-<!-- If user has not set up a match profile -->
-{% if curr_user_table.setup == False %}
-<section id="intro" class="section intro no-padding">
-    <div class="container-fluid"
-         style="background: linear-gradient(rgba(255, 0, 0, 0.45),rgba(255, 0, 0, 0.45)),url(../static/images/other/Elegant_Background-7.jpg)">
-        <blockquote class="site-info" style="height: 640px !important;">
-            <h2 style="text-align: center">Welcome aboard the love train !</h2>
-            <h1>Please set up your profile to begin.</h1>
-
-            <form action="/profile">
-                <div class="form-single-input">
-                    <div class="form-group col_1_of_1" style="margin-bottom: 100px;">
-                        <button type="submit" class="btn btn-default" style="letter-spacing: 1px;">Setup
-                            Profile
-                        </button>
-                    </div>
-                </div>
-            </form>
-
-        </blockquote>
-    </div>
-</section>
-
-<!-- If is has setup a profile display match profiles -->
-{% else %}
-<section id="intro" class="section intro no-padding">
-    <div class="container-fluid"
-         style="background: linear-gradient(rgba(51,70,92,0.91),rgba(51,70,92,0.91)),url(../static/images/other/Elegant_Background-7.jpg)">
-        <blockquote class="site-info">
-            <h1></h1>
-            <div class="tab">
-                <button class="tablinks" onclick="openCity(event, 'recommended')" id="defaultOpen">Recommend</button>
-                <button class="tablinks" onclick="openCity(event, 'matched')">Matched</button>
-                <button class="tablinks" onclick="openCity(event, 'setting')" style="border-right: none">Settings
-                </button>
+                </blockquote>
             </div>
+        </section>
 
-            <!-- Start Recommend Tab -->
-            <div id="recommended" class="tabcontent" style="overflow: hidden;">
-                <div class="match-user">
-
-                    {% for user in highest_match_users %}
-                    {% for value in user %}
-
-                    {% if value.username %}
-                    <span class="matched_username" style="display:none;">{{ value.username }}</span>
-                    {% endif %}
-
-                    {% if value.image %}
-                    <img class="mySlides w3-animate-left" src="../static/images/profiles/{{ value.image }}"
-                         style="width:100%;">
-                    {% endif %}
-
-                    {% endfor %}
-                    {% endfor %}
-                    <div class="like-dislike-btn">
-                        <button id="dislike" class="w3-button w3-blue" onclick="plusDivs(-1)" name="dislike"
-                                value="dislike">DISLIKE
-                        </button>
-                        <button id="like" class="w3-button w3-pink" onclick="plusDivs(1)" name="like" value="like">
-                            LIKE
+        <!-- If is has setup a profile display match profiles -->
+    {% else %}
+        <section id="intro" class="section intro no-padding">
+            <div class="container-fluid"
+                 style="background: linear-gradient(rgba(51,70,92,0.91),rgba(51,70,92,0.91)),url(../static/images/other/Elegant_Background-7.jpg)">
+                <blockquote class="site-info">
+                    <h1></h1>
+                    <div class="tab">
+                        <button class="tablinks" onclick="openCity(event, 'recommended')" id="defaultOpen">Recommend</button>
+                        <button class="tablinks" onclick="openCity(event, 'matched')">Matched</button>
+                        <button class="tablinks" onclick="openCity(event, 'setting')" style="border-right: none">
+                            Settings
                         </button>
                     </div>
 
-                    <button class="accordion">Show Info</button>
-                    <div class="panel">
+                    <div id="recommended" class="tabcontent" style="overflow: hidden;">
+                        <div class="match-user">
 
-                        <p><b>Name: </b><span id="panel-name">Something</span></p>
-                        <p><b>Gender: </b><span id="panel-gender">Something</span></p>
-                        <p><b>Age: </b><span id="panel-age">Something</span></p>
-                        <p><b>Height: </b><span id="panel-height">Something</span></p>
-                        <p><b>Location: </b><span id="panel-location">Something</span></p>
-                        <p><b>Education: </b><span id="panel-education">Something</span></p>
-                        <p><b>Bio:</b><span id="panel-bio">Something</span></p>
+                            {% for user in highest_match_users %}
+                                {% for value in user %}
+
+                                    {% if value.username %}
+                                        <span class="matched_username" style="display:none;">{{ value.username }}</span>
+                                    {% endif %}
+
+                                    {% if value.image %}
+                                        <img class="mySlides w3-animate-left"
+                                             src="../static/images/profiles/{{ value.image }}" style="width:100%;">
+                                    {% endif %}
+
+                                {% endfor %}
+                            {% endfor %}
+                            <div class="like-dislike-btn">
+                                <button id="dislike" class="w3-button w3-blue" onclick="plusDivs(-1)" name="dislike"
+                                        value="dislike">DISLIKE
+                                </button>
+                                <button id="like" class="w3-button w3-pink" onclick="plusDivs(1)" name="like"
+                                        value="like">LIKE
+                                </button>
+                            </div>
+
+                            <button class="accordion">Show Info</button>
+                            <div class="panel">
+
+                                {% for user in highest_match_users %}
+
+                                    {% for value in user %}
+
+                                        {% if value.name %}
+                                            <p class="panel-name" style="display:none;"><b>Name: </b>{{ value.name }}</p>
+                                        {% endif %}
+
+                                        {% if value.gender %}
+                                            <p class="panel-gender" style="display:none;"><b>Gender: </b>{{ value.gender }}</p>
+                                        {% endif %}
+
+                                        {% if value.age %}
+                                            <p class="panel-age" style="display:none;"><b>Age: </b>{{ value.age }}</p>
+                                        {% endif %}
+
+                                        {% if value.height %}
+                                            <p class="panel-height" style="display:none;"><b>Height: </b>{{ value.height }}</p>
+                                        {% endif %}
+
+                                        {% if value.location %}
+                                            <p class="panel-location" style="display:none;"><b>Location: </b>{{ value.location }}</p>
+                                        {% endif %}
+
+                                        {% if value.education %}
+                                            <p class="panel-bio" style="display:none;"><b>Bio: </b>{{ value.education }}</p>
+                                        {% endif %}
+
+                                        {% if value.bio %}
+                                            <p class="panel-education" style="display:none;"><b>Education: </b>{{ value.bio }}</p>
+                                        {% endif %}
+
+                                    {% endfor %}
+
+                                {% endfor %}
+                            </div>
+                        </div>
                     </div>
-
 
                     <script>  <!-- Javascript for Image slider -->
-
-                            // Image section
-                            var slideIndex = 1;
-                            showDivs(slideIndex);
-                            function plusDivs(n) {
-                                showDivs(slideIndex += n);
+                    // Image section
+                    var slideIndex = 1;
+                    showDivs(slideIndex);
+                    function plusDivs(n) {
+                        showDivs(slideIndex += n);
+                    }
+                    function showDivs(n) {
+                        var i;
+                        var x = document.getElementsByClassName("mySlides");
+                        if (n > x.length) {
+                            slideIndex = 1;
+                        }
+                        if (n < 1) {
+                            slideIndex = x.length;
+                        }
+                        for (i = 0; i < x.length; i++) {
+                            x[i].style.display = "none";
+                            document.getElementsByClassName('panel-name')[slideIndex-1].style.display = "none";
+                            document.getElementsByClassName('panel-gender')[slideIndex-1].style.display = "none";
+                            document.getElementsByClassName('panel-age')[slideIndex-1].style.display = "none";
+                            document.getElementsByClassName('panel-height')[slideIndex-1].style.display = "none";
+                            document.getElementsByClassName('panel-location')[slideIndex-1].style.display = "none";
+                            document.getElementsByClassName('panel-education')[slideIndex-1].style.display = "none";
+                            document.getElementsByClassName('panel-bio')[slideIndex-1].style.display = "none";
+                    }
+                        console.log(slideIndex - 1);
+                        x[slideIndex - 1].style.display = "block";
+                    }
+                    // POST likes / dislikes here
+                    var matched_username = document.getElementsByClassName("matched_username");
+                    matched_username = (matched_username[slideIndex - 1].textContent);
+                    $('#like').click(function () {
+                        var likeIndex = slideIndex;
+                        if (likeIndex - 2 == -1) {
+                            console.log('yep');
+                            likeIndex = 7;
+                        }
+                        var like = document.getElementById('like').value;
+                        var matched_username = document.getElementsByClassName("matched_username");
+                        matched_username = (matched_username[likeIndex - 2].textContent);
+                        console.log(matched_username);
+                        $.ajax({
+                            type: 'POST',
+                            url: '/member',
+                            data: {
+                                like_dislike: like,
+                                liked_user: matched_username
+                            },
+                            success: function (response) {
+                                console.log('success');
                             }
-
-                            function showDivs(n) {
-                                var i;
-                                var x = document.getElementsByClassName("mySlides");
-                                if (n > x.length) {
-                                    slideIndex = 1
-                                }
-                                if (n < 1) {
-                                    slideIndex = x.length
-                                }
-                                for (i = 0; i < x.length; i++) {
-                                    x[i].style.display = "none";
-                                }
-                                console.log(slideIndex-1)
-                                x[slideIndex - 1].style.display = "block";
+                        });
+                    });
+                    likeIndex = 1
+                    // Accordian
+                    var acc = document.getElementsByClassName("accordion");
+                    var i;
+                    for (i = 0; i < acc.length; i++) {
+                        acc[i].onclick = function () {
+                            this.classList.toggle("active");
+                            var panel = this.nextElementSibling;
+                            if (panel.style.maxHeight) {
+                                document.getElementsByClassName("accordion")[0].innerHTML = "SHOW INFO";
+                                panel.style.maxHeight = null;
+                            } else {
+                                document.getElementsByClassName("accordion")[0].innerHTML = "HIDE INFO";
+                                document.getElementsByClassName('panel-name')[slideIndex-1].style.display = "block";
+                                document.getElementsByClassName('panel-gender')[slideIndex-1].style.display = "block";
+                                document.getElementsByClassName('panel-age')[slideIndex-1].style.display = "block";
+                                document.getElementsByClassName('panel-height')[slideIndex-1].style.display = "block";
+                                document.getElementsByClassName('panel-location')[slideIndex-1].style.display = "block";
+                                document.getElementsByClassName('panel-education')[slideIndex-1].style.display = "block";
+                                document.getElementsByClassName('panel-bio')[slideIndex-1].style.display = "block";
+                                panel.style.maxHeight = panel.scrollHeight + "px";
                             }
-
-                            // POST likes / dislikes here
-
-                            var matched_username = document.getElementsByClassName("matched_username");
-                            matched_username = (matched_username[slideIndex -1 ].textContent);
-                            $('#like').click(function() {
-                                var likeIndex = slideIndex;
-
-                                if ( likeIndex-2 == -1) {
-                                    console.log('yep')
-                                    likeIndex = 7;
-                                };
-
-                                var like = document.getElementById('like').value;
-                                var matched_username = document.getElementsByClassName("matched_username");
-                                matched_username = (matched_username[likeIndex - 2].textContent);
-                                console.log(matched_username)
-
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: '/member',
-                                        data: {
-                                            like_dislike: like,
-                                            liked_user: matched_username
-                                    },
-                                    success: function(response) {
-                                        console.log('success');
-                                    }
-                                });
-                            });
-                            likeIndex  = 1
-
-                            // Accordian
-                            var acc = document.getElementsByClassName("accordion");
-                            var i;
-                            for (i = 0; i < acc.length; i++) {
-                                acc[i].onclick = function () {
-                                    this.classList.toggle("active");
-                                    var panel = this.nextElementSibling;
-                                    if (panel.style.maxHeight) {
-                                        document.getElementsByClassName("accordion")[0].innerHTML = "SHOW INFO";
-                                        panel.style.maxHeight = null;
-                                    } else {
-                                        document.getElementsByClassName("accordion")[0].innerHTML = "HIDE INFO";
-                                        document.getElementById('panel-name');
-                                        document.getElementById('panel-gender');
-                                        document.getElementById('panel-age');
-                                        document.getElementById('panel-height');
-                                        document.getElementById('panel-location');
-                                        document.getElementById('panel-education');
-                                        document.getElementById('panel-bio');
-                                        panel.style.maxHeight = panel.scrollHeight + "px";
-                                    }
-                                }
-                            }
+                        }
+                    }
+                    </script> <!-- Javascript for Image slider -->
 
 
+                    <div id="matched" class="tabcontent">
+                        <img src="../static/images/other/chat_demo.png" width="100%">
+                        <p><b>Need to figure out the format of chats with multiple users...</b></p>
+                         {% for user in mutual_likes %}
+                            {% for value in user %}
 
-                    </script> <!-- End Javascript for Image slider -->
-                </div>
-            </div>
+                                {% if value.username %}
+                                    {{ value.username }}
+                                {% endif %}
 
-            <!-- Start Tab for Matched content -->
-            <div id="matched" class="tabcontent" style="overflow: hidden;">
+                                {% if value.age %}
+                                    {{ value.age }}
+                                {% endif %}
 
-                <img src="../static/images/other/chat_demo.png" width="100%">
-                <p><b>afsfawddwa...</b></p>
-                <h1>ssaddsdds</h1>
+                                {% if value.bio %}
+                                    {{ value.bio }}
+                                {% endif %}
 
-            </div>
-            <!-- End Tab for Matched content -->
+                                {% if value.image %}
+                                    {{ value.image }}
+                                {% endif %}
+
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
 
 
-            <!-- Start Tab for Settings content -->
-            <div id="setting" class="tabcontent">
-                <img src="../static/images/other/settings_demo.jpg" width="100%">
-                <p><b>Quick setting toggles will go here (Age/Gender Preference)</b></p>
-            </div>
-            <!-- End Tab for Settings content -->
+                    <div id="setting" class="tabcontent">
+                        <img src="../static/images/other/settings_demo.jpg" width="100%">
+                        <p><b>Quick setting toggles will go here (Age/Gender Preference)</b></p>
+                    </div>
 
-            <script>
+
+                    <script>
                         // Content Area
                         function openCity(evt, pageName) {
                             var i, tabcontent, tablinks;
@@ -231,14 +268,11 @@
                         }
                         // Get the element with id="defaultOpen" and click on it
                         document.getElementById("defaultOpen").click();
+                    </script>
 
-
-            </script>
-
-
-        </blockquote>
-    </div>
-</section>
-{% endif %}
+                </blockquote>
+            </div>
+        </section>
+    {% endif %}
 
 {% endblock %}

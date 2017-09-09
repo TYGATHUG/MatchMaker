@@ -180,19 +180,26 @@ def member():
             db.session.add(dislike)
             db.session.commit()
 
-    # fetch matches using Watson algo
+    # fetch Recommended using Watson algo
     if curr_user:
         highest_match_users = match_users_watson(curr_user)
     else:
         highest_match_users = ""
 
 
-     # take care of matching
+    # fetch Matched users (mutual likes)
+    if curr_user:
+        mutual_likes = fetch_mutual_likes(curr_user)
+    else:
+        mutual_likes = ""
+
+
+    # take care of matching
     curr_user_table = User.query.filter_by(username=current_user.username).first()
     curr_match_table = Match.query.filter_by(username=current_user.username).first()
 
 
-    return render_template('member.html', name=current_user.username, highest_match_users=highest_match_users, curr_user_table=curr_user_table, curr_match_table=curr_match_table)
+    return render_template('member.html', name=current_user.username, highest_match_users=highest_match_users, curr_user_table=curr_user_table, curr_match_table=curr_match_table, mutual_likes=mutual_likes)
 
 
 @app.route('/profile', methods=['GET', 'POST'])
@@ -531,6 +538,46 @@ def match_users_watson(curr_user):
 
     return highest_match_users
 
+
+def fetch_mutual_likes(curr_user):
+
+    # fetch Matched users (mutual likes)
+    mutual_liked_users = {}
+    if curr_user:
+        likes = Like.query.filter_by(username=curr_user.username)
+
+        if likes:
+            for like in likes:
+                mutual_likes = Like.query.filter_by(username=like.liked_user)
+
+                if mutual_likes:
+                    for mutual in mutual_likes:
+                        if curr_user.username in mutual.liked_user:
+                            print 'LIKED!!!!!'
+                            print mutual.username
+                            print curr_user.username
+                            if mutual.username != curr_user.username:
+                                mutual_liked_users.update({mutual.username: ""})
+
+    mutual_liked_user_details = []
+    for user in mutual_liked_users:
+        print 'saassa'
+        print user
+        liked_user_details = Match.query.filter_by(username=user).first()
+
+        mutual_liked_user_details.append([
+            {
+            'username': user,
+            'image': liked_user_details.image,
+            'bio': liked_user_details.bio,
+            'height': liked_user_details.height,
+            'location': liked_user_details.location,
+            'education': liked_user_details.education
+            }
+        ])
+
+
+    return mutual_liked_user_details
 
 
 
