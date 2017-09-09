@@ -92,52 +92,14 @@
 
                         <button class="accordion">Show Info</button>
                         <div class="panel">
-                            {% for user in highest_match_users %}
 
-                                {% for value in user %}
-                                    {% if value.name %}
-                                        <p>Name: {{ value.name }}</p>
-                                    {% endif %}
-
-                                    {% if value.gender %}
-                                        <p>Gender: {{ value.gender }}</p>
-                                    {% endif %}
-
-                                    {% if value.age %}
-                                        <p>Age: {{ value.age }}</p>
-                                    {% endif %}
-
-                                    {% if value.height %}
-                                        <p>Height: {{ value.height }}</p>
-                                    {% endif %}
-
-                                    {% if value.location %}
-                                        <p>Location: {{ value.location }}</p>
-                                    {% endif %}
-
-                                    {% if value.education %}
-                                        <p>Education: {{ value.education }}</p>
-                                    {% endif %}
-
-                                    {% if value.ethnicity %}
-                                        <p>Ethnicity: {{ value.ethnicity }}</p>
-                                    {% endif %}
-
-                                    {% if value.religion %}
-                                        <p>Religion: {{ value.religion }}</p>
-                                    {% endif %}
-
-                                    {% if value.bio %}
-                                        <p>Bio: {{ value.bio }}</p>
-                                    {% endif %}
-
-                                    {% if value.username %}
-
-                                    {% endif %}
-
-                                {% endfor %}
-                            {% endfor %}
-
+                            <p><b>Name: </b><span id="panel-name">Something</span></p>
+                            <p><b>Gender: </b><span id="panel-gender">Something</span></p>
+                            <p><b>Age: </b><span id="panel-age">Something</span></p>
+                            <p><b>Height: </b><span id="panel-height">Something</span></p>
+                            <p><b>Location: </b><span id="panel-location">Something</span></p>
+                            <p><b>Education: </b><span id="panel-education">Something</span></p>
+                            <p><b>Bio:</b><span id="panel-bio">Something</span></p>
                         </div>
                     </div>
 
@@ -209,6 +171,13 @@
                                         panel.style.maxHeight = null;
                                     } else {
                                         document.getElementsByClassName("accordion")[0].innerHTML = "HIDE INFO";
+                                        document.getElementById('panel-name');
+                                        document.getElementById('panel-gender');
+                                        document.getElementById('panel-age');
+                                        document.getElementById('panel-height');
+                                        document.getElementById('panel-location');
+                                        document.getElementById('panel-education');
+                                        document.getElementById('panel-bio');
                                         panel.style.maxHeight = panel.scrollHeight + "px";
                                     }
                                 }
