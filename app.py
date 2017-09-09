@@ -449,14 +449,15 @@ def match_users_watson(curr_user):
 
         matched_users = {}
         users = Match.query.all()  # get all the match profiles
-        print
+
 
         for user in users:   # get all uses usernames to store in dict
             username = user.username
             matched_users.update({user.username: []})
 
         for user in users:   # get all the matches within a range and store in dict against name
-            print 'erer'
+
+            print user.practicality
 
             if user.practicality:
                 up = user.practicality + 10
@@ -513,7 +514,7 @@ def match_users_watson(curr_user):
 
         # return the highest matched users currently set to half of num items that match / 2 + 1
         highest_match_users = []
-        match_level = up / 2 -2
+        match_level = up / 2 - 1
 
         for match in matched_users:    # get the match data to return to member page
             for data in matched_users[match]:
@@ -523,8 +524,8 @@ def match_users_watson(curr_user):
                     user_match = data['num_match']
                 except:
                     user_match = 0
-
-                if (user_match >= match_level) & (user_match != curr_user.username):
+                print match
+                if (user_match >= match_level) & (match != curr_user.username):
                     #highest_match_users.append(matched_users[match])
 
                     user = Match.query.filter_by(username=match).first()
