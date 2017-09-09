@@ -83,7 +83,7 @@
                                         <img class="mySlides w3-animate-left"
                                              src="../static/images/profiles/{{ value.image }}"
                                              style="margin: auto;
-                                             max-width:600px;
+                                             max-width:550px;
                                              min-height:600px;
                                              max-height:600px;
                                              overflow: hidden;
@@ -97,7 +97,7 @@
                                         value="dislike">DISLIKE
                                 </button>
                                 <button id="like" class="w3-button w3-pink" onclick="plusDivs(1)" name="like"
-                                        value="like">LIKE
+                                        value="like" style="float:right;">LIKE
                                 </button>
                             </div>
 
@@ -185,7 +185,7 @@
                             document.getElementsByClassName('panel-location')[slideIndex-1].style.display = "none";
                             document.getElementsByClassName('panel-education')[slideIndex-1].style.display = "none";
                             document.getElementsByClassName('panel-bio')[slideIndex-1].style.display = "none";
-                    
+
                         }
                         console.log(slideIndex - 1);
                         x[slideIndex - 1].style.display = "block";

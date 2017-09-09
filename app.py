@@ -569,6 +569,7 @@ def fetch_mutual_likes(curr_user):
         mutual_liked_user_details.append([
             {
             'username': user,
+            'name': liked_user_details.name,
             'image': liked_user_details.image,
             'bio': liked_user_details.bio,
             'height': liked_user_details.height,
