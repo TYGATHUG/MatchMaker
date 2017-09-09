@@ -90,8 +90,6 @@
                                 <button id="like" class="w3-button w3-pink" onclick="plusDivs(1)" name="like" value="like">LIKE</button>
                             </div>
 
-
-
                         <button class="accordion">Show Info</button>
                         <div class="panel">
 
@@ -146,10 +144,10 @@
 
 
                         <script>  <!-- Javascript for Image slider -->
+
                             // Image section
                             var slideIndex = 1;
                             showDivs(slideIndex);
-
                             function plusDivs(n) {
                                 showDivs(slideIndex += n);
                             }
@@ -171,6 +169,9 @@
                             }
 
                             // POST likes / dislikes here
+
+                            var matched_username = document.getElementsByClassName("matched_username");
+                            matched_username = (matched_username[slideIndex -1 ].textContent);
                             $('#like').click(function() {
                                 var likeIndex = slideIndex;
 
@@ -202,8 +203,7 @@
                             // Accordian
                             var acc = document.getElementsByClassName("accordion");
                             var i;
-
-                            for (i = 0; i < acc.length; i++) {
+                            for (i = -1; i < acc.length; i++) {
                                 acc[i].onclick = function () {
                                     this.classList.toggle("active");
                                     var panel = this.nextElementSibling;
@@ -242,7 +242,6 @@
                             document.getElementById(pageName).style.display = "block";
                             evt.currentTarget.className += " active";
                         }
-
                         // Get the element with id="defaultOpen" and click on it
                         document.getElementById("defaultOpen").click();
                     </script>
