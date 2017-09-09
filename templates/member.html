@@ -1,7 +1,7 @@
 {% extends 'main.html' %}
 
 {% block body %}
-
+    <!-- Display Validation errors-->
     {% with messages=get_flashed_messages() %}
         {% if messages %}
             {% for message in messages %}
@@ -29,8 +29,9 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
+    <!-- End Display Validation errors-->
 
-
+    <!-- If user has not set up a match profile -->
     {% if curr_user_table.setup == False %}
         <section id="intro" class="section intro no-padding">
             <div class="container-fluid"
@@ -52,6 +53,8 @@
                 </blockquote>
             </div>
         </section>
+
+    <!-- If is has setup a profile display match profiles -->
     {% else %}
         <section id="intro" class="section intro no-padding">
             <div class="container-fluid"
@@ -86,11 +89,6 @@
                                 <button id="dislike" class="w3-button w3-blue" onclick="plusDivs(-1)" name="dislike" value="dislike">DISLIKE</button>
                                 <button id="like" class="w3-button w3-pink" onclick="plusDivs(1)" name="like" value="like">LIKE</button>
                             </div>
-
-
-
-
-
 
 
 
@@ -146,8 +144,8 @@
                         </div>
                     </div>
 
-
-                        <script>
+                        
+                        <script>  <!-- Javascript for Image slider -->
                             // Image section
                             var slideIndex = 1;
                             showDivs(slideIndex);
@@ -155,8 +153,6 @@
                             function plusDivs(n) {
                                 showDivs(slideIndex += n);
                             }
-
-
 
                             function showDivs(n) {
                                 var i;
@@ -173,6 +169,7 @@
                                 x[slideIndex - 1].style.display = "block";
                             }
 
+                            <!-- POST LIKES HERE  -->
                             var matched_username = document.getElementsByClassName("matched_username");
                             matched_username = (matched_username[slideIndex -1 ].textContent);
 
@@ -208,8 +205,8 @@
                                     }
                                 }
                             }
-                            
-                        </script>
+
+                        </script> <!-- Javascript for Image slider -->
 
                     <div id="chat" class="tabcontent">
                         <img src="../static/images/other/chat_demo.png" width="100%">
