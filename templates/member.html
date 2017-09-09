@@ -54,7 +54,7 @@
             </div>
         </section>
 
-    <!-- If is has setup a profile display match profiles -->
+        <!-- If is has setup a profile display match profiles -->
     {% else %}
         <section id="intro" class="section intro no-padding">
             <div class="container-fluid"
@@ -76,114 +76,157 @@
                                 {% for value in user %}
 
                                     {% if value.username %}
-                                       <span class="matched_username" style="display:none;">{{ value.username }}</span>
+                                        <span class="matched_username" style="display:none;">{{ value.username }}</span>
                                     {% endif %}
 
                                     {% if value.image %}
-                                        <img class="mySlides w3-animate-left" src="../static/images/profiles/{{ value.image }}" style="width:100%;">
+                                        <img class="mySlides w3-animate-left"
+                                             src="../static/images/profiles/{{ value.image }}" style="width:100%;">
                                     {% endif %}
 
                                 {% endfor %}
                             {% endfor %}
                             <div class="like-dislike-btn">
-                                <button id="dislike" class="w3-button w3-blue" onclick="plusDivs(-1)" name="dislike" value="dislike">DISLIKE</button>
-                                <button id="like" class="w3-button w3-pink" onclick="plusDivs(1)" name="like" value="like">LIKE</button>
+                                <button id="dislike" class="w3-button w3-blue" onclick="plusDivs(-1)" name="dislike"
+                                        value="dislike">DISLIKE
+                                </button>
+                                <button id="like" class="w3-button w3-pink" onclick="plusDivs(1)" name="like"
+                                        value="like">LIKE
+                                </button>
                             </div>
 
-                        <button class="accordion">Show Info</button>
-                        <div class="panel">
+                            <button class="accordion">Show Info</button>
+                            <div class="panel">
 
-                            <p><b>Name: </b><span id="panel-name">Something</span></p>
-                            <p><b>Gender: </b><span id="panel-gender">Something</span></p>
-                            <p><b>Age: </b><span id="panel-age">Something</span></p>
-                            <p><b>Height: </b><span id="panel-height">Something</span></p>
-                            <p><b>Location: </b><span id="panel-location">Something</span></p>
-                            <p><b>Education: </b><span id="panel-education">Something</span></p>
-                            <p><b>Bio:</b><span id="panel-bio">Something</span></p>
+                                {% for user in highest_match_users %}
+
+                                    {% for value in user %}
+
+                                        {% if value.name %}
+                                            <p class="panel-name" style="display:none;"><b>Name: </b>{{ value.name }}</p>
+                                        {% endif %}
+
+                                        {% if value.gender %}
+                                            <p class="panel-gender" style="display:none;"><b>Gender: </b>{{ value.gender }}</p>
+                                        {% endif %}
+
+                                        {% if value.age %}
+                                            <p class="panel-age"><b>Age: </b>{{ value.age }}</p>
+                                        {% endif %}
+
+                                        {% if value.height %}
+                                            <p class="panel-height"><b>Height: </b>{{ value.height }}</p>
+                                        {% endif %}
+
+                                        {% if value.location %}
+                                            <p class="panel-location"><b>Location: </b>{{ value.location }}</p>
+                                        {% endif %}
+
+                                        {% if value.education %}
+                                            <p class="panel-bio"><b>Bio: </b>{{ value.education }}</p>
+                                        {% endif %}
+
+                                        {% if value.bio %}
+                                            <p class="panel-education"><b>Education: </b>{{ value.bio }}</p>
+                                        {% endif %}
+
+                                    {% endfor %}
+
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
 
-                        <script>  <!-- Javascript for Image slider -->
+                    <script>  <!-- Javascript for Image slider -->
 
-                            // Image section
-                            var slideIndex = 1;
-                            showDivs(slideIndex);
-                            function plusDivs(n) {
-                                showDivs(slideIndex += n);
+                    // Image section
+                    var slideIndex = 1;
+                    showDivs(slideIndex);
+
+                    function plusDivs(n) {
+                        showDivs(slideIndex += n);
+                    }
+
+                    function showDivs(n) {
+                        var i;
+                        var x = document.getElementsByClassName("mySlides");
+                        if (n > x.length) {
+                            slideIndex = 1
+                        }
+                        if (n < 1) {
+                            slideIndex = x.length
+                        }
+                        for (i = 0; i < x.length; i++) {
+                            x[i].style.display = "none";
+                        }
+                        console.log(slideIndex - 1)
+                        x[slideIndex - 1].style.display = "block";
+                    }
+
+                    // POST likes / dislikes here
+
+                    var matched_username = document.getElementsByClassName("matched_username");
+                    matched_username = (matched_username[slideIndex - 1].textContent);
+                    $('#like').click(function () {
+                        var likeIndex = slideIndex;
+
+                        if (likeIndex - 2 == -1) {
+                            console.log('yep')
+                            likeIndex = 7;
+                        }
+                        ;
+
+                        var like = document.getElementById('like').value;
+                        var matched_username = document.getElementsByClassName("matched_username");
+                        matched_username = (matched_username[likeIndex - 2].textContent);
+                        console.log(matched_username)
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/member',
+                            data: {
+                                like_dislike: like,
+                                liked_user: matched_username
+                            },
+                            success: function (response) {
+                                console.log('success');
                             }
+                        });
+                    });
+                    likeIndex = 1
 
-                            function showDivs(n) {
-                                var i;
-                                var x = document.getElementsByClassName("mySlides");
-                                if (n > x.length) {
-                                    slideIndex = 1
-                                }
-                                if (n < 1) {
-                                    slideIndex = x.length
-                                }
-                                for (i = 0; i < x.length; i++) {
-                                    x[i].style.display = "none";
-                                }
-                                console.log(slideIndex-1)
-                                x[slideIndex - 1].style.display = "block";
+                    // Accordian
+                    var acc = document.getElementsByClassName("accordion");
+                    var i;
+                    for (i = 0; i < acc.length; i++) {
+                        acc[i].onclick = function () {
+                            this.classList.toggle("active");
+                            var panel = this.nextElementSibling;
+                            if (panel.style.maxHeight) {
+                                document.getElementsByClassName("accordion")[0].innerHTML = "SHOW INFO";
+{#                                document.getElementsByClassName('panel-name').style.display = "none";#}
+{#                                document.getElementsByClassName('panel-gender')[slideIndex].style.display = "none";#}
+{#                                document.getElementsByClassName('panel-age').style.display = "none";#}
+{#                                document.getElementsByClassName('panel-height').style.display = "none";#}
+{#                                document.getElementsByClassName('panel-location').style.display = "none";#}
+{#                                document.getElementsByClassName('panel-education').style.display = "none";#}
+{#                                document.getElementsByClassName('panel-bio').style.display = "none";#}
+                                panel.style.maxHeight = null;
+                            } else {
+                                document.getElementsByClassName("accordion")[0].innerHTML = "HIDE INFO";
+                                document.getElementsByClassName('panel-name')[slideIndex].style.display = "block";
+                                document.getElementsByClassName('panel-gender')[slideIndex].style.display = "block";
+                                document.getElementsByClassName('panel-age')[slideIndex].style.display = "block";
+                                document.getElementsByClassName('panel-height')[slideIndex].style.display = "block";
+                                document.getElementsByClassName('panel-location')[slideIndex].style.display = "block";
+                                document.getElementsByClassName('panel-education')[slideIndex].style.display = "block";
+                                document.getElementsByClassName('panel-bio')[slideIndex].style.display = "block";
+                                panel.style.maxHeight = panel.scrollHeight + "px";
                             }
+                        }
+                    }
 
-                            // POST likes / dislikes here
-
-                            var matched_username = document.getElementsByClassName("matched_username");
-                            matched_username = (matched_username[slideIndex -1 ].textContent);
-                            $('#like').click(function() {
-                                var likeIndex = slideIndex;
-
-                                if ( likeIndex-2 == -1) {
-                                    console.log('yep')
-                                    likeIndex = 7;
-                                };
-
-                                var like = document.getElementById('like').value;
-                                var matched_username = document.getElementsByClassName("matched_username");
-                                matched_username = (matched_username[likeIndex - 2].textContent);
-                                console.log(matched_username)
-
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: '/member',
-                                        data: {
-                                            like_dislike: like,
-                                            liked_user: matched_username
-                                    },
-                                    success: function(response) {
-                                        console.log('success');
-                                    }
-                                });
-                            });
-                            likeIndex  = 1
-
-                            // Accordian
-                            var acc = document.getElementsByClassName("accordion");
-                            var i;
-                            for (i = 0; i < acc.length; i++) {
-                                acc[i].onclick = function () {
-                                    this.classList.toggle("active");
-                                    var panel = this.nextElementSibling;
-                                    if (panel.style.maxHeight) {
-                                        document.getElementsByClassName("accordion")[0].innerHTML = "SHOW INFO";
-                                        panel.style.maxHeight = null;
-                                    } else {
-                                        document.getElementsByClassName("accordion")[0].innerHTML = "HIDE INFO";
-                                        document.getElementById('panel-name');
-                                        document.getElementById('panel-gender');
-                                        document.getElementById('panel-age');
-                                        document.getElementById('panel-height');
-                                        document.getElementById('panel-location');
-                                        document.getElementById('panel-education');
-                                        document.getElementById('panel-bio');
-                                        panel.style.maxHeight = panel.scrollHeight + "px";
-                                    }
-                                }
-                            }
-
-                        </script> <!-- Javascript for Image slider -->
+                    </script> <!-- Javascript for Image slider -->
 
                     <div id="chat" class="tabcontent">
                         <img src="../static/images/other/chat_demo.png" width="100%">
@@ -210,6 +253,7 @@
                             document.getElementById(pageName).style.display = "block";
                             evt.currentTarget.className += " active";
                         }
+
                         // Get the element with id="defaultOpen" and click on it
                         document.getElementById("defaultOpen").click();
                     </script>
