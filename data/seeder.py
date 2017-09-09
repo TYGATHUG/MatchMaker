@@ -149,6 +149,7 @@ def data_entry():
 
         conn.execute('''INSERT INTO user (id, username, email, password, setup) VALUES (?, ?, ?, ?, ?)''',
                      (idCounter, randName.lower(), emailName.lower(), test_passwordHash, True))
+
         conn.commit()
 
         usernames.remove(randName)
@@ -156,6 +157,35 @@ def data_entry():
 
     conn.execute('''INSERT INTO user (id, username, email, password, setup) VALUES (?, ?, ?, ?, ?)''',
                  (idCounter, "admin", "admin@gmail.com", admin_passwordHash, True))
+
+    usernames = ["Jerrell", "Stan", "Ross", "Cesar", "Fredric", "Henry", "Anderson", "Alec", "Jon", "Noel", "Fidel"
+        , "Brady", "Wallace", "Gayle", "Neil", "Horacio", "Florencio", "Hassan", "Raphael", "Jay", "Ali", "Lynn"
+        , "Gordon", "Waylon", "Randal", "Emilio", "Fletcher", "Brett", "Emerson", "Lindsey", "Homer", "Blake", "Jarred"
+        , "Damian", "Paul", "Issac", "Alvaro", "Terry", "Bryan", "Hong", "Theo", "Les", "Mohamed", "Demetrius"
+        , "Benjamin", "Elde", "Christoper", "Jospeh", "Dusty", "Edwardo", "Florance", "Nelly", "Shanti", "Cristal"
+        , "Meghann", "Shelley", "Tessa", "Amada", "Argentina", "Terina", "Karie", "Adriane", "Sarita", "Ofelia",
+                 "Mollie"
+        , "Shawnda", "Alise", "Chantay", "Verda", "Delmy", "Claire", "Lakeisha", "Carolina", "Hilaria", "Fanny",
+                 "Sharon"
+        , "Shavonda", "Millicent", "Yan", "Nanci", "Lecia", "Dinah", "Adele", "Mindy", "Tori", "Monica", "Agripina"
+        , "Myesha", "Rebecka", "Crista", "Shu", "Kasandra", "Tierra", "Merly", "Evia", "Hae", "Yer", "Sun", "Dahlia",
+                 "Marianna"
+                 ]
+
+    # seed like table
+    id_count = 0
+    for i in range(0, (initialLengthOfNames / 2)):
+        username = usernames[i]
+
+        for j in range(0, (initialLengthOfNames - 1)):
+            if i != j:
+                liked_user = usernames[j]
+
+                conn.execute('''INSERT INTO Like (id, username, liked_user) VALUES (?, ?, ?)''',
+                             (id_count, username, liked_user))
+
+                id_count += 1
+
     conn.commit()
 
     c.close()
