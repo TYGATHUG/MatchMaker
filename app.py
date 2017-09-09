@@ -199,7 +199,7 @@ def member():
         mutual_likes = fetch_mutual_likes(curr_user)
     else:
         mutual_likes = ""
-
+    print mutual_likes
 
     # take care of matching
     curr_user_table = User.query.filter_by(username=current_user.username).first()
@@ -559,16 +559,11 @@ def fetch_mutual_likes(curr_user):
                 if mutual_likes:
                     for mutual in mutual_likes:
                         if curr_user.username in mutual.liked_user:
-                            print 'LIKED!!!!!'
-                            print mutual.username
-                            print curr_user.username
                             if mutual.username != curr_user.username:
                                 mutual_liked_users.update({mutual.username: ""})
 
     mutual_liked_user_details = []
     for user in mutual_liked_users:
-        print 'saassa'
-        print user
         liked_user_details = Match.query.filter_by(username=user).first()
 
         mutual_liked_user_details.append([
