@@ -90,11 +90,11 @@ class Match(db.Model):
     reading = db.Column(db.Integer())
 
 
-class Matched(db.Model):
-    __tablename__ = 'Matched'
+class Like(db.Model):
+    __tablename__ = 'Like'
     username = db.Column(db.String(15), primary_key=True, unique=True)
-    likes = db.Column(db.String(1200))
-    dislikes = db.Column(db.String(1200))
+    like = db.Column(db.String(1200))
+    dislike = db.Column(db.String(1200))
 
 
 # ---------------------------------------------------------------------------------
@@ -155,19 +155,21 @@ def home():
 @app.route('/member', methods=['GET', 'POST'])
 @login_required
 def member():
+    username = current_user.username.title()    # get session based username
 
     if request.method == "POST":
         print "Posted"
-        feeling = request.form['feeling']
-        print feeling
-        if "like" in feeling:
-            print feeling
-            #matched_user = Matched()
+        like_dislike = request.form['like_dislike']
+        liked_user = request.form['liked_user']
+        print like_dislike
+        print liked_user
+
+        if "like" in like_dislike:
+            print like_dislike
+
 
 
     highest_match_users = ""
-    username = current_user.username.title()    # get session based username
-
     curr_user = Match.query.filter_by(username=username.lower()).first()    # get current user by matching session and Match DB
 
     curr_user_table = User.query.filter_by(username=current_user.username).first()
