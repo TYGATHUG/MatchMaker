@@ -23,7 +23,7 @@
                         "showMethod": "fadeIn",
                         "hideMethod": "fadeOut",
                         "closeMethod": "fadeOut"
-                    }
+                    };
                     toastr["success"]("Welcome {{ name }} !", "{{ message }}")
                 </script>
             {% endfor %}
@@ -43,7 +43,7 @@
                     <form action="/profile">
                         <div class="form-single-input">
                             <div class="form-group col_1_of_1" style="margin-bottom: 100px;">
-                                <button type="submit" class="btn btn-default" style="letter-spacing: 1px;">Setup
+                                <button class="btn btn-default" style="letter-spacing: 1px;">Setup
                                     Profile
                                 </button>
                             </div>
@@ -151,15 +151,22 @@
                         var i;
                         var x = document.getElementsByClassName("mySlides");
                         if (n > x.length) {
-                            slideIndex = 1
+                            slideIndex = 1;
                         }
                         if (n < 1) {
-                            slideIndex = x.length
+                            slideIndex = x.length;
                         }
                         for (i = 0; i < x.length; i++) {
                             x[i].style.display = "none";
-                        }
-                        console.log(slideIndex - 1)
+                            document.getElementsByClassName('panel-name')[slideIndex-1].style.display = "none";
+                            document.getElementsByClassName('panel-gender')[slideIndex-1].style.display = "none";
+                            document.getElementsByClassName('panel-age')[slideIndex-1].style.display = "none";
+                            document.getElementsByClassName('panel-height')[slideIndex-1].style.display = "none";
+                            document.getElementsByClassName('panel-location')[slideIndex-1].style.display = "none";
+                            document.getElementsByClassName('panel-education')[slideIndex-1].style.display = "none";
+                            document.getElementsByClassName('panel-bio')[slideIndex-1].style.display = "none";
+                    }
+                        console.log(slideIndex - 1);
                         x[slideIndex - 1].style.display = "block";
                     }
 
@@ -171,15 +178,15 @@
                         var likeIndex = slideIndex;
 
                         if (likeIndex - 2 == -1) {
-                            console.log('yep')
+                            console.log('yep');
                             likeIndex = 7;
                         }
-                        ;
+
 
                         var like = document.getElementById('like').value;
                         var matched_username = document.getElementsByClassName("matched_username");
                         matched_username = (matched_username[likeIndex - 2].textContent);
-                        console.log(matched_username)
+                        console.log(matched_username);
 
                         $.ajax({
                             type: 'POST',
@@ -204,23 +211,16 @@
                             var panel = this.nextElementSibling;
                             if (panel.style.maxHeight) {
                                 document.getElementsByClassName("accordion")[0].innerHTML = "SHOW INFO";
-{#                                document.getElementsByClassName('panel-name').style.display = "none";#}
-{#                                document.getElementsByClassName('panel-gender')[slideIndex].style.display = "none";#}
-{#                                document.getElementsByClassName('panel-age').style.display = "none";#}
-{#                                document.getElementsByClassName('panel-height').style.display = "none";#}
-{#                                document.getElementsByClassName('panel-location').style.display = "none";#}
-{#                                document.getElementsByClassName('panel-education').style.display = "none";#}
-{#                                document.getElementsByClassName('panel-bio').style.display = "none";#}
                                 panel.style.maxHeight = null;
                             } else {
                                 document.getElementsByClassName("accordion")[0].innerHTML = "HIDE INFO";
-                                document.getElementsByClassName('panel-name')[slideIndex].style.display = "block";
-                                document.getElementsByClassName('panel-gender')[slideIndex].style.display = "block";
-                                document.getElementsByClassName('panel-age')[slideIndex].style.display = "block";
-                                document.getElementsByClassName('panel-height')[slideIndex].style.display = "block";
-                                document.getElementsByClassName('panel-location')[slideIndex].style.display = "block";
-                                document.getElementsByClassName('panel-education')[slideIndex].style.display = "block";
-                                document.getElementsByClassName('panel-bio')[slideIndex].style.display = "block";
+                                document.getElementsByClassName('panel-name')[slideIndex-1].style.display = "block";
+                                document.getElementsByClassName('panel-gender')[slideIndex-1].style.display = "block";
+                                document.getElementsByClassName('panel-age')[slideIndex-1].style.display = "block";
+                                document.getElementsByClassName('panel-height')[slideIndex-1].style.display = "block";
+                                document.getElementsByClassName('panel-location')[slideIndex-1].style.display = "block";
+                                document.getElementsByClassName('panel-education')[slideIndex-1].style.display = "block";
+                                document.getElementsByClassName('panel-bio')[slideIndex-1].style.display = "block";
                                 panel.style.maxHeight = panel.scrollHeight + "px";
                             }
                         }
