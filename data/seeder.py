@@ -158,19 +158,27 @@ def data_entry():
     conn.execute('''INSERT INTO user (id, username, email, password, setup) VALUES (?, ?, ?, ?, ?)''',
                  (idCounter, "admin", "admin@gmail.com", admin_passwordHash, True))
 
-    usernames = ["Jerrell", "Stan", "Ross", "Cesar", "Fredric", "Henry", "Anderson", "Alec", "Jon", "Noel", "Fidel"
-        , "Brady", "Wallace", "Gayle", "Neil", "Horacio", "Florencio", "Hassan", "Raphael", "Jay", "Ali", "Lynn"
-        , "Gordon", "Waylon", "Randal", "Emilio", "Fletcher", "Brett", "Emerson", "Lindsey", "Homer", "Blake", "Jarred"
-        , "Damian", "Paul", "Issac", "Alvaro", "Terry", "Bryan", "Hong", "Theo", "Les", "Mohamed", "Demetrius"
-        , "Benjamin", "Elde", "Christoper", "Jospeh", "Dusty", "Edwardo", "Florance", "Nelly", "Shanti", "Cristal"
-        , "Meghann", "Shelley", "Tessa", "Amada", "Argentina", "Terina", "Karie", "Adriane", "Sarita", "Ofelia",
-                 "Mollie"
-        , "Shawnda", "Alise", "Chantay", "Verda", "Delmy", "Claire", "Lakeisha", "Carolina", "Hilaria", "Fanny",
-                 "Sharon"
-        , "Shavonda", "Millicent", "Yan", "Nanci", "Lecia", "Dinah", "Adele", "Mindy", "Tori", "Monica", "Agripina"
-        , "Myesha", "Rebecka", "Crista", "Shu", "Kasandra", "Tierra", "Merly", "Evia", "Hae", "Yer", "Sun", "Dahlia",
-                 "Marianna"
-                 ]
+    conn.execute('''INSERT INTO Match (username, view_count, image, name, gender, pref_gender,
+                         age, pref_age_min, pref_age_max, height, location, pref_location, education,
+                         bio, practicality, love, excitment, challenge, closeness, structure, live_music, 
+                         spare_moment_purchases, gym_member, outdoors, volunteering, entreprenuer, reading) 
+                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                 ("admin", 0, "neil.jpg", "Admin", randGender, "", (randint(18, 70)), 0, 0,
+                  (randint(145, 213)), randLocation, "", randEducation, randBio, (randint(1, 100)), (randint(1, 100)),
+                  (randint(1, 100)), (randint(1, 100)), (randint(1, 100)), (randint(1, 100)),
+                  random.choice(experienceValues),
+                  random.choice(experienceValues), random.choice(experienceValues), random.choice(experienceValues),
+                  random.choice(experienceValues), random.choice(experienceValues), random.choice(experienceValues)))
+
+    usernames = ["Admin", "Jerrell", "Stan", "Ross", "Cesar", "Fredric", "Henry", "Anderson", "Alec", "Jon", "Noel",
+                 "Fidel", "Brady", "Wallace", "Gayle", "Neil", "Horacio", "Florencio", "Hassan", "Raphael", "Jay", "Ali", "Lynn"
+                , "Gordon", "Waylon", "Randal", "Emilio", "Fletcher", "Brett", "Emerson", "Lindsey", "Homer", "Blake", "Jarred"
+                , "Damian", "Paul", "Issac", "Alvaro", "Terry", "Bryan", "Hong", "Theo", "Les", "Mohamed", "Demetrius"
+                , "Benjamin", "Elde", "Christoper", "Jospeh", "Dusty", "Edwardo", "Florance", "Nelly", "Shanti", "Cristal"
+                , "Meghann", "Shelley", "Tessa", "Amada", "Argentina", "Terina", "Karie", "Adriane", "Sarita", "Ofelia", "Mollie"
+                , "Shawnda", "Alise", "Chantay", "Verda", "Delmy", "Claire", "Lakeisha", "Carolina", "Hilaria", "Fanny", "Sharon"
+                , "Shavonda", "Millicent", "Yan", "Nanci", "Lecia", "Dinah", "Adele", "Mindy", "Tori", "Monica", "Agripina"
+                , "Myesha", "Rebecka", "Crista", "Shu", "Kasandra", "Tierra", "Merly", "Evia", "Hae", "Yer", "Sun", "Dahlia", "Marianna"]
 
     # seed like table
     id_count = 0
@@ -182,7 +190,7 @@ def data_entry():
                 liked_user = usernames[j]
 
                 conn.execute('''INSERT INTO Like (id, username, liked_user) VALUES (?, ?, ?)''',
-                             (id_count, username, liked_user))
+                             (id_count, username.lower(), liked_user.lower()))
 
                 id_count += 1
 
