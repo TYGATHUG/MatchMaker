@@ -23,3 +23,5 @@ private.py
 data/*
 
 .*.db
+
+*.db

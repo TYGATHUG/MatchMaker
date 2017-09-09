@@ -115,7 +115,6 @@
                                         {% endif %}
 
                                         {% if value.height %}
-                                            <p class="panel-height" style="display:none;"><b>Height: </b>{{ value.height }}</p>
                                             <p class="panel-height" style="display:none;"><b>Height: </b>{{ value.height }} cm</p>
                                         {% endif %}
 
@@ -124,11 +123,6 @@
                                         {% endif %}
 
                                         {% if value.education %}
-                                            <p class="panel-bio" style="display:none;"><b>Bio: </b>{{ value.education }}</p>
-                                        {% endif %}
-
-                                        {% if value.bio %}
-                                            <p class="panel-education" style="display:none;"><b>Education: </b>{{ value.bio }}</p>
                                             <p class="panel-education" style="display:none;"><b>Education: </b>{{ value.education }}</p>
                                         {% endif %}
 
@@ -185,14 +179,6 @@
                             document.getElementsByClassName('panel-location')[slideIndex-1].style.display = "none";
                             document.getElementsByClassName('panel-education')[slideIndex-1].style.display = "none";
                             document.getElementsByClassName('panel-bio')[slideIndex-1].style.display = "none";
-                    }
-{#                            document.getElementsByClassName('panel-name')[slideIndex-1].style.display = "none";#}
-{#                            document.getElementsByClassName('panel-gender')[slideIndex-1].style.display = "none";#}
-{#                            document.getElementsByClassName('panel-age')[slideIndex-1].style.display = "none";#}
-{#                            document.getElementsByClassName('panel-height')[slideIndex-1].style.display = "none";#}
-{#                            document.getElementsByClassName('panel-location')[slideIndex-1].style.display = "none";#}
-{#                            document.getElementsByClassName('panel-education')[slideIndex-1].style.display = "none";#}
-{#                            document.getElementsByClassName('panel-bio')[slideIndex-1].style.display = "none";#}
                         }
                         console.log(slideIndex - 1);
                         x[slideIndex - 1].style.display = "block";
@@ -252,7 +238,6 @@
 
 
                     <div id="matched" class="tabcontent">
-                        <img src="../static/images/other/chat_demo.png" width="100%">
                         <p><b>Need to figure out the format of chats with multiple users...</b></p>
                          {% for user in mutual_likes %}
                             {% for value in user %}
