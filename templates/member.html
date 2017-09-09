@@ -62,8 +62,8 @@
                 <blockquote class="site-info">
                     <h1></h1>
                     <div class="tab">
-                        <button class="tablinks" onclick="openCity(event, 'recommended')" id="defaultOpen">Recommend</button>
-                        <button class="tablinks" onclick="openCity(event, 'matched')">Matched</button>
+                        <button class="tablinks" onclick="openCity(event, 'recommended')">Recommend</button>
+                        <button class="tablinks" onclick="openCity(event, 'matched')" id="defaultOpen">Matched</button>
                         <button class="tablinks" onclick="openCity(event, 'setting')" style="border-right: none">
                             Settings
                         </button>
@@ -244,30 +244,35 @@
                     </script> <!-- Javascript for Image slider -->
 
                     <!-- Start Matched Tab -->
-                    <div id="matched" class="tabcontent">
+                    <div id="matched" class="tabcontent tabcontent-fixed">
 
                          {% for user in mutual_likes %}
-                            {% for value in user %}
+                             <div class="matched-container">
 
-                                {% if value.image %}
-                                    <img src="../static/images/profiles/{{ value.image }}" width="70%">
-                                {% endif %}
+                                {% for value in user %}
 
-                                {% if value.username %}
-                                    {{ value.username }}
-                                {% endif %}
+                                    {% if value.image %}
+                                        <img class="matched-image" src="../static/images/profiles/{{ value.image }}">
+                                    {% endif %}
 
+                                    {% if value.name %}
+                                        <span class="matched-info">
+                                            {{ value.name }},
+                                    {% endif %}
 
-                                {% if value.bio %}
-                                    {{ value.bio }}
-                                {% endif %}
+                                    {% if value.age %}
+                                            {{ value.age }}
+                                        </span><br>
+                                    {% endif %}
 
-                                {% if value.image %}
-                                    {{ value.image }}
-                                {% endif %}
+                                    {% if value.location %}
+                                        <span class="matched-location">{{ value.location }}</span>
+                                    {% endif %}
 
-                            {% endfor %}
-                             <p></p>
+                                {% endfor %}
+
+                            </div>
+
                         {% endfor %}
 
                     </div>

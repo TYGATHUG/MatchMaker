@@ -97,6 +97,7 @@ class Match(db.Model):
     entreprenuer = db.Column(db.Integer())
     reading = db.Column(db.Integer())
 
+admin.add_view(ModelView(Match, db.session)) # create User view for current session
 
 class Like(db.Model):
     __tablename__ = 'Like'
@@ -104,6 +105,7 @@ class Like(db.Model):
     username = db.Column(db.String(15))
     liked_user = db.Column(db.String(15))
 
+admin.add_view(ModelView(Like, db.session)) # create User view for current session
 
 class Dislike(db.Model):
     __tablename__ = 'Dislike'
@@ -111,7 +113,7 @@ class Dislike(db.Model):
     username = db.Column(db.String(15))
     disliked_user = db.Column(db.String(15))
 
-
+admin.add_view(ModelView(Dislike, db.session)) # create User view for current session
 
 # ---------------------------------------------------------------------------------
 #   Classes Forms
@@ -590,7 +592,8 @@ def fetch_mutual_likes(curr_user):
             'bio': liked_user_details.bio,
             'height': liked_user_details.height,
             'location': liked_user_details.location,
-            'education': liked_user_details.education
+            'education': liked_user_details.education,
+            'age': liked_user_details.age
             }
         ])
 
