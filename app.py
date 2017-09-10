@@ -264,10 +264,24 @@ def profile():
         curr_match_table = Match.query.filter_by(username=current_user.username).first()
 
         update_form = UpdateDetailsForm()
-        #if update_form.validate_on_submit():
-          #  update_details_form(update_form)
+
+        # if form has been submitted execute if
+        if update_form.validate_on_submit():
+            # query database for a user; filter by name passed from form
+            user = Match.query.filter_by(name = update_form.name.data).first()
+            # if user exists
+            if user:
+                # if name from db matches name from form
+                if user.name == update_form.name.data:
+                    return redirect(url_for('member'))
+            #update_details_form(update_form)
+            # data that was submitted with the form
+
+            return '<h1>invalid username </h1>'
+        # if form has not been submitted then return
 
         return render_template('profile.html', update_form=update_form, match_form=match_form, name=current_user.username, curr_user_table=curr_user_table, curr_match_table=curr_match_table)
+
         # user = Match.query.get(current_user.username)
         # form = MatchForm(obj=user)
         # if match_form.validate_on_submit():
