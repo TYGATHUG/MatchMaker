@@ -5,8 +5,7 @@
     <section id="intro" class="section intro no-padding">
         <div class="container-fluid">
             <blockquote class="site-info">
-                <h1>Profile Setup</h1>
-                <br><br>
+
 
                 {% if curr_user_table.setup == True %}
                     {% if match_form.errors %}
@@ -20,6 +19,9 @@
                         </ul>
                     {% endif %}
 
+                    <h1>Update Profile</h1>
+                    <br><br>
+
                     <!-- Start of MatchForm -->
                     <form role="form" method="POST" action="/profile" enctype="multipart/form-data">
 
@@ -29,7 +31,7 @@
                             <a href="#" id="profile-next-btn">Next &#8680</a>
 
                             <p class="sub-heading" style="font-style: normal; font-size: 20px; color: #3C6478 !important;">
-                                &#9473 The following fields will form your profile, Viewable by other users. &#9473
+                                &#9473 The following fields will form your profileeeee, Viewable by other users. &#9473
                             </p>
                             <br>
 
@@ -171,7 +173,7 @@
 
                             <div class="form-single-input">
                                 <div class="form-group col_1_of_1" style="margin-bottom: 80px;">
-                                    <button type="submit" class="btn btn-default" style="letter-spacing: 1px;">Submit
+                                    <button type="submit" class="btn btn-default" style="letter-spacing: 1px;">Update
                                     </button>
                                 </div>
                             </div>
@@ -180,6 +182,9 @@
                     </form>
 
                 {% else %}
+
+                <h1>Profile Setup</h1>
+                <br><br>
 
                     {% if match_form.errors %}
                         <ul class="errors">

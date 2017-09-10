@@ -244,7 +244,7 @@ def profile():
 
         except:
             if "error Watson API" in profile_setup:
-                return '<h2>Error in call to Watson API</h2'
+                return '<h2>Error in call to Watson API</h2>'
             return '<h2>Unable to retrieve match data try again later</h2>'
 
 
