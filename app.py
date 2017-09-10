@@ -152,6 +152,16 @@ class MatchForm(FlaskForm):
     setup = BooleanField()
 
 
+class UpdateDetailsForm(FlaskForm):
+    image = FileField('Image', validators=[FileRequired(), FileAllowed(ALLOWED_EXTENSIONS)])
+    name = StringField('Name', validators=[InputRequired(), Length(min=1, max=20)])
+    age = StringField('Age', validators=[InputRequired(), Length(min=1, max=3)])
+    gender = StringField('Gender', validators=[InputRequired(), Length(min=1, max=10)])
+    height = StringField('Height', validators=[InputRequired(), Length(min=1, max=5)])
+    location = StringField('Location', validators=[InputRequired(), Length(min=1)])
+    education = StringField('Education', validators=[InputRequired(), Length(min=1, max=20)])
+    bio = StringField('Bio', validators=[InputRequired(), Length(min=1, max=255)])
+
 class SettingsForm(FlaskForm):
     min_age = IntegerField('Min Age', [validators.Length(min=1, max=3, message="Age can be 3 digits no spaces")])
     max_age = IntegerField('MAx Age', [validators.Length(min=1, max=3, message="Age can be 3 digits no spaces")])
@@ -232,11 +242,12 @@ def member():
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
+    curr_user_table = User.query.filter_by(username=current_user.username).first()
     match_form = MatchForm()
 
 
     # validate form and upload to match data to DB
-    if match_form.validate_on_submit():
+    if match_form.validate_on_submit() and curr_user_table.setup == False:
 
         try:
             profile_setup = process_profile_form(match_form)
@@ -249,10 +260,24 @@ def profile():
 
 
     # partially repopulate fields
-    curr_user_table = User.query.filter_by(username=current_user.username).first()
     if curr_user_table.setup == True:
         curr_match_table = Match.query.filter_by(username=current_user.username).first()
-        return render_template('profile.html', name=current_user.username, match_form=match_form, curr_user_table=curr_user_table, curr_match_table=curr_match_table)
+
+        update_form = UpdateDetailsForm()
+        #if update_form.validate_on_submit():
+          #  update_details_form(update_form)
+
+        return render_template('profile.html', update_form=update_form, match_form=match_form, name=current_user.username, curr_user_table=curr_user_table, curr_match_table=curr_match_table)
+        # user = Match.query.get(current_user.username)
+        # form = MatchForm(obj=user)
+        # if match_form.validate_on_submit():
+        #
+        #     return "form successfully submitted"
+
+            # form.populate_obj(user)
+            # db.session.add(user)
+            # db.sesion.commit
+        #return render_template('profile.html', name=current_user.username, match_form=match_form, curr_user_table=curr_user_table, curr_match_table=curr_match_table)
     else:
         return render_template('profile.html', name=current_user.username, match_form=match_form, curr_user_table=curr_user_table)
 
@@ -622,6 +647,26 @@ def process_profile_form(match_form):
 
     return True
 
+def update_details_form(update_form):
 
+    # update_this = Table.query.filter_by(id=3).first()
+    # data is column name
+
+    # update_this.data = 'updated!'
+
+    # save the profile image to file
+    filename = ""
+    file = request.files['image']
+    if file and allowed_file(file.filename):
+        filename_temp = file.filename.split('.')[1]
+        filename = secure_filename(current_user.username + "." + filename_temp)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+    update_table = Match.query.filter_by(username=current_user.username).first()
+    print update_table.name
+    print update_table.gender
+
+
+    return True
 if __name__ == "__main__":
     app.run(debug=True)

@@ -8,11 +8,11 @@
 
 
                 {% if curr_user_table.setup == True %}
-                    {% if match_form.errors %}
+                    {% if update_form.errors %}
                         <ul class="errors">
-                            {% for field_name, field_errors in match_form.errors|dictsort if field_errors %}
+                            {% for field_name, field_errors in update_form.errors|dictsort if field_errors %}
                                 {% for error in field_errors %}
-                                    <li style="color: #e84545;">{{ match_form[field_name].label }}: {{ error }}</li>
+                                    <li style="color: #e84545;">{{ update_form[field_name].label }}: {{ error }}</li>
                                 {% endfor %}
                             {% endfor %}
                             <br>
@@ -22,16 +22,91 @@
                     <h1>Update Profile</h1>
                     <br><br>
 
+
                     <!-- Start of MatchForm -->
                     <form role="form" method="POST" action="/profile" enctype="multipart/form-data">
+                                            {{ update_form.hidden_tag() }}
+                        <div id="profile-form-modal-1">
+                            <a href="#" class="inactive-btn">&#8678 Back</a>
+                            <a href="#" id="profile-next-btn">Next &#8680</a>
 
+                            <p class="sub-heading" style="font-style: normal; font-size: 20px; color: #3C6478 !important;">
+                                &#9473 Choose which partt of your profile you would like to update &#9473
+                            </p>
+                            <br>
+
+                            <div class="form-group col_1_of_1">
+                                <label for="imageUpload" id="imageUpload-btn">
+                                    <span>Click to Upload Photo</span><br>
+                                    <span id="image-file-name-display" style="font-size: 15px; font-weight: normal;">No File Selected</span>
+                                </label>
+                                <script>
+                                    function displayFilename() {
+                                        var filename = $('#imageUpload')[0].files[0];
+                                        document.getElementById("image-file-name-display").innerHTML = filename.name;
+                                    }
+                                </script>
+                                {{ update_form.image(id="image-file-name", id="imageUpload", class="form-control", placeholder="image", onchange="displayFilename()", style="display:none;", value=curr_match_table.image) }}
+                            </div>
+                            <br><br><br>
+
+                            <div class="form-group col_1_of_2">
+                                <label>Name</label>
+                                {{ update_form.name(class="form-control", placeholder="Name", value=curr_match_table.name) }}
+                            </div>
+
+                            <div class="form-group col_1_of_2">
+                                <label>Age</label>
+                                {{ update_form.age(class="form-control", placeholder="Age", value=curr_match_table.age) }}
+                            </div>
+
+                            <div class="form-double-input">
+                                <div class="form-group col_1_of_2">
+                                    <label>Gender</label>
+                                    {{ update_form.gender(class="form-control", placeholder="Gender", value=curr_match_table.gender) }}
+                                </div>
+                                <div class="form-group col_1_of_2">
+                                    <label>Location</label>
+                                    {{ update_form.location(class="form-control", placeholder="Location", value=curr_match_table.location) }}
+                                </div>
+                            </div>
+
+                            <div class="form-double-input">
+                                <div class="form-group col_1_of_2">
+                                    <label>Height (cm)</label>
+                                    {{ update_form.height(class="form-control", placeholder="Height", value=curr_match_table.height) }}
+                                </div>
+
+                                <div class="form-group col_1_of_2">
+                                    <label>Education Level</label>
+                                    {{ update_form.education(class="form-control", placeholder="Education", value=curr_match_table.education) }}
+                                </div>
+                            </div>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1">
+                                    <label>About Me</label>
+                                    {{ update_form.bio(class="form-control", placeholder="About Me", value=curr_match_table.bio) }}
+                                </div>
+                            </div>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1" style="margin-bottom: 80px;">
+                                    <button type="submit" class="btn btn-default" style="letter-spacing: 1px;">Update
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!--
                         {{ match_form.hidden_tag() }}
                         <div id="profile-form-modal-1">
                             <a href="#" class="inactive-btn">&#8678 Back</a>
                             <a href="#" id="profile-next-btn">Next &#8680</a>
 
                             <p class="sub-heading" style="font-style: normal; font-size: 20px; color: #3C6478 !important;">
-                                &#9473 The following fields will form your profileeeee, Viewable by other users. &#9473
+                                &#9473 Choose which part of your profile you would like to update &#9473
                             </p>
                             <br>
 
@@ -90,6 +165,13 @@
                                 </div>
                             </div>
 
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1" style="margin-bottom: 80px;">
+                                    <button type="submit" class="btn btn-default" style="letter-spacing: 1px;">Update
+                                    </button>
+                                </div>
+                            </div>
+                        <!--
                             <div class="form-single-input">
                                 <div class="form-group col_1_of_1" style="margin-bottom: 80px;">
                                     <button type="button" id="profile-next-btn-2" class="btn btn-default"
@@ -180,7 +262,7 @@
                         </div>
 
                     </form>
-
+-->
                 {% else %}
 
                 <h1>Profile Setup</h1>
