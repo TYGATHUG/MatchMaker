@@ -245,7 +245,6 @@ def profile():
     curr_user_table = User.query.filter_by(username=current_user.username).first()
     match_form = MatchForm()
 
-
     # validate form and upload to match data to DB
     if match_form.validate_on_submit() and curr_user_table.setup == False:
 
@@ -257,7 +256,6 @@ def profile():
             if "error Watson API" in profile_setup:
                 return '<h2>Error in call to Watson API</h2>'
             return '<h2>Unable to retrieve match data try again later</h2>'
-
 
     # partially repopulate fields
     if curr_user_table.setup == True:
@@ -273,29 +271,28 @@ def profile():
 
             # if user exists
             if user:
+                if user.name != update_form.name.data:
+                    error = 'Name does not match system'
+
                 # if name from db matches name from form
-                if user.name == update_form.name.data:
+                else:
+
                     user.age = update_form.age.data
+                    user.gender = update_form.gender.data
+                    user.location = update_form.location.data
+                    user.height = update_form.height.data
+                    user.education =  update_form.education.data
+                    user.bio = update_form.bio.data
+
                     db.session.commit()
+                    flash('Successfully edited your profile.')
                     return redirect(url_for('member'))
-            #update_details_form(update_form)
-            # data that was submitted with the form
 
-            return '<h1>invalid username </h1>'
+                return render_template('member.html', error=error)
+            return render_template('member.html')
+
         # if form has not been submitted then return
-
         return render_template('profile.html', update_form=update_form, match_form=match_form, name=current_user.username, curr_user_table=curr_user_table, curr_match_table=curr_match_table)
-
-        # user = Match.query.get(current_user.username)
-        # form = MatchForm(obj=user)
-        # if match_form.validate_on_submit():
-        #
-        #     return "form successfully submitted"
-
-            # form.populate_obj(user)
-            # db.session.add(user)
-            # db.sesion.commit
-        #return render_template('profile.html', name=current_user.username, match_form=match_form, curr_user_table=curr_user_table, curr_match_table=curr_match_table)
     else:
         return render_template('profile.html', name=current_user.username, match_form=match_form, curr_user_table=curr_user_table)
 
@@ -662,28 +659,7 @@ def process_profile_form(match_form):
     db.session.merge(update)
     db.session.commit()
 
-
     return True
-
-def update_details_form(update_form):
-
-    # update_this = Table.query.filter_by(id=3).first()
-    # data is column name
-
-    # update_this.data = 'updated!'
-
-    # save the profile image to file
-    filename = ""
-    file = request.files['image']
-    if file and allowed_file(file.filename):
-        filename_temp = file.filename.split('.')[1]
-        filename = secure_filename(current_user.username + "." + filename_temp)
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
-    update_table = Match.query.filter_by(username=current_user.username).first()
-    print update_table.name
-    print update_table.gender
-
 
     return True
 if __name__ == "__main__":
