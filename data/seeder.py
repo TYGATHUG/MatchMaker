@@ -58,6 +58,18 @@ class Match(db.Model):
     entreprenuer = db.Column(db.Integer())
     reading = db.Column(db.Integer())
 
+class PersonalityAnswers(db.Model):
+    __tablename__ = 'PersonalityAnswers'
+    username = db.Column(db.String(15), primary_key=True, unique=True)
+    q1 = db.Column(db.String(255))
+    q2 = db.Column(db.String(255))
+    q3 = db.Column(db.String(255))
+    q4 = db.Column(db.String(255))
+    q5 = db.Column(db.String(255))
+    q6 = db.Column(db.String(255))
+    q7 = db.Column(db.String(255))
+    q8 = db.Column(db.String(255))
+
 
 class Like(db.Model):
     __tablename__ = 'Like'
@@ -73,11 +85,13 @@ class Dislike(db.Model):
     disliked_user = db.Column(db.String(15))
 
 
-
 # if current tables exist then drop them
 def check_existing_tables():
     c.executescript('DROP TABLE IF EXISTS match')
     c.executescript('DROP TABLE IF EXISTS user')
+    c.executescript('DROP TABLE IF EXISTS personalityanswers')
+    c.executescript('DROP TABLE IF EXISTS Like')
+    c.executescript('DROP TABLE IF EXISTS Dislike')
 
 
 # main logic for entering randomised data
@@ -118,6 +132,22 @@ def data_entry():
            "Maecenas congue mauris id leo volutpat posuere.", "Nullam posuere risus non eros porttitor, quis cursus erat finibus."
            ]
 
+    answers = ["I tend to keep to myself and study a lot", "I like to be outside with nature", "I like to go camping with friends",
+               "I like to spend time with family doing things", "I like to go on adventures outside from home",
+               "I like to sing in the shower", "I like to walk my dog", "I love exercising, particularly running",
+               "I would love to go to China and see the history", "I want to go to America and see more pop culture",
+               "I want to see the scenery in New Zealand", "I would be happy just going to Sydney for a visit",
+               "I have always wanted to see what Africa has to offer", "Europe has been a place I've always wanted to go",
+               "I recently splurged a lot of money, I impulse buy a lot", "I just like to window shop",
+               "I love trying on clothes at different stores", "I usually just buy only the necessities",
+               "I always go just for strength training, my favourite!", "I think people exercising is a great thing",
+               "I just do cardio and like to keep fit that way", "I'm a bit intimidated by the thought",
+               "It meanns being able to enjoy yourself without a phone", "To keep away from electronics and enjoy yourself",
+               "Just enjoying yourself outside of the comfort of your home", "Heading straight into the wilderness",
+               "I went camping at Dandenong, good times", "Does the beach count as nature?", "Very, very cold to go during Winter",
+               "I invented a new app that no one has done before", "I made my own clothes business",
+               "It is something more people should do", "I don't really see the need for it personally"]
+
     experienceValues = [0, 0.5, 1]
 
     initialLengthOfNames = len(usernames)
@@ -149,6 +179,11 @@ def data_entry():
 
         conn.execute('''INSERT INTO user (id, username, email, password, setup) VALUES (?, ?, ?, ?, ?)''',
                      (idCounter, randName.lower(), emailName.lower(), test_passwordHash, True))
+
+        conn.execute('''INSERT INTO PersonalityAnswers (username, q1, q2, q3, q4, q5, q6, q7, q8) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                     (randName.lower(), random.choice(answers), random.choice(answers), random.choice(answers),
+                      random.choice(answers), random.choice(answers), random.choice(answers), random.choice(answers),
+                      random.choice(answers)))
 
         conn.commit()
 

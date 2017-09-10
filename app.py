@@ -62,6 +62,7 @@ class User(UserMixin, db.Model):
 
 admin.add_view(ModelView(User, db.session)) # create User view for current session
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
@@ -99,6 +100,21 @@ class Match(db.Model):
 
 admin.add_view(ModelView(Match, db.session)) # create User view for current session
 
+class PersonalityAnswers(db.Model):
+    __tablename__ = 'PersonalityAnswers'
+    username = db.Column(db.String(15), primary_key=True, unique=True)
+    q1 = db.Column(db.String(255))
+    q2 = db.Column(db.String(255))
+    q3 = db.Column(db.String(255))
+    q4 = db.Column(db.String(255))
+    q5 = db.Column(db.String(255))
+    q6 = db.Column(db.String(255))
+    q7 = db.Column(db.String(255))
+    q8 = db.Column(db.String(255))
+
+admin.add_view(ModelView(PersonalityAnswers, db.session))  # create User view for current session
+
+
 class Like(db.Model):
     __tablename__ = 'Like'
     id = db.Column(db.Integer, primary_key=True)
@@ -106,6 +122,7 @@ class Like(db.Model):
     liked_user = db.Column(db.String(15))
 
 admin.add_view(ModelView(Like, db.session)) # create User view for current session
+
 
 class Dislike(db.Model):
     __tablename__ = 'Dislike'
@@ -151,7 +168,7 @@ class MatchForm(FlaskForm):
     q8 = StringField('Question 8', validators=[InputRequired(), Length(min=15, max=255)])
     setup = BooleanField()
 
-
+# for updating only the user's details
 class UpdateDetailsForm(FlaskForm):
     image = FileField('Image', validators=[FileRequired(), FileAllowed(ALLOWED_EXTENSIONS)])
     name = StringField('Name', validators=[InputRequired(), Length(min=1, max=20)])
@@ -161,6 +178,18 @@ class UpdateDetailsForm(FlaskForm):
     location = StringField('Location', validators=[InputRequired(), Length(min=1)])
     education = StringField('Education', validators=[InputRequired(), Length(min=1, max=20)])
     bio = StringField('Bio', validators=[InputRequired(), Length(min=1, max=255)])
+
+# for updating on the user's personality profile
+class UpdatePersonalityForm(FlaskForm):
+    q1 = StringField('Question 1', validators=[InputRequired(), Length(min=15, max=255)])
+    q2 = StringField('Question 2', validators=[InputRequired(), Length(min=15, max=255)])
+    q3 = StringField('Question 3', validators=[InputRequired(), Length(min=15, max=255)])
+    q4 = StringField('Question 4', validators=[InputRequired(), Length(min=15, max=255)])
+    q5 = StringField('Question 5', validators=[InputRequired(), Length(min=15, max=255)])
+    q6 = StringField('Question 6', validators=[InputRequired(), Length(min=15, max=255)])
+    q7 = StringField('Question 7', validators=[InputRequired(), Length(min=15, max=255)])
+    q8 = StringField('Question 8', validators=[InputRequired(), Length(min=15, max=255)])
+
 
 class SettingsForm(FlaskForm):
     min_age = IntegerField('Min Age', [validators.Length(min=1, max=3, message="Age can be 3 digits no spaces")])
@@ -269,7 +298,7 @@ def profile():
             # query database for a user; filter by name passed from form
             user = Match.query.filter_by(name = update_form.name.data).first()
 
-            # if user exists
+            # if user exists; basic test comparision, will find a better one -alex
             if user:
                 if user.name != update_form.name.data:
                     error = 'Name does not match system'
