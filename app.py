@@ -224,6 +224,7 @@ def member():
     # instasiate SettingsForm
     settings_form = SettingsForm()
 
+    print highest_match_users
 
     return render_template('member.html', settings_form=settings_form, name=current_user.username, highest_match_users=highest_match_users, curr_user_table=curr_user_table, curr_match_table=curr_match_table, mutual_likes=mutual_likes)
 
@@ -233,84 +234,19 @@ def member():
 def profile():
     match_form = MatchForm()
 
-    # instatiate API for getting Watson data
-    personality_results = api.MatchAPI()
 
     # validate form and upload to match data to DB
     if match_form.validate_on_submit():
-        """
-        # check if the post request has the file part
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        
 
-        # if user does not select file, browser also
-        # submit a empty part without filename
-    
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-        """
-        filename = ""
-        file = request.files['image']
-        if file and allowed_file(file.filename):
-            filename_temp = file.filename.split('.')[1]
-            filename = secure_filename(current_user.username + "." + filename_temp)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        try:
+            profile_setup = process_profile_form(match_form)
+            return redirect(url_for('member'))
 
-        q1 = str(match_form.q1.data)
-        q2 = str(match_form.q2.data)
-        q3 = str(match_form.q3.data)
-        q4 = str(match_form.q4.data)
-        q5 = str(match_form.q5.data)
-        q6 = str(match_form.q6.data)
-        q7 = str(match_form.q7.data)
-        q8 = str(match_form.q8.data)
-        personality = q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8
+        except:
+            if "error Watson API" in profile_setup:
+                return '<h2>Error in call to Watson API</h2'
+            return '<h2>Unable to retrieve match data try again later</h2>'
 
-        # call the Watson API and pass in the 8 questions
-        results = personality_results.get_personality(personality)
-
-        # extract traits: 0 - 100 scale
-        practicality = results['needs'][0]['practicality']
-        love = results['needs'][0]['love']
-        challenge = results['needs'][0]['challenge']
-        challenge = results['needs'][0]['challenge']
-        closeness = results['needs'][0]['closeness']
-        excitment = results['needs'][0]['excitment']
-        structure = results['needs'][0]['structure']
-
-        # extract traits: 1 - 3 scale
-        live_music = results['live_music']
-        volunteering = results['volunteering']['score']
-        entreprenuer = results['entreprenuer']
-        gym_member = results['consumption'][0]['gym_member']
-        spare_moment_purchases = results['consumption'][0]['spare_of_moment_purchase']
-        outdoors = results['consumption'][0]['outdoors']
-        reading = results['reading']
-
-        username = current_user.username
-        new_match = Match(username=username, view_count=0, name=match_form.name.data, image=filename, \
-                          gender=match_form.gender.data, age=match_form.age.data, height=match_form.height.data, \
-                          location=match_form.location.data, education=match_form.education.data,
-                          love=love, excitment=excitment, challenge=challenge, \
-                          closeness=closeness, structure=structure, live_music=live_music, \
-                          spare_moment_purchases=spare_moment_purchases, gym_member=gym_member, \
-                          outdoors=outdoors, volunteering=volunteering, \
-                          entreprenuer=entreprenuer, reading=reading \
-                          )
-
-        db.session.add(new_match)
-        db.session.commit()
-
-        # update the setup value
-        update = User.query.filter_by(username=username).first()
-        update.setup = True
-        db.session.merge(update)
-        db.session.commit()
-
-        return redirect(url_for('member'))
 
     # partially repopulate fields
     curr_user_table = User.query.filter_by(username=current_user.username).first()
@@ -464,6 +400,7 @@ def logout():
 # -------------------------------------------------------------------------------*/
 def match_users_watson(curr_user):
     highest_match_users = ""
+
     if curr_user:    # if curr user has made a profile we can match them
 
         matched_users = {}
@@ -600,6 +537,90 @@ def fetch_mutual_likes(curr_user):
 
     return mutual_liked_user_details
 
+
+
+def process_profile_form(match_form):
+    # validation for file need to fix
+    """
+    # check if the post request has the file part
+    if 'file' not in request.files:
+        flash('No file part')
+        return redirect(request.url)
+
+
+    # if user does not select file, browser also
+    # submit a empty part without filename
+
+    if file.filename == '':
+        flash('No selected file')
+        return redirect(request.url)
+    """
+    # save the profile image to file
+    filename = ""
+    file = request.files['image']
+    if file and allowed_file(file.filename):
+        filename_temp = file.filename.split('.')[1]
+        filename = secure_filename(current_user.username + "." + filename_temp)
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+    # instatiate API for getting Watson data
+    personality_results = api.MatchAPI()
+
+    q1 = str(match_form.q1.data)
+    q2 = str(match_form.q2.data)
+    q3 = str(match_form.q3.data)
+    q4 = str(match_form.q4.data)
+    q5 = str(match_form.q5.data)
+    q6 = str(match_form.q6.data)
+    q7 = str(match_form.q7.data)
+    q8 = str(match_form.q8.data)
+    personality = q1 + q2 + q3 + q4 + q5 + q6 + q7 + q8
+
+    # call the Watson API and pass in the 8 questions
+    results = personality_results.get_personality(personality)
+    if not results:
+        return "error Watson API"
+
+    # extract traits: 0 - 100 scale
+    practicality = results['needs'][0]['practicality']
+    love = results['needs'][0]['love']
+    challenge = results['needs'][0]['challenge']
+    challenge = results['needs'][0]['challenge']
+    closeness = results['needs'][0]['closeness']
+    excitment = results['needs'][0]['excitment']
+    structure = results['needs'][0]['structure']
+
+    # extract traits: 1 - 3 scale
+    live_music = results['live_music']
+    volunteering = results['volunteering']['score']
+    entreprenuer = results['entreprenuer']
+    gym_member = results['consumption'][0]['gym_member']
+    spare_moment_purchases = results['consumption'][0]['spare_of_moment_purchase']
+    outdoors = results['consumption'][0]['outdoors']
+    reading = results['reading']
+
+    username = current_user.username
+    new_match = Match(username=username, view_count=0, name=match_form.name.data, image=filename, \
+                      gender=match_form.gender.data, age=match_form.age.data, height=match_form.height.data, \
+                      location=match_form.location.data, education=match_form.education.data,
+                      love=love, excitment=excitment, challenge=challenge, \
+                      closeness=closeness, structure=structure, live_music=live_music, \
+                      spare_moment_purchases=spare_moment_purchases, gym_member=gym_member, \
+                      outdoors=outdoors, volunteering=volunteering, \
+                      entreprenuer=entreprenuer, reading=reading \
+                      )
+
+    db.session.add(new_match)
+    db.session.commit()
+
+    # update the setup value
+    update = User.query.filter_by(username=username).first()
+    update.setup = True
+    db.session.merge(update)
+    db.session.commit()
+
+
+    return True
 
 
 if __name__ == "__main__":
