@@ -267,12 +267,16 @@ def profile():
 
         # if form has been submitted execute if
         if update_form.validate_on_submit():
+
             # query database for a user; filter by name passed from form
             user = Match.query.filter_by(name = update_form.name.data).first()
+
             # if user exists
             if user:
                 # if name from db matches name from form
                 if user.name == update_form.name.data:
+                    user.age = update_form.age.data
+                    db.session.commit()
                     return redirect(url_for('member'))
             #update_details_form(update_form)
             # data that was submitted with the form
