@@ -342,7 +342,7 @@ def profile():
 
             return render_template('profile.html')
 
-        # if form has not been submitted then return
+        # if setup has happened, show their personal profile page
         return render_template('viewprofile.html', update_answers=update_answers, curr_ans_table=curr_ans_table, update_form=update_form,
                                match_form=match_form, name=current_user.username, curr_user_table=curr_user_table,
                                curr_match_table=curr_match_table)
@@ -355,17 +355,10 @@ def profile():
 @login_required
 def viewprofile():
 
-    # match_form = MatchForm()
-    # update_form = UpdateDetailsForm()
-    # update_answers = UpdatePersonalityForm()
-
     # getting information from these tables to pass into the html page
     curr_user_table = User.query.filter_by(username=current_user.username).first()
     curr_match_table = Match.query.filter_by(username=current_user.username).first()
     curr_ans_table = PersonalityAnswers.query.filter_by(username=current_user.username).first()
-
-  #  if curr_match_table:
-
 
     return render_template('viewprofile.html', curr_answer_table=curr_ans_table, curr_match_table=curr_match_table, curr_user_table=curr_user_table)
 
@@ -426,7 +419,7 @@ def login():
         if user:
             if check_password_hash(user.password, login_form.password.data):
                 login_user(user, remember=login_form.remember.data)
-                flash("Login Successful !")
+
                 return redirect(url_for('member'))
             else:
                 login_form.password.errors.append('Incorrect Password')
