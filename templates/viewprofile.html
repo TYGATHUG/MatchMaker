@@ -6,6 +6,10 @@
         <div class="container-fluid">
             <br><br>
 
+                <!-- run this IF statement if looking at another users profile-->
+                {% if current_user.username != curr_user_table.username %}
+                {% endif %}
+
                 {% if curr_user_table.setup == True %}
 
                 <div class="col-lg-6 col-sm-6 col-md-offset-3">
@@ -39,7 +43,9 @@
                     </div>
 
                     <div class="well">
+
                         <div class="tab-content">
+
                             <div class="tab-pane fade in active" id="tab1">
                             <h3 class="red-text text-center">The Basics</h3>
                         <br>
@@ -63,8 +69,88 @@
                             <dt>Bio</dt>
                             <dd>{{ curr_match_table.bio }}</dd>
                         </dl>
+{#                                <button id="update-details-btn" type="submit" class="btn btn-default" style="letter-spacing: 1px;">Update Details</button>#}
 
-                            </div>
+                        <a href="#" id="edit-details-btn" class="btn btn-default" style="letter-spacing: 1px;">Edit Details</a>
+
+                        <div id="edit-profile-form">
+
+                            <a href="#" id="edit-profile-back-btn">&#8678 Back</a>
+
+                            <p class="sub-heading" style="font-style: normal; font-size: 20px; color: #3C6478 !important;">
+                                &#9473 Update your personal details &#9473
+                            </p>
+                            <br>
+                        </div>
+                                </div>
+{#                            <form role="form" method="POST" action="/profile" enctype="multipart/form-data">#}
+{#                                            {{ update_form.hidden_tag() }}#}
+{#                            <div class="form-group col_1_of_1">#}
+{#                                <label for="imageUpload" id="imageUpload-btn">#}
+{#                                    <span>Click to Upload Photo</span><br>#}
+{#                                    <span id="image-file-name-display" style="font-size: 15px; font-weight: normal;">No File Selected</span>#}
+{#                                </label>#}
+{#                                <script>#}
+{#                                    function displayFilename() {#}
+{#                                        var filename = $('#imageUpload')[0].files[0];#}
+{#                                        document.getElementById("image-file-name-display").innerHTML = filename.name;#}
+{#                                    }#}
+{#                                </script>#}
+{##}
+{#                                {{ update_form.image(id="image-file-name", id="imageUpload", class="form-control", placeholder="image", onchange="displayFilename()", style="display:none;", value=curr_match_table.image) }}#}
+{#                            </div>#}
+{#                            <br><br><br>#}
+{##}
+{#                            <div class="form-group col_1_of_2">#}
+{#                                <label>Name</label>#}
+{#                                {{ update_form.name(class="form-control", placeholder="Name", value=curr_match_table.name, readonly=true) }}#}
+{#                            </div>#}
+{##}
+{#                            <div class="form-group col_1_of_2">#}
+{#                                <label>Age</label>#}
+{#                                {{ update_form.age(class="form-control", placeholder="Age", value=curr_match_table.age) }}#}
+{#                            </div>#}
+{##}
+{#                            <div class="form-double-input">#}
+{#                                <div class="form-group col_1_of_2">#}
+{#                                    <label>Gender</label>#}
+{#                                    {{ update_form.gender(class="form-control", placeholder="Gender", value=curr_match_table.gender) }}#}
+{#                                </div>#}
+{#                                <div class="form-group col_1_of_2">#}
+{#                                    <label>Location</label>#}
+{#                                    {{ update_form.location(class="form-control", placeholder="Location", value=curr_match_table.location) }}#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                            <div class="form-double-input">#}
+{#                                <div class="form-group col_1_of_2">#}
+{#                                    <label>Height (cm)</label>#}
+{#                                    {{ update_form.height(class="form-control", placeholder="Height", value=curr_match_table.height) }}#}
+{#                                </div>#}
+{##}
+{#                                <div class="form-group col_1_of_2">#}
+{#                                    <label>Education Level</label>#}
+{#                                    {{ update_form.education(class="form-control", placeholder="Education", value=curr_match_table.education) }}#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                            <div class="form-single-input">#}
+{#                                <div class="form-group col_1_of_1">#}
+{#                                    <label>About Me</label>#}
+{#                                    {{ update_form.bio(class="form-control", placeholder="About Me", value=curr_match_table.bio) }}#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                            <div class="form-single-input">#}
+{#                                <div class="form-group col_1_of_1" style="margin-bottom: 80px;">#}
+{#                                    <button type="submit" class="btn btn-default" style="letter-spacing: 1px;">Update Details#}
+{#                                    </button>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{##}
+{#                    </form>#}
+
                         <div class="tab-pane fade in" id="tab2">
                             <h3 class="red-text text-center">My thoughts</h3>
                         <dl>
@@ -92,7 +178,6 @@
                             <br>
                             <dt>DWhat do you think of volunteering and have you ever volunteered?</dt>
                             <dd>{{ curr_ans_table.q8 }}</dd>
-
                         </dl>
                         </div>
                         <div class="tab-pane fade in" id="tab3">

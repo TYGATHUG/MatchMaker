@@ -10,7 +10,9 @@
     <!-- Display Validation errors-->
     {% with messages=get_flashed_messages() %}
         {% if messages %}
+{#            <ul class="flashes">#}
             {% for message in messages %}
+{#                <li>{{ message }}</li>#}
                 <script>
                     toastr.options = {
                         "closeButton": true,
@@ -33,6 +35,7 @@
                     toastr["success"]("Welcome {{ name }} !", "{{ message }}")
                 </script>
             {% endfor %}
+{#            </ul>#}
         {% endif %}
     {% endwith %}
     <!-- End Display Validation errors-->

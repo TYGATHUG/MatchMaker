@@ -70,7 +70,7 @@
 }
 .card.hovercard .card-info {
     overflow: hidden;
-    font-size: 50px;
+    font-size: 12px;
     line-height: 20px;
     color: #737373;
     text-overflow: ellipsis;
@@ -84,5 +84,13 @@
     -webkit-border-radius: 0 !important;
 }
 /* ------------------------------------------------------------------------------
-	 Profile Lists
+	 Profile Form
 -------------------------------------------------------------------------------*/
+.tab-content #edit-profile-form {
+    /*display:none !important;*/
+}
+
+
+div#tab1 {
+    /*display:none;*/
+}
