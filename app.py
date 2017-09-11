@@ -286,7 +286,7 @@ def profile():
                 return '<h2>Error in call to Watson API</h2>'
             return '<h2>Unable to retrieve match data try again later</h2>'
 
-    # partially repopulate fields
+    # if the user has setup their profile already then:
     if curr_user_table.setup == True:
 
         update_form = UpdateDetailsForm()
@@ -299,7 +299,7 @@ def profile():
         if update_form.validate_on_submit():
 
             # query database for a user; filter by name passed from form
-            user = Match.query.filter_by(name = update_form.name.data).first()
+            user = Match.query.filter_by(name=update_form.name.data).first()
 
             # if user exists; basic test comparision, will find a better one -alex
             if user:
@@ -325,7 +325,7 @@ def profile():
 
         if update_answers.validate_on_submit():
 
-            user = Match.query.filter_by(name = update_form.name.data).first()
+            user = Match.query.filter_by(name=update_form.name.data).first()
 
             if user:
 
@@ -349,17 +349,23 @@ def profile():
     else:
         return render_template('profile.html', name=current_user.username, match_form=match_form, curr_user_table=curr_user_table)
 
+
+# only possible to get rerouted here if a users profile has already been setup
 @app.route('/viewprofile')
 @login_required
 def viewprofile():
+
+    # match_form = MatchForm()
+    # update_form = UpdateDetailsForm()
+    # update_answers = UpdatePersonalityForm()
+
+    # getting information from these tables to pass into the html page
     curr_user_table = User.query.filter_by(username=current_user.username).first()
-    match_form = MatchForm()
+    curr_match_table = Match.query.filter_by(username=current_user.username).first()
+    curr_ans_table = PersonalityAnswers.query.filter_by(username=current_user.username).first()
 
-    if curr_user_table.setup == True:
 
-        return render_template('viewprofile.html')
-
-    return render_template('viewprofile.html')
+    return render_template('viewprofile.html', curr_answer_table=curr_ans_table, curr_match_table=curr_match_table)
 
 
 @app.route('/terms', methods=['GET', 'POST'])

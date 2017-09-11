@@ -4,27 +4,65 @@
 
     <section id="intro" class="section intro no-padding">
         <div class="container-fluid">
-            <blockquote class="site-info">
+            <div id="profile-view">
 
-                    <h1>Your Profile</h1>
-                    <br><br>
+                <br><br>
+                <h1>Your Profile</h1>
+                <br><br>
 
-            </blockquote>
+                {% if curr_user_table.setup == True %}
+
+                <div class="col-lg-6 col-sm-6 col-md-offset-3">
+                    <div class="card hovercard">
+                        <div class="card-background">
+                            <img class="card-bkimg" alt="" src="http://lorempixel.com/100/100/people/9/">
+                        </div>
+                        <div class="useravatar">
+                            <img alt="" src="http://lorempixel.com/100/100/people/9/">
+                        </div>
+                        <div class="card-info"> <span class="card-title">Pamela Anderson</span>
+
+                        </div>
+                    </div>
+                    <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
+                        <div class="btn-group" role="group">
+                            <button type="button" id="stars" class="btn btn-primary" href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                <div class="hidden-xs">Stars</div>
+                            </button>
+                        </div>
+                        <div class="btn-group" role="group">
+                            <button type="button" id="favorites" class="btn btn-default" href="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+                                <div class="hidden-xs">Favorites</div>
+                            </button>
+                        </div>
+                        <div class="btn-group" role="group">
+                            <button type="button" id="following" class="btn btn-default" href="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                <div class="hidden-xs">Following</div>
+                            </button>
+                        </div>
+                    </div>
+
+                        <div class="well">
+                      <div class="tab-content">
+                        <div class="tab-pane fade in active" id="tab1">
+                          <h3>This is tab 1</h3>
+                        </div>
+                        <div class="tab-pane fade in" id="tab2">
+                          <h3>This is tab 2</h3>
+                        </div>
+                        <div class="tab-pane fade in" id="tab3">
+                          <h3>This is tab 3</h3>
+                        </div>
+                      </div>
+                    </div>
+
+                    </div>
+
+                    </div>
+                {% endif %}
+
+
         </div>
     </section>
-
-
-{#                {% if curr_user_table.setup == True %}#}
-{#                    {% if update_form.errors %}#}
-{#                        <ul class="errors">#}
-{#                            {% for field_name, field_errors in update_form.errors|dictsort if field_errors %}#}
-{#                                {% for error in field_errors %}#}
-{#                                    <li style="color: #e84545;">{{ update_form[field_name].label }}: {{ error }}</li>#}
-{#                                {% endfor %}#}
-{#                            {% endfor %}#}
-{#                            <br>#}
-{#                        </ul>#}
-{#                    {% endif %}#}
-
 
 {% endblock %}
