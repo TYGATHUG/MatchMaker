@@ -364,8 +364,10 @@ def viewprofile():
     curr_match_table = Match.query.filter_by(username=current_user.username).first()
     curr_ans_table = PersonalityAnswers.query.filter_by(username=current_user.username).first()
 
+  #  if curr_match_table:
 
-    return render_template('viewprofile.html', curr_answer_table=curr_ans_table, curr_match_table=curr_match_table)
+
+    return render_template('viewprofile.html', curr_answer_table=curr_ans_table, curr_match_table=curr_match_table, curr_user_table=curr_user_table)
 
 
 @app.route('/terms', methods=['GET', 'POST'])

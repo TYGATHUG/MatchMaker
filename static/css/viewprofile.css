@@ -1,4 +1,6 @@
-/* USER PROFILE PAGE */
+/* ------------------------------------------------------------------------------
+	 Profile card
+-------------------------------------------------------------------------------*/
  .card {
     margin-top: 20px;
     padding: 30px;
@@ -78,12 +80,8 @@
     margin-bottom: 17px;
 }
 .btn-pref .btn {
-    -webkit-border-radius:0 !important;
+    -webkit-border-radius: 0 !important;
 }
-
-#profile-view{
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+/* ------------------------------------------------------------------------------
+	 Profile Lists
+-------------------------------------------------------------------------------*/
