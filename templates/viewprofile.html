@@ -45,38 +45,55 @@
                         <br>
 
                         <dl class="dl-horizontal">
-
                             <dt>Age</dt>
-
                             <dd>{{ curr_match_table.age }}</dd>
 
                             <dt>Gender</dt>
-
-                            <dd>Client-side scripting generally refers to the category of computer programs on the web that are executed by the user's web browser.</dd>
+                            <dd>{{ curr_match_table.gender }}</dd>
 
                             <dt>Height</dt>
-
                             <dd>{{ curr_match_table.height }}</dd>
 
                             <dt>Location</dt>
-
                             <dd>{{ curr_match_table.location }}</dd>
 
                             <dt>Education</dt>
-
                             <dd>{{ curr_match_table.education }}</dd>
 
                             <dt>Bio</dt>
-
                             <dd>{{ curr_match_table.bio }}</dd>
-
-
                         </dl>
-
 
                             </div>
                         <div class="tab-pane fade in" id="tab2">
-                            <h3>This is tab 2</h3>
+                            <h3 class="red-text text-center">My thoughts</h3>
+                        <dl>
+                            <dt>Tell me about yourself.</dt>
+                            <dd>{{ curr_ans_table.q1 }}</dd>
+                            <br>
+                            <dt>What is your ideal holiday?</dt>
+                            <dd>{{ curr_ans_table.q2 }}</dd>
+                            <br>
+                            <dt>Describe your most recent shopping experience.</dt>
+                            <dd>{{ curr_ans_table.q3 }}</dd>
+                            <br>
+                            <dt>Describe your expirence with going to the gym and if you have never attended
+                                        a gym whatdo you think of them?</dt>
+                            <dd>{{ curr_ans_table.q4 }}</dd>
+                            <br>
+                            <dt>What does being outdoor mean to you?</dt>
+                            <dd>{{ curr_ans_table.q5 }}</dd>
+                            <br>
+                            <dt>Describe the last time you experienced being in nature.</dt>
+                            <dd>{{ curr_ans_table.q6}}</dd>
+                            <br>
+                            <dt>Describe a time when you did something entrepreneurial.</dt>
+                            <dd>{{ curr_ans_table.q7 }}</dd>
+                            <br>
+                            <dt>DWhat do you think of volunteering and have you ever volunteered?</dt>
+                            <dd>{{ curr_ans_table.q8 }}</dd>
+
+                        </dl>
                         </div>
                         <div class="tab-pane fade in" id="tab3">
                             <h3>This is tab 3</h3>
@@ -85,10 +102,12 @@
                     </div>
 
                 </div>
+
                 {% endif %}
 
 
         </div>
+
     </section>
 
 {% endblock %}
