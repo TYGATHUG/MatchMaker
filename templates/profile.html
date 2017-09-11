@@ -23,15 +23,15 @@
                     <br><br>
 
 
-                    <!-- Start of MatchForm -->
+                    <!-- Form to edit profile details -->
                     <form role="form" method="POST" action="/profile" enctype="multipart/form-data">
                                             {{ update_form.hidden_tag() }}
                         <div id="profile-form-modal-1">
-                            <a href="#" class="inactive-btn">&#8678 Back</a>
-                            <a href="#" id="profile-next-btn">Next &#8680</a>
+
+                            <a href="/member" id="profile-back-btn">&#8678 Back</a>
 
                             <p class="sub-heading" style="font-style: normal; font-size: 20px; color: #3C6478 !important;">
-                                &#9473 Choose which partt of your profile you would like to update &#9473
+                                &#9473 Update your personal details &#9473
                             </p>
                             <br>
 
@@ -46,6 +46,7 @@
                                         document.getElementById("image-file-name-display").innerHTML = filename.name;
                                     }
                                 </script>
+
                                 {{ update_form.image(id="image-file-name", id="imageUpload", class="form-control", placeholder="image", onchange="displayFilename()", style="display:none;", value=curr_match_table.image) }}
                             </div>
                             <br><br><br>
@@ -92,102 +93,25 @@
 
                             <div class="form-single-input">
                                 <div class="form-group col_1_of_1" style="margin-bottom: 80px;">
-                                    <button type="submit" class="btn btn-default" style="letter-spacing: 1px;">Update
+                                    <button type="submit" class="btn btn-default" style="letter-spacing: 1px;">Update Details
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </form>
 
-                    <!--
-                        {{ match_form.hidden_tag() }}
-                        <div id="profile-form-modal-1">
-                            <a href="#" class="inactive-btn">&#8678 Back</a>
-                            <a href="#" id="profile-next-btn">Next &#8680</a>
 
-                            <p class="sub-heading" style="font-style: normal; font-size: 20px; color: #3C6478 !important;">
-                                &#9473 Choose which part of your profile you would like to update &#9473
-                            </p>
-                            <br>
+                    <!-- Form to edit personality profile -->
+                    <form role="form" method="POST" action="/profile" enctype="multipart/form-data">
 
-                            <div class="form-group col_1_of_1">
-                                <label for="imageUpload" id="imageUpload-btn">
-                                    <span>Click to Upload Photo</span><br>
-                                    <span id="image-file-name-display" style="font-size: 15px; font-weight: normal;">No File Selected</span>
-                                </label>
-                                <script>
-                                    function displayFilename() {
-                                        var filename = $('#imageUpload')[0].files[0];
-                                        document.getElementById("image-file-name-display").innerHTML = filename.name;
-                                    }
-                                </script>
-                                {{ match_form.image(id="image-file-name", id="imageUpload", class="form-control", placeholder="image", onchange="displayFilename()", style="display:none;") }}
-                            </div>
-                            <br><br><br>
+                                    {{ update_answers.hidden_tag() }}
 
-                            <div class="form-group col_1_of_2">
-                                <label>Name</label>
-                                {{ match_form.name(class="form-control", placeholder="Name", value=curr_match_table.name) }}
-                            </div>
+                        <button id="profile-form-modal-2">
 
-                            <div class="form-group col_1_of_2">
-                                <label>Age</label>
-                                {{ match_form.age(class="form-control", placeholder="Age", value=curr_match_table.age) }}
-                            </div>
-
-                            <div class="form-double-input">
-                                <div class="form-group col_1_of_2">
-                                    <label>Gender</label>
-                                    {{ match_form.gender(class="form-control", placeholder="Gender", value=curr_match_table.gender) }}
-                                </div>
-                                <div class="form-group col_1_of_2">
-                                    <label>Location</label>
-                                    {{ match_form.location(class="form-control", placeholder="Location", value=curr_match_table.location) }}
-                                </div>
-                            </div>
-
-                            <div class="form-double-input">
-                                <div class="form-group col_1_of_2">
-                                    <label>Height (cm)</label>
-                                    {{ match_form.height(class="form-control", placeholder="Height", value=curr_match_table.height) }}
-                                </div>
-
-                                <div class="form-group col_1_of_2">
-                                    <label>Education Level</label>
-                                    {{ match_form.education(class="form-control", placeholder="Education", value=curr_match_table.education) }}
-                                </div>
-                            </div>
-
-                            <div class="form-single-input">
-                                <div class="form-group col_1_of_1">
-                                    <label>About Me</label>
-                                    {{ match_form.bio(class="form-control", placeholder="About Me", value=curr_match_table.bio) }}
-                                </div>
-                            </div>
-
-                            <div class="form-single-input">
-                                <div class="form-group col_1_of_1" style="margin-bottom: 80px;">
-                                    <button type="submit" class="btn btn-default" style="letter-spacing: 1px;">Update
-                                    </button>
-                                </div>
-                            </div>
-                        <!--
-                            <div class="form-single-input">
-                                <div class="form-group col_1_of_1" style="margin-bottom: 80px;">
-                                    <button type="button" id="profile-next-btn-2" class="btn btn-default"
-                                            style="letter-spacing: 1px;">Next
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                            <a href="/member" id="profile-back-btn">&#8678 Back</a>>
 
 
-                        <div id="profile-form-modal-2">
-                            <a href="#" id="profile-back-btn">&#8678 Back</a>
-                            <a href="#" id="profile-next-btn" class="inactive-btn">Next &#8680</a>
-
-                            <p class="sub-heading"
-                               style="font-style: normal; font-size: 20px; color: #3C6478 !important;">
+                            <p class="sub-heading">
                                 &#9473 The following questions are used to match you with other users. &#9473
                             </p>
                             <br>
@@ -195,21 +119,21 @@
                             <div class="form-single-input">
                                 <div class="form-group col_1_of_1">
                                     <label for="q1">Tell me about yourself.</label>
-                                    {{ match_form.q1(class="form-control", placeholder="Question 1") }}
+                                    {{ update_answers.q1(class="form-control", placeholder="Question 1") }}
                                 </div>
                             </div>
 
                             <div class="form-single-input">
                                 <div class="form-group col_1_of_1">
                                     <label for="q2">What is your ideal holiday?.</label>
-                                    {{ match_form.q2(class="form-control", placeholder="Question 2") }}
+                                    {{ update_answers.q2(class="form-control", placeholder="Question 2") }}
                                 </div>
                             </div>
 
                             <div class="form-single-input">
                                 <div class="form-group col_1_of_1">
                                     <label for="q3">Describe your most recent shopping experience.</label>
-                                    {{ match_form.q3(class="form-control", placeholder="Question 3") }}
+                                    {{ update_answers.q3(class="form-control", placeholder="Question 3") }}
                                 </div>
 
                             </div>
@@ -220,28 +144,28 @@
                                         Describe your expirence with going to the gym and if you have never attended
                                         a gym whatdo you think of them?
                                     </label>
-                                    {{ match_form.q4(class="form-control", placeholder="Question 4") }}
+                                    {{ update_answers.q4(class="form-control", placeholder="Question 4") }}
                                 </div>
                             </div>
 
                             <div class="form-single-input">
                                 <div class="form-group col_1_of_1">
                                     <label for="q5">What does being outdoor mean to you?</label>
-                                    {{ match_form.q5(class="form-control", placeholder="Question 5") }}
+                                    {{ update_answers.q5(class="form-control", placeholder="Question 5") }}
                                 </div>
                             </div>
 
                             <div class="form-single-input">
                                 <div class="form-group col_1_of_1">
                                     <label for="q6">Describe the last time you experienced being in nature.</label>
-                                    {{ match_form.q6(class="form-control", placeholder="Question 6") }}
+                                    {{ update_answers.q6(class="form-control", placeholder="Question 6") }}
                                 </div>
                             </div>
 
                             <div class="form-single-input">
                                 <div class="form-group col_1_of_1">
                                     <label for="q7">Describe a time when you did something entreprenuerial.</label>
-                                    {{ match_form.q7(class="form-control", placeholder="Question 7") }}
+                                    {{ update_answers.q7(class="form-control", placeholder="Question 7") }}
                                 </div>
                             </div>
 
@@ -249,20 +173,20 @@
                                 <div class="form-group col_1_of_1">
                                     <label for="q8">What do you think of volunteering and have you ever
                                         volunteered?</label>
-                                    {{ match_form.q8(class="form-control", placeholder="Question 8") }}
+                                    {{ update_answers.q8(class="form-control", placeholder="Question 8") }}
                                 </div>
                             </div>
 
                             <div class="form-single-input">
                                 <div class="form-group col_1_of_1" style="margin-bottom: 80px;">
-                                    <button type="submit" class="btn btn-default" style="letter-spacing: 1px;">Update
+                                    <button type="submit" class="btn btn-default" style="letter-spacing: 1px;">Update Answers
                                     </button>
                                 </div>
                             </div>
                         </div>
 
-                    </form>
--->
+                    </form>-
+
                 {% else %}
 
                 {% if match_form.errors %}

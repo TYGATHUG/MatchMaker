@@ -288,9 +288,12 @@ def profile():
 
     # partially repopulate fields
     if curr_user_table.setup == True:
-        curr_match_table = Match.query.filter_by(username=current_user.username).first()
 
         update_form = UpdateDetailsForm()
+        update_answers = UpdatePersonalityForm()
+
+        curr_match_table = Match.query.filter_by(username=current_user.username).first()
+        curr_ans_table = PersonalityAnswers.query.filter_by(username=current_user.username).first()
 
         # if form has been submitted execute if
         if update_form.validate_on_submit():
@@ -310,18 +313,38 @@ def profile():
                     user.gender = update_form.gender.data
                     user.location = update_form.location.data
                     user.height = update_form.height.data
-                    user.education =  update_form.education.data
+                    user.education = update_form.education.data
                     user.bio = update_form.bio.data
 
                     db.session.commit()
                     flash('Successfully edited your profile.')
                     return redirect(url_for('member'))
 
-                return render_template('member.html', error=error)
-            return render_template('member.html')
+                return render_template('profile.html', error=error)
+            return render_template('profile.html')
+
+        if update_answers.validate_on_submit():
+
+            user = Match.query.filter_by(name = update_form.name.data).first()
+
+            if user:
+
+                if user.name != update_form.name.data:
+                    error = 'Name does not match system'
+
+                # if name from db matches name from form
+                else:
+
+                    flash('Successfully edited your answers.')
+                    return redirect(url_for('member'))
+
+                return render_template('profile.html')
+            return render_template('profile.html')
 
         # if form has not been submitted then return
-        return render_template('profile.html', update_form=update_form, match_form=match_form, name=current_user.username, curr_user_table=curr_user_table, curr_match_table=curr_match_table)
+        return render_template('profile.html', update_answers=update_answers, curr_ans_table=curr_ans_table, update_form=update_form,
+                               match_form=match_form, name=current_user.username, curr_user_table=curr_user_table,
+                               curr_match_table=curr_match_table)
     else:
         return render_template('profile.html', name=current_user.username, match_form=match_form, curr_user_table=curr_user_table)
 
