@@ -348,7 +348,11 @@ def profile():
     else:
         return render_template('profile.html', name=current_user.username, match_form=match_form, curr_user_table=curr_user_table)
 
+@app.route('/viewprofile')
+@login_required
+def viewprofile():
 
+    return render_template('viewprofile.html')
 @app.route('/terms', methods=['GET', 'POST'])
 def terms():
     register_form = RegisterForm()

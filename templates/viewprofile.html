@@ -1,0 +1,30 @@
+{% extends 'main.html' %}
+
+{% block body %}
+
+    <section id="intro" class="section intro no-padding">
+        <div class="container-fluid">
+            <blockquote class="site-info">
+
+                    <h1>Your Profile</h1>
+                    <br><br>
+
+            </blockquote>
+        </div>
+    </section>
+
+
+{#                {% if curr_user_table.setup == True %}#}
+{#                    {% if update_form.errors %}#}
+{#                        <ul class="errors">#}
+{#                            {% for field_name, field_errors in update_form.errors|dictsort if field_errors %}#}
+{#                                {% for error in field_errors %}#}
+{#                                    <li style="color: #e84545;">{{ update_form[field_name].label }}: {{ error }}</li>#}
+{#                                {% endfor %}#}
+{#                            {% endfor %}#}
+{#                            <br>#}
+{#                        </ul>#}
+{#                    {% endif %}#}
+
+
+{% endblock %}
