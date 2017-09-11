@@ -339,10 +339,11 @@ def profile():
                     return redirect(url_for('member'))
 
                 return render_template('profile.html')
+
             return render_template('profile.html')
 
         # if form has not been submitted then return
-        return render_template('profile.html', update_answers=update_answers, curr_ans_table=curr_ans_table, update_form=update_form,
+        return render_template('viewprofile.html', update_answers=update_answers, curr_ans_table=curr_ans_table, update_form=update_form,
                                match_form=match_form, name=current_user.username, curr_user_table=curr_user_table,
                                curr_match_table=curr_match_table)
     else:
@@ -351,8 +352,16 @@ def profile():
 @app.route('/viewprofile')
 @login_required
 def viewprofile():
+    curr_user_table = User.query.filter_by(username=current_user.username).first()
+    match_form = MatchForm()
+
+    if curr_user_table.setup == True:
+
+        return render_template('viewprofile.html')
 
     return render_template('viewprofile.html')
+
+
 @app.route('/terms', methods=['GET', 'POST'])
 def terms():
     register_form = RegisterForm()
