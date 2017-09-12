@@ -71,9 +71,9 @@
                 <blockquote class="site-info">
                     <h1></h1>
                     <div class="tab">
-                        <button class="tablinks" onclick="openCity(event, 'recommended')" id="defaultOpen">Recommend</button>
+                        <button class="tablinks" onclick="openCity(event, 'recommended')">Recommend</button>
                         <button class="tablinks" onclick="openCity(event, 'matched')">Matched</button>
-                        <button class="tablinks" onclick="openCity(event, 'setting')" style="border-right: none">
+                        <button class="tablinks" onclick="openCity(event, 'setting')" style="border-right: none" id="defaultOpen">
                             Settings
                         </button>
                     </div>
@@ -289,52 +289,99 @@
 
 
                     <!-- Start Settings Tab -->
-                    <div id="setting" class="tabcontent">
+                    <div id="setting" class="tabcontent tabcontent-fixed">
                         <div class="testbox">
 
                             <form>
-                                <label>Preferred Gender:</label><br>
-                                <div class="form-single-input">
-                                    <input type="radio" id="gender" value="female" name="gender">
-                                    <label class="light">Female</label><br>
-                               </div>
 
-                               <div class="form-single-input">
-                                    <input type="radio" id="gender" value="male" name="gender">
-                                    <label class="light">Male</label>
+                                <div class="setting-section">
+                                    <label >Show Me</label><br>
+
+                                    <div class="gender-btn-group">
+                                        <h3 style="float:left;">Male</h3>
+                                        <label class="switch" style="float:right;">
+                                            <input type="checkbox" id="male" name="gender" value="male" checked>
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+
+                                    <div class="gender-btn-group">
+                                        <h3 style="float:left;">Female</h3>
+                                        <label class="switch" style="float:right;">
+                                            <input type="checkbox" id="female" name="gender" value="female" checked>
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+
                                 </div>
 
-                                <div class="form-single-input">
-                                    <label>Preferred Age:</label><br>
-                                    <input type="checkbox" id="18" value="18_25" name="age"><label class="light">18-25</label><br>
-                                    <input type="checkbox" id="25" value="25_35" name="age"><label class="light">25-35</label><br>
-                                    <input type="checkbox" id="35" value="35_45" name="age"><label class="light">35-45</label>
+
+                                <div class="setting-section">
+                                    <label>Age Range</label><br>
+
+                                    <input type="hidden" id="age-min" readonly>
+                                    <input type="hidden" id="age-max" readonly>
+
+                                    <p><input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;"></p>
+                                    <div id="slider-range"></div>
+
+                                    <script>
+                                        $(function () {
+                                            $("#slider-range").slider({
+                                                range: true,
+                                                min: 18,
+                                                max: 60,
+                                                values: [0, 60],
+                                                slide: function (event, ui) {
+                                                    $("#amount").val(ui.values[0] + " - " + ui.values[1]);
+                                                    $("#age-min").val(ui.values[0]);
+                                                    $("#age-max").val(ui.values[1]);
+                                                }
+                                            });
+                                            $("#amount").val($("#slider-range").slider("values", 0) +
+                                                " - " + $("#slider-range").slider("values", 1));
+
+                                            $("#age-min").val($("#slider-range").slider("values", 0));
+                                            $("#age-max").val($("#slider-range").slider("values", 1));
+                                        });
+                                    </script>
+
                                 </div>
+
 
                                 <div class="form-single-input">
                                     <div class="form-group col_1_of_1" style="margin-bottom: 80px;">
                                         <button id="settings" type="submit" class="btn btn-default" style="letter-spacing: 1px;">Submit</button>
                                     </div>
                                 </div>
+
                             </form>
+
                         </div>
                     </div>
                     <script>
                     $(document).ready(function(){
 
                         $('#settings').click(function () {
-                            console.log("Gender");
-                            var gender = document.getElementById('gender').value;
-                            var age1 = document.getElementById('18').value;
-                            var age2 = document.getElementById('25').value;
-                            var age3 = document.getElementById('35').value;
-                            console.log(age1);
-                             console.log(age2);
-                            console.log();
+                            var male = document.getElementById('male').checked;
+                            var female = document.getElementById('female').checked;
+                            var age_min = document.getElementById('age-min').value;
+                            var age_max = document.getElementById('age-max').value;
+
+                            console.log(male);
+                            console.log(female);
+                            console.log(age_min);
+                            console.log(age_max);
+
                             $.ajax({
                                 type: 'POST',
                                 url: '/member',
-                                data: {settings: 'male'},
+                                data: {
+                                    male: male,
+                                    female: female,
+                                    age_min: age_min,
+                                    age_max: age_max
+                                },
                                 success: function (response) {
                                     console.log('success');
                                 }
