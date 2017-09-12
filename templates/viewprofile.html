@@ -75,10 +75,19 @@
 
                                 <a href="#" id="edit-details-btn" class="btn btn-default" style="letter-spacing: 1px;">Edit Details</a>
                         </div>
-{#                                <button id="update-details-btn" type="submit" class="btn btn-default" style="letter-spacing: 1px;">Update Details</button>#}
-
 
                         <div id="edit-profile-form">
+
+                        {% if update_form.errors %}
+                            <ul class="errors">
+                                {% for field_name, field_errors in update_form.errors|dictsort if field_errors %}
+                                    {% for error in field_errors %}
+                                        <li style="color: #e84545;">{{ update_form[field_name].label }}: {{ error }}</li>
+                                    {% endfor %}
+                             {% endfor %}
+                                <br>
+                            </ul>
+                        {% endif %}
 
                             <h4 class="red-text text-center">&#9473 Update your personal details &#9473</h4>
 
