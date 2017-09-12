@@ -235,11 +235,6 @@ def member():
         age_min = request.form['age_min']
         age_max = request.form['age_max']
         pref_gender = ""
-        print "female"
-        print female
-        print "male"
-        print male
-        print '\n'
 
         if male == "true":
             pref_gender = "male"
@@ -250,8 +245,7 @@ def member():
         if "true" in male:
             if "true" in female:
                 pref_gender = "both"
-        print "YES prefer gender"
-        print pref_gender
+
 
         if age_min:
             change_settings = Match.query.filter_by(username=curr_user.username).update(dict(pref_gender=pref_gender, pref_age_min=age_min, pref_age_max=age_max))
@@ -298,6 +292,10 @@ def member():
         filter_highest_match_users = []
 
         pref_gender = settings_pref.pref_gender
+        age_min = settings_pref.pref_age_min
+        age_max = settings_pref.pref_age_max
+        print age_min
+        print age_max
 
         print "PREF GENDER"
         print pref_gender
@@ -308,7 +306,9 @@ def member():
 
             if (pref_gender == "female") or (pref_gender == "male"):
                 if pref_gender == gender.lower():
+
                     filter_highest_match_users.append(user)
+
 
             if pref_gender == "both":
                 filter_highest_match_users.append(user)
