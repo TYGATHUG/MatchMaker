@@ -295,7 +295,7 @@
                             <form>
 
                                 <div class="setting-section">
-                                    <label >Show Me</label><br>
+                                    <label >Show Me:</label><br>
 
                                     <div class="gender-btn-group">
                                         <h3 style="float:left;">Male</h3>
@@ -308,22 +308,53 @@
                                     <div class="gender-btn-group">
                                         <h3 style="float:left;">Female</h3>
                                         <label class="switch" style="float:right;">
-                                            <input type="checkbox" id="female" name="gender" value="female" checked>
+                                            <input type="checkbox" id="female" name="gender" value="female">
                                             <span class="slider round"></span>
                                         </label>
                                     </div>
 
+                                    <script>
+                                        $("#male").click(function () {
+
+                                            var male_checked = document.getElementById('male').checked;
+                                            var female_checked = document.getElementById('female').checked;
+
+                                            if (male_checked == false){
+                                                if (female_checked == false) {
+                                                    document.getElementById("female").click();
+                                                }
+                                            }
+                                        });
+
+                                        $("#female").click(function () {
+
+                                            var male_checked = document.getElementById('male').checked;
+                                            var female_checked = document.getElementById('female').checked;
+
+                                            if (female_checked == false){
+                                                if (male_checked == false) {
+                                                    document.getElementById("male").click();
+                                                }
+                                            }
+                                        });
+                                    </script>
                                 </div>
 
-
+                                <br>
                                 <div class="setting-section">
-                                    <label>Age Range</label><br>
+                                    <label>Age Range:</label><br>
 
                                     <input type="hidden" id="age-min" readonly>
                                     <input type="hidden" id="age-max" readonly>
 
-                                    <p><input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;"></p>
-                                    <div id="slider-range"></div>
+                                    <div class="range-amount-group">
+                                        <h4><input type="text" id="amount-min" readonly style="float: left; padding:0;"></h4>
+                                        <h4><input type="text" id="amount-max" readonly style="float: right; padding:0; text-align: right;"></h4>
+                                    </div>
+                                    <br><br>
+                                    <div class="slider-range-container">
+                                        <div id="slider-range"></div>
+                                    </div>
 
                                     <script>
                                         $(function () {
@@ -333,25 +364,24 @@
                                                 max: 60,
                                                 values: [0, 60],
                                                 slide: function (event, ui) {
-                                                    $("#amount").val(ui.values[0] + " - " + ui.values[1]);
                                                     $("#age-min").val(ui.values[0]);
                                                     $("#age-max").val(ui.values[1]);
+                                                    $("#amount-min").val(ui.values[0]);
+                                                    $("#amount-max").val(ui.values[1]);
                                                 }
                                             });
-                                            $("#amount").val($("#slider-range").slider("values", 0) +
-                                                " - " + $("#slider-range").slider("values", 1));
-
                                             $("#age-min").val($("#slider-range").slider("values", 0));
                                             $("#age-max").val($("#slider-range").slider("values", 1));
+                                            $("#amount-min").val($("#slider-range").slider("values", 0));
+                                            $("#amount-max").val($("#slider-range").slider("values", 1));
                                         });
                                     </script>
 
                                 </div>
 
-
                                 <div class="form-single-input">
-                                    <div class="form-group col_1_of_1" style="margin-bottom: 80px;">
-                                        <button id="settings" type="submit" class="btn btn-default" style="letter-spacing: 1px;">Submit</button>
+                                    <div class="form-group col_1_of_1">
+                                        <button id="settings" type="submit" class="btn btn-default" style="letter-spacing: 1px; margin-top: 80px;">Save</button>
                                     </div>
                                 </div>
 
@@ -368,10 +398,10 @@
                             var age_min = document.getElementById('age-min').value;
                             var age_max = document.getElementById('age-max').value;
 
-                            console.log(male);
-                            console.log(female);
-                            console.log(age_min);
-                            console.log(age_max);
+                            console.log("Male: " + male);
+                            console.log("Female: " + female);
+                            console.log("Min: " + age_min);
+                            console.log("Max: " + age_max);
 
                             $.ajax({
                                 type: 'POST',
