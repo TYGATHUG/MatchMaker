@@ -83,6 +83,11 @@
 .btn-pref .btn {
     -webkit-border-radius: 0 !important;
 }
+/* sunburst chart*/
+#answer_details #sunburst-chart{
+    width:100%;
+}
+
 /* ------------------------------------------------------------------------------
 	 Profile Form
 -------------------------------------------------------------------------------*/
