@@ -33,6 +33,16 @@ $(document).ready(function () {
         $("#answer_details").fadeIn();
     });
 
+    $("#stars").on('click', function(){
+       $(form).hide();
+       $("#details").fadeIn();
+    });
+
+    $("#favorites").on('click', function(){
+       $(answer_form).hide();
+       $("#answer_details").fadeIn();
+    });
+
        //
        // $('div#tab1 #edit-profile-form').hide();
        // $('.tab-content #edit-profile-form').eq($(this).index()).show()
