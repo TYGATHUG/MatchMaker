@@ -350,7 +350,7 @@ def profile():
 
 
 # only possible to get rerouted here if a users profile has already been setup
-@app.route('/viewprofile')
+@app.route('/viewprofile', methods=['GET', 'POST'])
 @login_required
 def viewprofile():
 

@@ -1,3 +1,29 @@
+
+$(document).ready(function () {
+
+    var details = document.getElementById("details");
+    var form = document.getElementById("edit-profile-form");
+
+    $(form).hide();
+
+    $('#edit-details-btn').on('click', function() {
+        $(form).show();
+        $(details).hide();
+    });
+
+    $('#edit-profile-back-btn').on('click', function() {
+        $(form).hide();
+        $(details).show();
+    });
+       //
+       // $('div#tab1 #edit-profile-form').hide();
+       // $('.tab-content #edit-profile-form').eq($(this).index()).show()
+
+    // var element = document.getElementById("details");
+    //
+    // element.style.visibility = "hidden";
+});
+
 $(document).ready(function () {
 
     $(".btn-pref .btn").click(function () {
@@ -8,10 +34,10 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-    var profile = document.getElementById("tab1")
-    var button = document.getElementById("edit-details-btn")
-    var editprofileform = document.getElementsById("edit-profile-form")
-    var backbutton = document.getElementById("edit-profile-back-btn")
+    var profile = document.getElementById("tab1");
+    var button = document.getElementById("edit-details-btn");
+    var editprofileform = document.getElementById("edit-profile-form");
+    var backbutton = document.getElementById("edit-profile-back-btn");
     var visibleDivId = null;
 
     // button.onclick = function(){
@@ -31,16 +57,6 @@ $(document).ready(function () {
 });
 
 
-$(document).ready(function () {
-
-    $('#edit-details-btn').on('click', function() {
-        $(this).hide();
-    });
-
-      //  $('div#tab1 #edit-profile-form').hide();
-       // $('.tab-content #edit-profile-form').eq($(this).index()).show()
-
-});
 
 // $("#edit-profile-form").hide()
 //
