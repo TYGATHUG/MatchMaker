@@ -33,6 +33,8 @@ $(document).ready(function () {
         $("#answer_details").fadeIn();
     });
 
+
+    // show original details if user is exiting form by clicking on a tab
     $("#stars").on('click', function(){
        $(form).hide();
        $("#details").fadeIn();

@@ -168,6 +168,7 @@ class MatchForm(FlaskForm):
     q8 = StringField('Question 8', validators=[InputRequired(), Length(min=15, max=255)])
     setup = BooleanField()
 
+
 # for updating only the user's details
 class UpdateDetailsForm(FlaskForm):
     image = FileField('Image', validators=[FileRequired(), FileAllowed(ALLOWED_EXTENSIONS)])
@@ -178,6 +179,7 @@ class UpdateDetailsForm(FlaskForm):
     location = StringField('Location', validators=[InputRequired(), Length(min=1)])
     education = StringField('Education', validators=[InputRequired(), Length(min=1, max=20)])
     bio = StringField('Bio', validators=[InputRequired(), Length(min=1, max=255)])
+
 
 # for updating on the user's personality profile
 class UpdatePersonalityForm(FlaskForm):
@@ -290,7 +292,7 @@ def profile():
     if curr_user_table.setup == True:
 
         update_form = UpdateDetailsForm()
-        update_answers = UpdatePersonalityForm()
+        answer_form = UpdatePersonalityForm()
 
         curr_match_table = Match.query.filter_by(username=current_user.username).first()
         curr_ans_table = PersonalityAnswers.query.filter_by(username=current_user.username).first()
@@ -323,7 +325,7 @@ def profile():
                 return render_template('profile.html', error=error)
             return render_template('profile.html')
 
-        if update_answers.validate_on_submit():
+        if answer_form.validate_on_submit():
 
             user = Match.query.filter_by(name=update_form.name.data).first()
 
@@ -342,7 +344,7 @@ def profile():
             return render_template('profile.html')
 
         # if setup has happened, show their personal profile page
-        return render_template('viewprofile.html', update_answers=update_answers, curr_ans_table=curr_ans_table, update_form=update_form,
+        return render_template('viewprofile.html', answer_form=answer_form, curr_ans_table=curr_ans_table, update_form=update_form,
                                match_form=match_form, name=current_user.username, curr_user_table=curr_user_table,
                                curr_match_table=curr_match_table)
     else:
@@ -355,15 +357,16 @@ def profile():
 def viewprofile():
 
     update_form = UpdateDetailsForm()
-    answer_form = UpdatePersonalityForm;
+    answer_form = UpdatePersonalityForm()
 
     # getting information from these tables to pass into the html page
     curr_user_table = User.query.filter_by(username=current_user.username).first()
     curr_match_table = Match.query.filter_by(username=current_user.username).first()
     curr_ans_table = PersonalityAnswers.query.filter_by(username=current_user.username).first()
 
-
-    return render_template('viewprofile.html', answer_form=answer_form, update_form=update_form, curr_answer_table=curr_ans_table, curr_match_table=curr_match_table, curr_user_table=curr_user_table)
+    return render_template('viewprofile.html', update_form=update_form,
+                           curr_answer_table=curr_ans_table, curr_match_table=curr_match_table,
+                           curr_user_table=curr_user_table, answer_form=answer_form)
 
 
 @app.route('/terms', methods=['GET', 'POST'])
