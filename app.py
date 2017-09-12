@@ -355,6 +355,7 @@ def profile():
 def viewprofile():
 
     update_form = UpdateDetailsForm()
+    answer_form = UpdatePersonalityForm;
 
     # getting information from these tables to pass into the html page
     curr_user_table = User.query.filter_by(username=current_user.username).first()
@@ -362,7 +363,7 @@ def viewprofile():
     curr_ans_table = PersonalityAnswers.query.filter_by(username=current_user.username).first()
 
 
-    return render_template('viewprofile.html', update_form=update_form, curr_answer_table=curr_ans_table, curr_match_table=curr_match_table, curr_user_table=curr_user_table)
+    return render_template('viewprofile.html', answer_form=answer_form, update_form=update_form, curr_answer_table=curr_ans_table, curr_match_table=curr_match_table, curr_user_table=curr_user_table)
 
 
 @app.route('/terms', methods=['GET', 'POST'])

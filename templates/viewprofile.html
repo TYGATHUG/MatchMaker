@@ -47,7 +47,9 @@
                         <div class="tab-content">
 
                             <div class="tab-pane fade in active" id="tab1">
-                                 <div id = "details">
+
+                                <div id = "details">
+
                             <h3 class="red-text text-center">The Basics</h3>
                         <br>
 
@@ -152,8 +154,94 @@
                              <a href="#" id="edit-profile-back-btn" class="btn btn-default" style="letter-spacing: 1px;">Back</a>
                             </div>
                             </div>
+
                         <div class="tab-pane fade in" id="tab2">
-                            <h3 class="red-text text-center">My thoughts</h3>
+                            <h3 class="red-text text-center">Watson Personality Profile</h3>
+
+                           <div id="edit-personality-form">
+
+
+                            <h4 class="red-text text-center"> &#9473 The following questions are used to match you with other users. &#9473</h4>
+
+                            <br>
+                               <form role="form" method="POST" action="/profile" enctype="multipart/form-data">
+                                            {{ update_form.hidden_tag() }}
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1">
+                                    <label for="q1">Tell me about yourself.</label>
+                                    {{ match_form.q1(class="form-control", placeholder="Question 1") }}
+                                </div>
+                            </div>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1">
+                                    <label for="q2">What is your ideal holiday?.</label>
+                                    {{ match_form.q2(class="form-control", placeholder="Question 2") }}
+                                </div>
+                            </div>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1">
+                                    <label for="q3">Describe your most recent shopping experience.</label>
+                                    {{ match_form.q3(class="form-control", placeholder="Question 3") }}
+                                </div>
+
+                            </div>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1">
+                                    <label for="q4">
+                                        Describe your expirence with going to the gym and if you have never attended
+                                        a gym whatdo you think of them?
+                                    </label>
+                                    {{ match_form.q4(class="form-control", placeholder="Question 4") }}
+                                </div>
+                            </div>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1">
+                                    <label for="q5">What does being outdoor mean to you?</label>
+                                    {{ match_form.q5(class="form-control", placeholder="Question 5") }}
+                                </div>
+                            </div>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1">
+                                    <label for="q6">Describe the last time you expirience being in nature.</label>
+                                    {{ match_form.q6(class="form-control", placeholder="Question 6") }}
+                                </div>
+                            </div>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1">
+                                    <label for="q7">Describe a time when you did something entreprenuerial.</label>
+                                    {{ match_form.q7(class="form-control", placeholder="Question 7") }}
+                                </div>
+                            </div>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1">
+                                    <label for="q8">What do you think of volunteering and have you ever
+                                        volunteered?</label>
+                                    {{ match_form.q8(class="form-control", placeholder="Question 8") }}
+                                </div>
+                            </div>
+
+                            <div class="form-single-input">
+                                <div class="form-group col_1_of_1" style="margin-bottom: 80px;">
+                                    <button type="submit" class="btn btn-default" style="letter-spacing: 1px;">Submit
+                                    </button>
+                                </div>
+                            </div>
+
+
+
+                    </form>
+                            <a href="#" id="edit-answer-back-btn" class="btn btn-default" style="letter-spacing: 1px;">Back</a>
+                        </div>
+
+                            <div id = "answer_details">
                         <dl>
                             <dt>Tell me about yourself.</dt>
                             <dd>{{ curr_ans_table.q1 }}</dd>
@@ -180,7 +268,12 @@
                             <dt>DWhat do you think of volunteering and have you ever volunteered?</dt>
                             <dd>{{ curr_ans_table.q8 }}</dd>
                         </dl>
+
+                                <a href="#" id="edit-answers-btn" class="btn btn-default" style="letter-spacing: 1px;">Edit Answers</a>
+
                         </div>
+                        </div>
+
                         <div class="tab-pane fade in" id="tab3">
                             <h3>This is tab 3</h3>
                         </div>

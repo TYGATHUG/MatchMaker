@@ -3,9 +3,15 @@ $(document).ready(function () {
 
     var details = document.getElementById("details");
     var form = document.getElementById("edit-profile-form");
+    var answer_form = document.getElementById("edit-personality-form");
+    var answer_details = document.getElementById("answer_details");
 
+    // hide forms initially
     $(form).hide();
+    $(answer_form).hide()
 
+
+    // code to show/hide profile form in tab 1
     $('#edit-details-btn').on('click', function() {
         $("#edit-profile-form").fadeIn();
         $(details).hide();
@@ -15,6 +21,18 @@ $(document).ready(function () {
         $(form).hide();
         $("#details").fadeIn();
     });
+
+    // code to show/hide personality form in tab 2
+    $('#edit-answers-btn').on('click', function() {
+        $("#edit-personality-form").fadeIn();
+        $(answer_details).hide();
+    });
+
+    $('#edit-answer-back-btn').on('click', function() {
+        $(answer_form).hide();
+        $("#answer_details").fadeIn();
+    });
+
        //
        // $('div#tab1 #edit-profile-form').hide();
        // $('.tab-content #edit-profile-form').eq($(this).index()).show()
