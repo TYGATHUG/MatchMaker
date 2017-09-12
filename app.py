@@ -230,10 +230,31 @@ def member():
     if request.method == "POST":
 
         # handle settings request
-        settings = request.form['settings']
-        if settings:
-            gender = settings
-            change_settings = Match.query.filter_by(username=curr_user.username).update(dict(pref_gender=gender))
+        male = request.form['male']
+        female = request.form['female']
+        age_min = request.form['age_min']
+        age_max = request.form['age_max']
+        pref_gender = ""
+        print "female"
+        print female
+        print "male"
+        print male
+        print '\n'
+
+        if male == "true":
+            pref_gender = "male"
+
+        if female == "true":
+             pref_gender = "female"
+
+        if "true" in male:
+            if "true" in female:
+                pref_gender = "both"
+        print "YES prefer gender"
+        print pref_gender
+
+        if age_min:
+            change_settings = Match.query.filter_by(username=curr_user.username).update(dict(pref_gender=pref_gender, pref_age_min=age_min, pref_age_max=age_max))
             db.session.commit()
 
 
@@ -277,24 +298,29 @@ def member():
         filter_highest_match_users = []
 
         pref_gender = settings_pref.pref_gender
-        print "pref gender of user"
 
+        print "PREF GENDER"
+        print pref_gender
 
         for user in highest_match_users:
 
             gender = user[3]['gender']
 
-            if pref_gender == gender.lower():
-                print "YEAHA"
+            if (pref_gender == "female") or (pref_gender == "male"):
+                if pref_gender == gender.lower():
+                    filter_highest_match_users.append(user)
+
+            if pref_gender == "both":
                 filter_highest_match_users.append(user)
 
 
-                print '\n'
+    try:
+        if filter_highest_match_users:
+            print 'filter'
+            highest_match_users = filter_highest_match_users
+    except:
+        "fhm"
 
-    if filter_highest_match_users:
-        highest_match_users = filter_highest_match_users
-        print highest_match_users
-        
 
     return render_template('member.html', settings_form=settings_form, name=current_user.username, highest_match_users=highest_match_users, curr_user_table=curr_user_table, curr_match_table=curr_match_table, mutual_likes=mutual_likes)
 
