@@ -78,13 +78,9 @@
 
                         <div id="edit-profile-form">
 
-                            <a href="#" id="edit-profile-back-btn">&#8678 Back</a>
+                            <h4 class="red-text text-center">&#9473 Update your personal details &#9473</h4>
 
-                            <p class="sub-heading" style="font-style: normal; font-size: 20px; color: #3C6478 !important;">
-                                &#9473 Update your personal details &#9473
-                            </p>
                             <br>
-
 
                             <form role="form" method="POST" action="/profile" enctype="multipart/form-data">
                                             {{ update_form.hidden_tag() }}
@@ -153,6 +149,7 @@
 
 
                     </form>
+                             <a href="#" id="edit-profile-back-btn" class="btn btn-default" style="letter-spacing: 1px;">Back</a>
                             </div>
                             </div>
                         <div class="tab-pane fade in" id="tab2">

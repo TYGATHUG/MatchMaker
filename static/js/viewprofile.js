@@ -7,13 +7,13 @@ $(document).ready(function () {
     $(form).hide();
 
     $('#edit-details-btn').on('click', function() {
-        $(form).show();
+        $("#edit-profile-form").fadeIn();
         $(details).hide();
     });
 
     $('#edit-profile-back-btn').on('click', function() {
         $(form).hide();
-        $(details).show();
+        $("#details").fadeIn();
     });
        //
        // $('div#tab1 #edit-profile-form').hide();
