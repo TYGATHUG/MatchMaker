@@ -219,6 +219,10 @@ def home():
 @app.route('/member', methods=['GET', 'POST'])
 @login_required
 def member():
+
+    # instasiate SettingsForm
+    settings_form = SettingsForm()
+
     username = current_user.username.title()    # get session based username
     curr_user = Match.query.filter_by(username=username.lower()).first()    # get current user by matching session and Match DB
 
@@ -227,8 +231,12 @@ def member():
 
         # handle settings request
         settings = request.form['settings']
-        print "settings"
-        print settings
+        if settings:
+            gender = settings
+            change_settings = Match.query.filter_by(username=curr_user.username).update(dict(pref_gender=gender))
+            db.session.commit()
+
+
 
         # handle like requests
         like_dislike = request.form['like_dislike']
@@ -262,10 +270,31 @@ def member():
     curr_user_table = User.query.filter_by(username=current_user.username).first()
     curr_match_table = Match.query.filter_by(username=current_user.username).first()
 
-    # instasiate SettingsForm
-    settings_form = SettingsForm()
 
-    print highest_match_users
+    # run settings over matches to filter further
+    settings_pref = Match.query.filter_by(username=curr_user.username).first()
+    if settings_pref.pref_gender != "":
+        filter_highest_match_users = []
+
+        pref_gender = settings_pref.pref_gender
+        print "pref gender of user"
+
+
+        for user in highest_match_users:
+
+            gender = user[3]['gender']
+
+            if pref_gender == gender.lower():
+                print "YEAHA"
+                filter_highest_match_users.append(user)
+
+
+                print '\n'
+
+    if filter_highest_match_users:
+        highest_match_users = filter_highest_match_users
+        print highest_match_users
+        
 
     return render_template('member.html', settings_form=settings_form, name=current_user.username, highest_match_users=highest_match_users, curr_user_table=curr_user_table, curr_match_table=curr_match_table, mutual_likes=mutual_likes)
 
