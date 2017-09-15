@@ -5,6 +5,7 @@ $(document).ready(function () {
     var form = document.getElementById("edit-profile-form");
     var answer_form = document.getElementById("edit-personality-form");
     var answer_details = document.getElementById("answer_details");
+    var details_form = $( "#details-form");
 
     // hide forms initially
     $(form).hide();
@@ -44,6 +45,20 @@ $(document).ready(function () {
        $(answer_form).hide();
        $("#answer_details").fadeIn();
     });
+
+    $("form").submit(function(e) {
+
+        details_form.validate();
+
+        if (!details_form.valid()) {
+            alert("form not valid!");
+        } else {
+            alert("it's valid!");
+        }
+        }
+
+    );
+
 
        //
        // $('div#tab1 #edit-profile-form').hide();

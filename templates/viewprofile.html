@@ -93,199 +93,168 @@
 
                             <br>
 
-                            <form role="form" method="POST" action="/profile" enctype="multipart/form-data">
-                                            {{ update_form.hidden_tag() }}
-                            <div class="form-group col_1_of_1">
-                                <label for="imageUpload" id="imageUpload-btn">
-                                    <span>Click to Upload Photo</span><br>
-                                    <span id="image-file-name-display" style="font-size: 15px; font-weight: normal;">No File Selected</span>
-                                </label>
-                                <script>
-                                    function displayFilename() {
-                                        var filename = $('#imageUpload')[0].files[0];
-                                        document.getElementById("image-file-name-display").innerHTML = filename.name;
-                                    }
-                                </script>
+                            <form role="form" method="POST" action="/viewprofile" enctype="multipart/form-data" id="details-form">
+                                {{ update_form.hidden_tag() }}
 
-                                {{ update_form.image(id="image-file-name", id="imageUpload", class="form-control", placeholder="image", onchange="displayFilename()", style="display:none;", value=curr_match_table.image) }}
-                            </div>
-                            <br><br><br>
-
-                            <div class="form-group col_1_of_2">
-                                <label>Name</label>
-                                {{ update_form.name(class="form-control", placeholder="Name", value=curr_match_table.name, readonly=true) }}
-                            </div>
-
-                            <div class="form-group col_1_of_2">
-                                <label>Age</label>
-                                {{ update_form.age(class="form-control", placeholder="Age", value=curr_match_table.age) }}
-                            </div>
-
-                            <div class="form-double-input">
-                                <div class="form-group col_1_of_2">
-                                    <label>Gender</label>
-                                    {{ update_form.gender(class="form-control", placeholder="Gender", value=curr_match_table.gender) }}
-                                </div>
-                                <div class="form-group col_1_of_2">
-                                    <label>Location</label>
-                                    {{ update_form.location(class="form-control", placeholder="Location", value=curr_match_table.location) }}
-                                </div>
-                            </div>
-
-                            <div class="form-double-input">
-                                <div class="form-group col_1_of_2">
-                                    <label>Height (cm)</label>
-                                    {{ update_form.height(class="form-control", placeholder="Height", value=curr_match_table.height) }}
-                                </div>
-
-                                <div class="form-group col_1_of_2">
-                                    <label>Education Level</label>
-                                    {{ update_form.education(class="form-control", placeholder="Education", value=curr_match_table.education) }}
-                                </div>
-                            </div>
-
-                            <div class="form-single-input">
                                 <div class="form-group col_1_of_1">
-                                    <label>About Me</label>
-                                    {{ update_form.bio(class="form-control", placeholder="About Me", value=curr_match_table.bio) }}
+                                    <label for="imageUpload" id="imageUpload-btn">
+                                        <span>Click to Upload Photo</span><br>
+                                        <span id="image-file-name-display" style="font-size: 15px; font-weight: normal;">No File Selected</span>
+                                    </label>
+                                    <script>
+                                        function displayFilename() {
+                                            var filename = $('#imageUpload')[0].files[0];
+                                            document.getElementById("image-file-name-display").innerHTML = filename.name;
+                                        }
+                                    </script>
+
+                                    {{ update_form.image(id="image-file-name", id="imageUpload", class="form-control", placeholder="image", onchange="displayFilename()", style="display:none;", value=curr_match_table.image) }}
                                 </div>
-                            </div>
+                                <br><br><br>
 
-                            <div class="form-single-input">
-                                <div class="form-group col_1_of_1" style="margin-bottom: 80px;">
-                                    <button type="submit" class="btn btn-default" style="letter-spacing: 1px;">Update Details
-                                    </button>
+                                <div class="form-group col_1_of_2">
+                                    <label>Name</label>
+                                    {{ update_form.name(class="form-control", placeholder="Name", value=curr_match_table.name, readonly=true) }}
                                 </div>
-                            </div>
 
+                                <div class="form-group col_1_of_2">
+                                    <label>Age</label>
+                                    {{ update_form.age(class="form-control", placeholder="Age", value=curr_match_table.age) }}
+                                </div>
 
-                    </form>
-                             <a href="#" id="edit-profile-back-btn" class="btn btn-default" style="letter-spacing: 1px;">Back</a>
-                            </div>
+                                <div class="form-double-input">
+                                    <div class="form-group col_1_of_2">
+                                        <label>Gender</label>
+                                        {{ update_form.gender(class="form-control", placeholder="Gender", value=curr_match_table.gender) }}
+                                    </div>
+                                    <div class="form-group col_1_of_2">
+                                        <label>Location</label>
+                                        {{ update_form.location(class="form-control", placeholder="Location", value=curr_match_table.location) }}
+                                    </div>
+                                </div>
+
+                                <div class="form-double-input">
+                                    <div class="form-group col_1_of_2">
+                                        <label>Height (cm)</label>
+                                        {{ update_form.height(class="form-control", placeholder="Height", value=curr_match_table.height) }}
+                                    </div>
+
+                                    <div class="form-group col_1_of_2">
+                                        <label>Education Level</label>
+                                        {{ update_form.education(class="form-control", placeholder="Education", value=curr_match_table.education) }}
+                                    </div>
+                                </div>
+
+                                <div class="form-single-input">
+                                    <div class="form-group col_1_of_1">
+                                        <label>About Me</label>
+                                        {{ update_form.bio(class="form-control", placeholder="About Me", value=curr_match_table.bio) }}
+                                    </div>
+                                </div>
+
+                                <div class="form-single-input">
+                                    <div class="form-group col_1_of_1" style="margin-bottom: 80px;">
+                                        <button type="submit" class="btn btn-default" style="letter-spacing: 1px;">Update Details
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </form>
+                                <a href="#" id="edit-profile-back-btn" class="btn btn-default" style="letter-spacing: 1px;">Back</a>
+                        </div>
                             </div>
 
                         <div class="tab-pane fade in" id="tab2">
 
-
-                           <div id="edit-personality-form">
-
-
-                            <h4 class="red-text text-center"> &#9473 The following questions are used to match you with other users. &#9473</h4>
-
-                            <br>
-                               <form role="form" method="POST" action="/viewprofile" >
-                                            {{ answer_form.hidden_tag() }}
-
-                            <div class="form-single-input">
-                                <div class="form-group col_1_of_1">
-                                    <label for="q1">Tell me about yourself.</label>
-                                    {{ answer_form.q1(class="form-control", placeholder="Question 1", value=curr_ans_table.q1) }}
-                                </div>
-                            </div>
-
-                            <div class="form-single-input">
-                                <div class="form-group col_1_of_1">
-                                    <label for="q2">What is your ideal holiday?.</label>
-                                    {{ answer_form.q2(class="form-control", placeholder="Question 2", value=curr_ans_table.q2) }}
-                                </div>
-                            </div>
-
-                            <div class="form-single-input">
-                                <div class="form-group col_1_of_1">
-                                    <label for="q3">Describe your most recent shopping experience.</label>
-                                    {{ answer_form.q3(class="form-control", placeholder="Question 3", value=curr_ans_table.q3) }}
-                                </div>
-
-                            </div>
-
-                            <div class="form-single-input">
-                                <div class="form-group col_1_of_1">
-                                    <label for="q4">
-                                        Describe your expirence with going to the gym and if you have never attended
-                                        a gym whatdo you think of them?
-                                    </label>
-                                    {{ answer_form.q4(class="form-control", placeholder="Question 4", value=curr_ans_table.q4) }}
-                                </div>
-                            </div>
-
-                            <div class="form-single-input">
-                                <div class="form-group col_1_of_1">
-                                    <label for="q5">What does being outdoor mean to you?</label>
-                                    {{ answer_form.q5(class="form-control", placeholder="Question 5", value=curr_ans_table.q5) }}
-                                </div>
-                            </div>
-
-                            <div class="form-single-input">
-                                <div class="form-group col_1_of_1">
-                                    <label for="q6">Describe the last time you expirience being in nature.</label>
-                                    {{ answer_form.q6(class="form-control", placeholder="Question 6", value=curr_ans_table.q6) }}
-                                </div>
-                            </div>
-
-                            <div class="form-single-input">
-                                <div class="form-group col_1_of_1">
-                                    <label for="q7">Describe a time when you did something entreprenuerial.</label>
-                                    {{ answer_form.q7(class="form-control", placeholder="Question 7", value=curr_ans_table.q7) }}
-                                </div>
-                            </div>
-
-                            <div class="form-single-input">
-                                <div class="form-group col_1_of_1">
-                                    <label for="q8">What do you think of volunteering and have you ever
-                                        volunteered?</label>
-                                    {{ answer_form.q8(class="form-control", placeholder="Question 8", value=curr_ans_table.q8) }}
-                                </div>
-                            </div>
-
-                            <div class="form-single-input">
-                                <div class="form-group col_1_of_1" style="margin-bottom: 80px;">
-                                    <button type="submit" class="btn btn-default" style="letter-spacing: 1px;">Submit
-                                    </button>
-                                </div>
-                            </div>
-
-
-
-                    </form>
-                            <a href="#" id="edit-answer-back-btn" class="btn btn-default" style="letter-spacing: 1px;">Back</a>
-                        </div>
-
                             <div id = "answer_details">
                                 <h3 class="red-text text-center">Watson Personality Profile</h3>
 
-                                 <img src="static/images/other/sunburstchart.jpg" id="sunburst-chart" class="img-rounded" alt="sunburst-chart">
-                                <dl>
-
-
-{#                            <dt>Tell me about yourself.</dt>#}
-{#                            <dd>{{ curr_ans_table.q1 }}</dd>#}
-{#                            <br>#}
-{#                            <dt>What is your ideal holiday?</dt>#}
-{#                            <dd>{{ curr_ans_table.q2 }}</dd>#}
-{#                            <br>#}
-{#                            <dt>Describe your most recent shopping experience.</dt>#}
-{#                            <dd>{{ curr_ans_table.q3 }}</dd>#}
-{#                            <br>#}
-{#                            <dt>Describe your expirence with going to the gym and if you have never attended#}
-{#                                        a gym whatdo you think of them?</dt>#}
-{#                            <dd>{{ curr_ans_table.q4 }}</dd>#}
-{#                            <br>#}
-{#                            <dt>What does being outdoor mean to you?</dt>#}
-{#                            <dd>{{ curr_ans_table.q5 }}</dd>#}
-{#                            <br>#}
-{#                            <dt>Describe the last time you experienced being in nature.</dt>#}
-{#                            <dd>{{ curr_ans_table.q6}}</dd>#}
-{#                            <br>#}
-{#                            <dt>Describe a time when you did something entrepreneurial.</dt>#}
-{#                            <dd>{{ curr_ans_table.q7 }}</dd>#}
-{#                            <br>#}
-{#                            <dt>DWhat do you think of volunteering and have you ever volunteered?</dt>#}
-{#                            <dd>{{ curr_ans_table.q8 }}</dd>#}
-                        </dl>
-
+                                <img src="static/images/other/sunburstchart.jpg" id="sunburst-chart" class="img-rounded" alt="sunburst-chart">
+                                <br>
+                                <br>
                                 <a href="#" id="edit-answers-btn" class="btn btn-default" style="letter-spacing: 1px;">Edit Answers</a>
+                            </div>
 
-                        </div>
+                            <div id="edit-personality-form">
+
+                                <h4 class="red-text text-center"> &#9473 The following questions are used to match you with other users. &#9473</h4>
+
+                                <br>
+                                <form role="form" method="POST" action="/viewprofile">
+                                    {{ answer_form.hidden_tag() }}
+
+                                    <div class="form-single-input">
+                                        <div class="form-group col_1_of_1">
+                                            <label for="q1">Tell me about yourself.</label>
+                                            {{ answer_form.q1(class="form-control", placeholder="Question 1", value=curr_ans_table.q1) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-single-input">
+                                        <div class="form-group col_1_of_1">
+                                            <label for="q2">What is your ideal holiday?.</label>
+                                            {{ answer_form.q2(class="form-control", placeholder="Question 2", value=curr_ans_table.q2) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-single-input">
+                                        <div class="form-group col_1_of_1">
+                                            <label for="q3">Describe your most recent shopping experience.</label>
+                                            {{ answer_form.q3(class="form-control", placeholder="Question 3", value=curr_ans_table.q3) }}
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-single-input">
+                                        <div class="form-group col_1_of_1">
+                                            <label for="q4">
+                                                Describe your expirence with going to the gym and if you have never attended
+                                                a gym whatdo you think of them?
+                                            </label>
+                                            {{ answer_form.q4(class="form-control", placeholder="Question 4", value=curr_ans_table.q4) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-single-input">
+                                        <div class="form-group col_1_of_1">
+                                            <label for="q5">What does being outdoor mean to you?</label>
+                                            {{ answer_form.q5(class="form-control", placeholder="Question 5", value=curr_ans_table.q5) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-single-input">
+                                        <div class="form-group col_1_of_1">
+                                            <label for="q6">Describe the last time you expirience being in nature.</label>
+                                            {{ answer_form.q6(class="form-control", placeholder="Question 6", value=curr_ans_table.q6) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-single-input">
+                                        <div class="form-group col_1_of_1">
+                                            <label for="q7">Describe a time when you did something entreprenuerial.</label>
+                                            {{ answer_form.q7(class="form-control", placeholder="Question 7", value=curr_ans_table.q7) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-single-input">
+                                        <div class="form-group col_1_of_1">
+                                            <label for="q8">What do you think of volunteering and have you ever
+                                                volunteered?</label>
+                                            {{ answer_form.q8(class="form-control", placeholder="Question 8", value=curr_ans_table.q8) }}
+                                        </div>
+                                    </div>
+
+                                    <div class="form-single-input">
+                                        <div class="form-group col_1_of_1" style="margin-bottom: 80px;">
+                                            <button type="submit" class="btn btn-default" style="letter-spacing: 1px;">Submit
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <a href="#" id="edit-answer-back-btn" class="btn btn-default" style="letter-spacing: 1px;">Back</a>
+
+                            </div>
                         </div>
 
                         <div class="tab-pane fade in" id="tab3">
