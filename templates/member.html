@@ -278,11 +278,9 @@
                                         <span class="matched-location">{{ value.location }}</span>
                                     {% endif %}
 
-{#                                <a href="/viewprofile" id="view-profile-btn" class="btn btn-default"#}
-{#                                   style="letter-spacing: 1px;">View {{ value.name }}'s profile</a>#}
                             <form method="POST" action="/viewprofile">
-                            <input type="hidden" name="name" value="{{ value.name }}">
-                            <input type="submit" value="View Profile">
+                                <input type="hidden" name="name" value="{{ value.name }}">
+                                <input type="submit" value="View Profile" class="btn btn-default btn-xs" id="indv-prof-btn">
                             </form>
                                 {% endfor %}
 

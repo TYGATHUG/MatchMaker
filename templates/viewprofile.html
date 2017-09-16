@@ -165,7 +165,11 @@
                                 <img src="static/images/other/sunburstchart.jpg" id="sunburst-chart" class="img-rounded" alt="sunburst-chart">
                                 <br>
                                 <br>
+                            <!-- only show the edit button if looking at another user's profile -->
+                            {% if current_user.username == curr_match_table.username %}
+
                                 <a href="#" id="edit-answers-btn" class="btn btn-default" style="letter-spacing: 1px;">Edit Answers</a>
+                            {% endif %}
                             </div>
 
                             <div id="edit-personality-form">
@@ -244,11 +248,7 @@
                                         </div>
                                     </div>
                                 </form>
-                            
-                        <!-- only show the edit button if looking at another user's profile -->
-                        {% if current_user.username == curr_match_table.username %}
-                            <a href="#" id="edit-details-btn" class="btn btn-default" style="letter-spacing: 1px;">Edit Details</a>
-                        {% endif %}
+
                             <a href="#" id="edit-answer-back-btn" class="btn btn-default" style="letter-spacing: 1px;">Back</a>
 
                             </div>

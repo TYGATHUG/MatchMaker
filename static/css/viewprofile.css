@@ -130,6 +130,8 @@ div.profiletab button.active {
 /* ------------------------------------------------------------------------------
 	 Viewing other user's profiles
 -------------------------------------------------------------------------------*/
-#view-profile-btn{
-    float:right;
+#indv-prof-btn{
+    width: 180px;
+    height: 30px;
+    margin: 10px;
 }
