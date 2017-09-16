@@ -24,7 +24,7 @@
     background-color: rgba(255, 255, 255, 1);
 }
 .card.hovercard .card-background {
-    height: 180px;
+    height: 185px;
 }
 .card-background img {
     min-width: 130%;
@@ -55,14 +55,15 @@
     right: 0;
 }
 .card.hovercard .card-info .card-title {
-    padding:0 5px;
-    font-size: 20px;
+    padding:0 10px;
+    font-size: 25px;
     line-height: 1;
-    color: #262626;
+    color: #ffffff;
     background-color: rgba(255, 255, 255, 0.1);
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
+    -webkit-border-radius: 9px;
+    -moz-border-radius: 9px;
+    border-radius: 9px;
+    text-shadow: 1px 1px 1px black!important;
 }
 .card.hovercard .card-info {
     overflow: hidden;
@@ -93,7 +94,6 @@ div.profiletab {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     background-color: #f1f1f1;
-    max-width: 600px;
     min-width: 390px;
     margin-left: auto;
     margin-right: auto;
@@ -102,7 +102,6 @@ div.profiletab {
 /* Style the buttons inside the tab */
 div.profiletab button {
     background-color: inherit;
-
     min-width: 130px;
     width: 50%;
     float: left;
@@ -117,4 +116,13 @@ div.profiletab button {
     border-right: 0.5px solid #ccc;
     border-left: none;
     border-bottom: none;
+}
+div.profiletab button:hover {
+    background-color: #DDDDDD;
+    /*font-weight: bold;*/
+}
+div.profiletab button.active {
+    background-color: #ffffff;
+    border-bottom: none;
+    color: black;
 }
