@@ -246,12 +246,9 @@ def member():
             if "true" in female:
                 pref_gender = "both"
 
-
         if age_min:
             change_settings = Match.query.filter_by(username=curr_user.username).update(dict(pref_gender=pref_gender, pref_age_min=age_min, pref_age_max=age_max))
             db.session.commit()
-
-
 
         # handle like requests
         like_dislike = request.form['like_dislike']
@@ -273,18 +270,15 @@ def member():
     else:
         highest_match_users = ""
 
-
     # fetch Matched users (mutual likes)
     if curr_user:
         mutual_likes = fetch_mutual_likes(curr_user)
     else:
         mutual_likes = ""
 
-
     # take care of matching
     curr_user_table = User.query.filter_by(username=current_user.username).first()
     curr_match_table = Match.query.filter_by(username=current_user.username).first()
-
 
     # run settings over matches to filter further
     settings_pref = Match.query.filter_by(username=curr_user.username).first()
@@ -321,8 +315,9 @@ def member():
     except:
         "fhm"
 
-
-    return render_template('member.html', settings_form=settings_form, name=current_user.username, highest_match_users=highest_match_users, curr_user_table=curr_user_table, curr_match_table=curr_match_table, mutual_likes=mutual_likes)
+    return render_template('member.html', settings_form=settings_form, name=current_user.username,
+                           highest_match_users=highest_match_users, curr_user_table=curr_user_table,
+                           curr_match_table=curr_match_table, mutual_likes=mutual_likes)
 
 
 @app.route('/profile', methods=['GET', 'POST'])
@@ -344,7 +339,7 @@ def profile():
             return '<h2>Unable to retrieve match data try again later</h2>'
 
     # if the user has setup their profile already then:
-    if curr_user_table.setup == True:
+    if curr_user_table.setup:
 
         # if setup has happened, show their personal profile page
         return redirect(url_for('viewprofile'))
@@ -361,76 +356,89 @@ def profile():
 @login_required
 def viewprofile():
 
-    update_form = UpdateDetailsForm()
-    answer_form = UpdatePersonalityForm()
+    if request.method == 'POST':
+        name = request.form['name']
+        update_form = UpdateDetailsForm()
+        answer_form = UpdatePersonalityForm()
+        curr_ans_table = PersonalityAnswers.query.filter_by(username=current_user.username).first()
 
-    # getting information from these tables to pass into the html page
-    curr_user_table = User.query.filter_by(username=current_user.username).first()
-    curr_match_table = Match.query.filter_by(username=current_user.username).first()
-    curr_ans_table = PersonalityAnswers.query.filter_by(username=current_user.username).first()
+        viewed_user_profile = Match.query.filter_by(name=name).first()
+        curr_user_table = User.query.filter_by(username=current_user.username).first()
 
-    if curr_user_table.setup:
-        # if form has been submitted execute if
-        if update_form.validate_on_submit():
+        #return "viewed user is %s and current user is %s" % (viewed_user_profile.name, curr_user_table.username)
+        return render_template('viewprofile.html', curr_match_table=viewed_user_profile, curr_user_table=curr_user_table,
+                               update_form=update_form, answer_form=answer_form, curr_ans_table=curr_ans_table)
 
-            # query database for a user; filter by name passed from form
-            user = Match.query.filter_by(name=update_form.name.data).first()
+    else:
+        update_form = UpdateDetailsForm()
+        answer_form = UpdatePersonalityForm()
 
-            # if user exists; basic test comparision, will find a better one -alex
-            if user:
-                if user.name != update_form.name.data:
-                    error = 'Name does not match system'
+        # getting information from these tables to pass into the html page
+        curr_user_table = User.query.filter_by(username=current_user.username).first()
+        curr_match_table = Match.query.filter_by(username=current_user.username).first()
+        curr_ans_table = PersonalityAnswers.query.filter_by(username=current_user.username).first()
 
-                # if name from db matches name from form
-                else:
+        if curr_user_table.setup:
+            # if form has been submitted execute if
+            if update_form.validate_on_submit():
 
-                    user.age = update_form.age.data
-                    user.gender = update_form.gender.data
-                    user.location = update_form.location.data
-                    user.height = update_form.height.data
-                    user.education = update_form.education.data
-                    user.bio = update_form.bio.data
+                # query database for a user; filter by name passed from form
+                user = Match.query.filter_by(name=update_form.name.data).first()
 
-                    db.session.commit()
-                    flash('Successfully edited your profile.')
-                    return redirect(url_for('member'))
+                # if user exists; basic test comparision, will find a better one -alex
+                if user:
+                    if user.name != update_form.name.data:
+                        error = 'Name does not match system'
 
-                return render_template('viewprofile.html', error=error)
-            return render_template('viewprofile.html')
+                    # if name from db matches name from form
+                    else:
 
-        if answer_form.validate_on_submit():
+                        user.age = update_form.age.data
+                        user.gender = update_form.gender.data
+                        user.location = update_form.location.data
+                        user.height = update_form.height.data
+                        user.education = update_form.education.data
+                        user.bio = update_form.bio.data
 
-            user = PersonalityAnswers.query.filter_by(username=current_user.username).first()
+                        db.session.commit()
+                        flash('Successfully edited your profile.')
+                        return redirect(url_for('member'))
 
-            if user:
-                # print user.username
-                #
-                if user.username != current_user.username:
-                    error = 'Name does not match system'
-
-                # if name from db matches name from form
-                else:
-
-                    user.q1 = answer_form.q1.data
-                    user.q2 = answer_form.q2.data
-                    user.q3 = answer_form.q3.data
-                    user.q4 = answer_form.q4.data
-                    user.q5 = answer_form.q5.data
-                    user.q6 = answer_form.q6.data
-                    user.q7 = answer_form.q7.data
-                    user.q8 = answer_form.q8.data
-
-                    db.session.commit()
-                    flash('Successfully edited your answers.')
-                    return redirect(url_for('member'))
-
+                    return render_template('viewprofile.html', error=error)
                 return render_template('viewprofile.html')
 
-            return render_template('viewprofile.html')
-        return render_template('viewprofile.html', update_form=update_form,
-                           curr_ans_table=curr_ans_table, curr_match_table=curr_match_table,
-                           curr_user_table=curr_user_table, answer_form=answer_form)
+            if answer_form.validate_on_submit():
 
+                user = PersonalityAnswers.query.filter_by(username=current_user.username).first()
+
+                if user:
+                    # print user.username
+                    #
+                    if user.username != current_user.username:
+                        error = 'Name does not match system'
+
+                    # if name from db matches name from form
+                    else:
+
+                        user.q1 = answer_form.q1.data
+                        user.q2 = answer_form.q2.data
+                        user.q3 = answer_form.q3.data
+                        user.q4 = answer_form.q4.data
+                        user.q5 = answer_form.q5.data
+                        user.q6 = answer_form.q6.data
+                        user.q7 = answer_form.q7.data
+                        user.q8 = answer_form.q8.data
+
+                        db.session.commit()
+                        flash('Successfully edited your answers.')
+                        return redirect(url_for('member'))
+
+                    return render_template('viewprofile.html')
+
+                return render_template('viewprofile.html')
+            return render_template('viewprofile.html', update_form=update_form,
+                               curr_ans_table=curr_ans_table, curr_match_table=curr_match_table,
+                               curr_user_table=curr_user_table, answer_form=answer_form)
 
     return render_template('viewprofile.html', update_form=update_form,
                            curr_ans_table=curr_ans_table, curr_match_table=curr_match_table,
@@ -718,7 +726,6 @@ def fetch_mutual_likes(curr_user):
     return mutual_liked_user_details
 
 
-
 def process_profile_form(match_form):
     # validation for file need to fix
     """
@@ -802,5 +809,7 @@ def process_profile_form(match_form):
     return True
 
     return True
+
+
 if __name__ == "__main__":
     app.run(debug=True)

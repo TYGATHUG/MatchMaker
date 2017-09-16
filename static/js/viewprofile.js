@@ -125,3 +125,13 @@ function openTab(evt, pageName) {
 
     evt.currentTarget.className += " active";
 }
+
+// view another user's profile
+function view_profile(clicked_user){
+    console.log(clicked_user)
+}
+
+function test(current_user, viewed_user){
+    console.log(current_user)
+    console.log(viewed_user)
+}

@@ -8,8 +8,8 @@
             <br><br>
 
                 <!-- run this IF statement if looking at another users profile-->
-                {% if current_user.username != curr_user_table.username %}
-                {% endif %}
+
+
 
                 {% if curr_user_table.setup == True %}
 
@@ -66,9 +66,14 @@
                                 <dd>{{ curr_match_table.bio }}</dd>
                             </dl>
 
-                                <a href="#" id="edit-details-btn" class="btn btn-default" style="letter-spacing: 1px;">Edit Details</a>
-                        </div>
 
+                        </div>
+                        {% if current_user.username != curr_match_table.username %}
+
+
+
+                        <a href="#" id="edit-details-btn" class="btn btn-default" style="letter-spacing: 1px;">Edit Details</a>
+                        {% endif %}
                         <div id="edit-profile-form">
 
                         {% if update_form.errors %}
