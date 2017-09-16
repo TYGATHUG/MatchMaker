@@ -24,17 +24,13 @@
     background-color: rgba(255, 255, 255, 1);
 }
 .card.hovercard .card-background {
-    height: 130px;
+    height: 180px;
 }
 .card-background img {
-    -webkit-filter: blur(25px);
-    -moz-filter: blur(25px);
-    -o-filter: blur(25px);
-    -ms-filter: blur(25px);
-    filter: blur(25px);
-    margin-left: -100px;
-    margin-top: -200px;
     min-width: 130%;
+    margin-left: -60px;
+    margin-top: -5px;
+
 }
 .card.hovercard .useravatar {
     position: absolute;
@@ -43,14 +39,14 @@
     right: 0;
 }
 .card.hovercard .useravatar img {
-    width: 100px;
-    height: 100px;
-    max-width: 100px;
-    max-height: 100px;
+    width: 150px;
+    height: 150px;
+    max-width: 150px;
+    max-height: 150px;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
-    border: 5px solid rgba(255, 255, 255, 0.5);
+    border: 5px solid rgba(255, 255, 255, 1);
 }
 .card.hovercard .card-info {
     position: absolute;
@@ -89,5 +85,36 @@
 }
 
 /* ------------------------------------------------------------------------------
-	 Profile Form
+	 Profile Tabs
 -------------------------------------------------------------------------------*/
+div.profiletab {
+    overflow: hidden;
+    /*border: 1px solid #ccc;*/
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: #f1f1f1;
+    max-width: 600px;
+    min-width: 390px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Style the buttons inside the tab */
+div.profiletab button {
+    background-color: inherit;
+
+    min-width: 130px;
+    width: 50%;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+    text-transform: uppercase !important;
+    letter-spacing: 3px !important;
+    border-right: 0.5px solid #ccc;
+    border-left: none;
+    border-bottom: none;
+}
