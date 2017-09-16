@@ -126,3 +126,10 @@ div.profiletab button.active {
     border-bottom: none;
     color: black;
 }
+
+/* ------------------------------------------------------------------------------
+	 Viewing other user's profiles
+-------------------------------------------------------------------------------*/
+#view-profile-btn{
+    float:right;
+}

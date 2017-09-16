@@ -356,6 +356,8 @@ def profile():
 @login_required
 def viewprofile():
 
+    # if another profile is being viewed, it will be through POST
+    # render the viewprofile template based off of this POST name
     if request.method == 'POST':
         name = request.form['name']
         update_form = UpdateDetailsForm()

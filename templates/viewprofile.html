@@ -7,10 +7,6 @@
              style="background: linear-gradient(rgba(51,70,92,0.91),rgba(51,70,92,0.91)),url(../static/images/other/Elegant_Background-7.jpg)">>
             <br><br>
 
-                <!-- run this IF statement if looking at another users profile-->
-
-
-
                 {% if curr_user_table.setup == True %}
 
                 <div class="col-lg-6 col-sm-6 col-md-offset-3">
@@ -68,12 +64,11 @@
 
 
                         </div>
-                        {% if current_user.username != curr_match_table.username %}
 
-
-
-                        <a href="#" id="edit-details-btn" class="btn btn-default" style="letter-spacing: 1px;">Edit Details</a>
+                        {% if current_user.username == curr_match_table.username %}
+                            <a href="#" id="edit-details-btn" class="btn btn-default" style="letter-spacing: 1px;">Edit Details</a>
                         {% endif %}
+
                         <div id="edit-profile-form">
 
                         {% if update_form.errors %}
@@ -249,8 +244,12 @@
                                         </div>
                                     </div>
                                 </form>
-
-                                <a href="#" id="edit-answer-back-btn" class="btn btn-default" style="letter-spacing: 1px;">Back</a>
+                            
+                        <!-- only show the edit button if looking at another user's profile -->
+                        {% if current_user.username == curr_match_table.username %}
+                            <a href="#" id="edit-details-btn" class="btn btn-default" style="letter-spacing: 1px;">Edit Details</a>
+                        {% endif %}
+                            <a href="#" id="edit-answer-back-btn" class="btn btn-default" style="letter-spacing: 1px;">Back</a>
 
                             </div>
                         </div>
