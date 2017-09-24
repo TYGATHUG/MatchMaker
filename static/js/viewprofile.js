@@ -38,6 +38,16 @@ $(document).ready(function () {
         $("#answer_details").fadeIn();
     });
 
+    // // use AJAX to send data to Flask back-end with jQuery
+    // $('#deactivate-profile-btn').on('click', function() {
+    //         $.ajax({
+    //             url: "{{ url_for('deactivate_user') }}",
+    //             method: "POST",
+    //             data: {
+    //                 data:$
+    //             }
+    //         })
+    // });
 
     // show original details if user is exiting form by clicking on a tab
     $("#stars").on('click', function(){

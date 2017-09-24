@@ -210,9 +210,10 @@ class SettingsForm(FlaskForm):
 def home():
     register_form = RegisterForm()
     login_form = LoginForm()
+    curr_user_table = User.query.filter_by(username=current_user.username).first()
     globals()['PREVIOUS_SAVED_ROUTE'] = "welcome.html"
 
-    if current_user.is_authenticated:
+    if current_user.is_authenticated and curr_user_table.activated == 1:
         return member()
     else:
         return render_template('welcome.html', register_form=register_form, login_form=login_form)
@@ -486,6 +487,14 @@ def admin():
 
     return render_template('admin.html')
 
+
+# route to deactivate the user
+@app.route('/deactivate', methods=['POST'])
+def deactivate_user():
+    username = User.query.filter_by(username=request.form["name"]).first()
+    username.activated = 0
+    db.session.commit()
+    return redirect(url_for('home'))
 
 # ---------------------------------------------------------------------------------
 #   Routes for user authentication
