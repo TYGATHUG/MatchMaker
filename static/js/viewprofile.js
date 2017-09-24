@@ -9,18 +9,22 @@ $(document).ready(function () {
 
     // hide forms initially
     $(form).hide();
-    $(answer_form).hide()
+    $(answer_form).hide();
 
 
     // code to show/hide profile form in tab 1
     $('#edit-details-btn').on('click', function() {
         $("#edit-profile-form").fadeIn();
         $(details).hide();
+        $("#edit-details-btn").hide();
+        $("#deactivate-profile-btn").hide();
     });
 
     $('#edit-profile-back-btn').on('click', function() {
         $(form).hide();
         $("#details").fadeIn();
+        $("#edit-details-btn").fadeIn();
+        $("#deactivate-profile-btn").fadeIn();
     });
 
     // code to show/hide personality form in tab 2
