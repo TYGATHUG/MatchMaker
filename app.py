@@ -210,10 +210,11 @@ class SettingsForm(FlaskForm):
 def home():
     register_form = RegisterForm()
     login_form = LoginForm()
-    curr_user_table = User.query.filter_by(username=current_user.username).first()
-    globals()['PREVIOUS_SAVED_ROUTE'] = "welcome.html"
 
-    if current_user.is_authenticated and curr_user_table.activated == 1:
+    globals()['PREVIOUS_SAVED_ROUTE'] = "welcome.html"
+    # curr_user_table = User.query.filter_by(username=current_user.username).first()
+    # and curr_user_table.activated == 1
+    if current_user.is_authenticated :
         return member()
     else:
         return render_template('welcome.html', register_form=register_form, login_form=login_form)
