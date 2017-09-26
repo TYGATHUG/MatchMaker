@@ -9,18 +9,22 @@ $(document).ready(function () {
 
     // hide forms initially
     $(form).hide();
-    $(answer_form).hide()
+    $(answer_form).hide();
 
 
     // code to show/hide profile form in tab 1
     $('#edit-details-btn').on('click', function() {
         $("#edit-profile-form").fadeIn();
         $(details).hide();
+            $("#edit-details-btn").hide();
+        $("#deactivate-profile-btn").hide();
     });
 
     $('#edit-profile-back-btn').on('click', function() {
         $(form).hide();
         $("#details").fadeIn();
+        $("#edit-details-btn").fadeIn();
+        $("#deactivate-profile-btn").fadeIn();
     });
 
     // code to show/hide personality form in tab 2
@@ -34,6 +38,16 @@ $(document).ready(function () {
         $("#answer_details").fadeIn();
     });
 
+    // // use AJAX to send data to Flask back-end with jQuery
+    // $('#deactivate-profile-btn').on('click', function() {
+    //         $.ajax({
+    //             url: "{{ url_for('deactivate_user') }}",
+    //             method: "POST",
+    //             data: {
+    //                 data:$
+    //             }
+    //         })
+    // });
 
     // show original details if user is exiting form by clicking on a tab
     $("#stars").on('click', function(){
