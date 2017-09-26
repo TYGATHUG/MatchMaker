@@ -81,8 +81,9 @@
     -webkit-border-radius: 0 !important;
 }
 /* sunburst chart*/
-#answer_details #sunburst-chart{
+#answer_details{
     width:100%;
+    height: 1200px;
 }
 
 /* ------------------------------------------------------------------------------
@@ -126,27 +127,13 @@ div.profiletab button.active {
     border-bottom: none;
     color: black;
 }
-#deactivate-profile-btn {
-    background-color: #D9534F;
-    color: #fff;
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 5px;
-    border: 0;
-    -moz-border-radius: 2px;
-    -webkit-border-radius: 2px;
-    border-radius: 2px;
-    display: inline-block;
-    text-transform: uppercase;
-    float:right;
-}
+
 /* ------------------------------------------------------------------------------
 	 Viewing other user's profiles
 -------------------------------------------------------------------------------*/
-#indv-prof-btn {
+#indv-prof-btn{
     width: 180px;
     height: 30px;
     margin: 10px;
 }
-
 

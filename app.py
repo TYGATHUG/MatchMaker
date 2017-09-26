@@ -22,7 +22,7 @@ from flask_admin.contrib.sqla import ModelView
 #   Initialisation / Settings
 # -------------------------------------------------------------------------------*/
 # Create app
-app = Flask(__name__)
+application = app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret'
 ###### get pwd function
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -59,7 +59,6 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(80))
     setup = db.Column(db.Boolean())
-    activated = db.Column(db.Boolean())
 
 admin.add_view(ModelView(User, db.session)) # create User view for current session
 
@@ -168,7 +167,6 @@ class MatchForm(FlaskForm):
     q7 = StringField('Question 7', validators=[InputRequired(), Length(min=15, max=255)])
     q8 = StringField('Question 8', validators=[InputRequired(), Length(min=15, max=255)])
     setup = BooleanField()
-    activated = BooleanField()
 
 
 # for updating only the user's details
@@ -210,10 +208,9 @@ class SettingsForm(FlaskForm):
 def home():
     register_form = RegisterForm()
     login_form = LoginForm()
-    curr_user_table = User.query.filter_by(username=current_user.username).first()
     globals()['PREVIOUS_SAVED_ROUTE'] = "welcome.html"
 
-    if current_user.is_authenticated and curr_user_table.activated == 1:
+    if current_user.is_authenticated:
         return member()
     else:
         return render_template('welcome.html', register_form=register_form, login_form=login_form)
@@ -223,100 +220,115 @@ def home():
 @login_required
 def member():
 
-    # instasiate SettingsForm
-    settings_form = SettingsForm()
+    curr_match_table = ""
+    mutual_likes = ""
+    curr_user = None
 
-    username = current_user.username.title()    # get session based username
-    curr_user = Match.query.filter_by(username=username.lower()).first()    # get current user by matching session and Match DB
+    settings_form = SettingsForm()  # instasiate SettingsForm
+    username = current_user.username.title()  # get session based username
 
-    # take care of likes / dislikes
-    if request.method == "POST":
+    curr_user_table = User.query.filter_by(username=username.lower()).first()
+    print 'user ref'
+    print curr_user_table.setup
 
-        # handle settings request
-        male = request.form['male']
-        female = request.form['female']
-        age_min = request.form['age_min']
-        age_max = request.form['age_max']
-        pref_gender = ""
 
-        if male == "true":
-            pref_gender = "male"
+    try:
+        curr_user = Match.query.filter_by(username=username.lower()).first()    # get current user by matching session and Match DB
+    except curr_user is None:
+        curr_user = False
 
-        if female == "true":
-             pref_gender = "female"
+    print 'curr_user'
+    print curr_user
 
-        if "true" in male:
-            if "true" in female:
-                pref_gender = "both"
-
-        if age_min:
-            change_settings = Match.query.filter_by(username=curr_user.username).update(dict(pref_gender=pref_gender, pref_age_min=age_min, pref_age_max=age_max))
-            db.session.commit()
-
-        # handle like requests
-        like_dislike = request.form['like_dislike']
-        liked_user = request.form['liked_user']
-
-        if "like" in like_dislike:
-            like = Like(username=curr_user.username, liked_user=liked_user)
-            db.session.add(like)
-            db.session.commit()
-
-        if "dislike" in like_dislike:
-            dislike = Dislike(username=curr_user.username, disliked_user=liked_user)
-            db.session.add(dislike)
-            db.session.commit()
-
-    # fetch Recommended using Watson algo
     if curr_user:
-        highest_match_users = match_users_watson(curr_user)
-    else:
-        highest_match_users = ""
+        print "YEP"
+        # take care of likes / dislikes
+        if request.method == "POST":
 
-    # fetch Matched users (mutual likes)
-    if curr_user:
-        mutual_likes = fetch_mutual_likes(curr_user)
-    else:
-        mutual_likes = ""
+            # handle settings request
+            male = request.form['male']
+            female = request.form['female']
+            age_min = request.form['age_min']
+            age_max = request.form['age_max']
+            pref_gender = ""
 
-    # take care of matching
-    curr_user_table = User.query.filter_by(username=current_user.username).first()
-    curr_match_table = Match.query.filter_by(username=current_user.username).first()
+            if male == "true":
+                pref_gender = "male"
 
-    # run settings over matches to filter further
-    settings_pref = Match.query.filter_by(username=curr_user.username).first()
-    if settings_pref.pref_gender != "":
-        filter_highest_match_users = []
+            if female == "true":
+                 pref_gender = "female"
 
-        pref_gender = settings_pref.pref_gender
-        age_min = settings_pref.pref_age_min
-        age_max = settings_pref.pref_age_max
-        print age_min
-        print age_max
+            if "true" in male:
+                if "true" in female:
+                    pref_gender = "both"
 
-        print "PREF GENDER"
-        print pref_gender
+            if age_min:
+                change_settings = Match.query.filter_by(username=curr_user.username).update(dict(pref_gender=pref_gender, pref_age_min=age_min, pref_age_max=age_max))
+                db.session.commit()
 
-        for user in highest_match_users:
+            # handle like requests
+            like_dislike = request.form['like_dislike']
+            liked_user = request.form['liked_user']
 
-            gender = user[3]['gender']
+            if "like" in like_dislike:
+                like = Like(username=curr_user.username, liked_user=liked_user)
+                db.session.add(like)
+                db.session.commit()
 
-            if (pref_gender == "female") or (pref_gender == "male"):
-                if pref_gender == gender.lower():
+            if "dislike" in like_dislike:
+                dislike = Dislike(username=curr_user.username, disliked_user=liked_user)
+                db.session.add(dislike)
+                db.session.commit()
 
+
+        # fetch Recommended using Watson algo
+        if curr_user:
+            highest_match_users = match_users_watson(curr_user)
+        else:
+            highest_match_users = ""
+
+        # fetch Matched users (mutual likes)
+        if curr_user:
+            mutual_likes = fetch_mutual_likes(curr_user)
+        else:
+            mutual_likes = ""
+
+        # take care of matching
+        curr_match_table = Match.query.filter_by(username=current_user.username).first()
+
+        # run settings over matches to filter further
+        settings_pref = Match.query.filter_by(username=curr_user.username).first()
+        if settings_pref.pref_gender != "":
+            filter_highest_match_users = []
+
+            pref_gender = settings_pref.pref_gender
+            age_min = settings_pref.pref_age_min
+            age_max = settings_pref.pref_age_max
+            print age_min
+            print age_max
+
+            print "PREF GENDER"
+            print pref_gender
+
+            for user in highest_match_users:
+
+                gender = user[3]['gender']
+
+                if (pref_gender == "female") or (pref_gender == "male"):
+                    if pref_gender == gender.lower():
+
+                        filter_highest_match_users.append(user)
+
+                if pref_gender == "both":
                     filter_highest_match_users.append(user)
-
-
-            if pref_gender == "both":
-                filter_highest_match_users.append(user)
-
 
     try:
         if filter_highest_match_users:
             print 'filter'
             highest_match_users = filter_highest_match_users
     except:
-        "fhm"
+        highest_match_users = ""
+
 
     return render_template('member.html', settings_form=settings_form, name=current_user.username,
                            highest_match_users=highest_match_users, curr_user_table=curr_user_table,
@@ -488,14 +500,6 @@ def admin():
     return render_template('admin.html')
 
 
-# route to deactivate the user
-@app.route('/deactivate', methods=['POST'])
-def deactivate_user():
-    username = User.query.filter_by(username=request.form["name"]).first()
-    username.activated = 0
-    db.session.commit()
-    return redirect(url_for('home'))
-
 # ---------------------------------------------------------------------------------
 #   Routes for user authentication
 # -------------------------------------------------------------------------------*/
@@ -551,8 +555,7 @@ def register():
         if not email:
             if register_form.validate_on_submit():
                 hashed_password = generate_password_hash(register_form.password.data, method='sha256')
-                new_user = User(username=register_form.username.data.lower(), email=register_form.email.data.lower(),
-                                password=hashed_password, setup=False)
+                new_user = User(username=register_form.username.data.lower(), email=register_form.email.data.lower(), password=hashed_password, setup=False)
                 db.session.add(new_user)
                 db.session.commit()
 
@@ -816,7 +819,6 @@ def process_profile_form(match_form):
     # update the setup value
     update = User.query.filter_by(username=username).first()
     update.setup = True
-    update.activated = True
     db.session.merge(update)
     db.session.commit()
 
@@ -826,4 +828,4 @@ def process_profile_form(match_form):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    application.run(debug=True)
