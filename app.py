@@ -511,6 +511,9 @@ def deactivate_user():
     username = User.query.filter_by(username=request.form["name"]).first()
     username.activated = 0
     db.session.commit()
+    logout_user()
+    #
+    # flash("User deactivated")
     return redirect(url_for('home'))
 
 # ---------------------------------------------------------------------------------
@@ -609,7 +612,6 @@ def register():
 def logout():
     logout_user()
     return redirect(url_for('home'))
-
 
 
 # ---------------------------------------------------------------------------------

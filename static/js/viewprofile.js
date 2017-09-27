@@ -5,7 +5,7 @@ $(document).ready(function () {
     var form = document.getElementById("edit-profile-form");
     var answer_form = document.getElementById("edit-personality-form");
     var answer_details = document.getElementById("answer_details");
-    var details_form = $( "#details-form");
+    var details_form = $("#details-form");
 
     // hide forms initially
     $(form).hide();
@@ -16,7 +16,7 @@ $(document).ready(function () {
     $('#edit-details-btn').on('click', function() {
         $("#edit-profile-form").fadeIn();
         $(details).hide();
-            $("#edit-details-btn").hide();
+        $("#edit-details-btn").hide();
         $("#deactivate-profile-btn").hide();
     });
 
@@ -31,12 +31,17 @@ $(document).ready(function () {
     $('#edit-answers-btn').on('click', function() {
         $("#edit-personality-form").fadeIn();
         $(answer_details).hide();
+        $("#edit-answers-btn").hide();
     });
 
     $('#edit-answer-back-btn').on('click', function() {
         $(answer_form).hide();
         $("#answer_details").fadeIn();
+        $("#edit-answers-btn").fadeIn();
     });
+
+    // code to run when profile is deactivated
+
 
     // // use AJAX to send data to Flask back-end with jQuery
     // $('#deactivate-profile-btn').on('click', function() {
@@ -74,7 +79,6 @@ $(document).ready(function () {
     );
 
 
-
        //
        // $('div#tab1 #edit-profile-form').hide();
        // $('.tab-content #edit-profile-form').eq($(this).index()).show()
@@ -83,6 +87,13 @@ $(document).ready(function () {
     //
     // element.style.visibility = "hidden";
 });
+
+function show_alert() {
+  if(confirm("Do you really want to do this?"))
+    document.forms[0].submit();
+  else
+    return false;
+}
 
 $(document).ready(function () {
 

@@ -62,20 +62,16 @@
                                 <dd>{{ curr_match_table.bio }}</dd>
                             </dl>
 
+                        {% if current_user.username == curr_match_table.username %}
+                            <form action="{{ url_for('deactivate_user') }}" method="POST" id="deactivateForm">
+                                <input type="hidden" name="name" value="{{ current_user.username }}">
+                                <input type="submit" value="Deactivate" class="btn btn-danger"
+                                       id="deactivate-profile-btn">
+                            </form>
+                            <a href="#" id="edit-details-btn" class="btn btn-default" style="letter-spacing: 1px;">Edit Details</a>
+                        {% endif %}
 
                         </div>
-
-
-                        {% if current_user.username == curr_match_table.username %}
-                            <a href="#" id="edit-details-btn" class="btn btn-default" style="letter-spacing: 1px;">Edit Details</a>
-
-                            <form action="{{ url_for('deactivate_user') }}" method="POST">
-                                <input type="hidden" name="name" value="{{ current_user.username }}">
-                                <input type="submit" value="Deactivate" class="btn btn-danger" id="deactivate-profile-btn">
-
-{#                            <a href="#" id="deactivate-profile-btn" class="btn btn-danger" style="letter-spacing: 1px">Deactivate</a>#}
-                            </form>
-                        {% endif %}
 
                         <div id="edit-profile-form">
 
@@ -456,14 +452,11 @@
                                 <!-- End Reading -->
 
 
-                                <!-- End display binary floats -->
-                                <div style="display:inline-block;padding:25px">
-                                    <!-- only show the edit button if looking at another user's profile -->
+                            </div>
+                                                            <!-- only show the edit button if looking at another user's profile -->
                                     {% if current_user.username == curr_match_table.username %}
                                     <a href="#" id="edit-answers-btn" class="btn btn-default" style="letter-spacing: 1px;">Edit Answers</a>
                                     {% endif %}
-                                </div>
-                            </div>
                                 <div id="edit-personality-form">
 
                                 <h4 class="red-text text-center"> &#9473 The following questions are used to match you with other users. &#9473</h4>
