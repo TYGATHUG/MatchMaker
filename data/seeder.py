@@ -171,7 +171,7 @@ def data_entry():
                      bio, practicality, love, excitment, challenge, closeness, structure, live_music, 
                      spare_moment_purchases, gym_member, outdoors, volunteering, entreprenuer, reading) 
                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-                     (randName.lower(), 0, imageName.lower(), randName, randGender, "", (randint(18, 70)), 0, 0,
+                     (randName.lower(), (randint(0, 500)), imageName.lower(), randName, randGender, "", (randint(18, 70)), 0, 0,
                      (randint(145, 213)), randLocation, "", randEducation, randBio, (randint(1, 100)), (randint(1, 100)),
                      (randint(1, 100)), (randint(1, 100)), (randint(1, 100)), (randint(1, 100)), random.choice(experienceValues),
                      random.choice(experienceValues), random.choice(experienceValues), random.choice(experienceValues),

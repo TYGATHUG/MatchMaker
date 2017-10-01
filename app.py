@@ -387,6 +387,9 @@ def viewprofile():
         viewed_user_profile = Match.query.filter_by(name=name).first()
         curr_user_table = User.query.filter_by(username=current_user.username).first()
 
+        viewed_user_profile.view_count += 1
+        db.session.commit()
+
         #return "viewed user is %s and current user is %s" % (viewed_user_profile.name, curr_user_table.username)
         return render_template('viewprofile.html', curr_match_table=viewed_user_profile, curr_user_table=curr_user_table,
                                update_form=update_form, answer_form=answer_form, curr_ans_table=curr_ans_table)
