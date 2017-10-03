@@ -26,7 +26,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(80))
     setup = db.Column(db.Boolean())
-
+    activated = db.Column(db.Boolean())
 
 class Match(db.Model):
     __tablename__ = 'Match'
@@ -171,14 +171,14 @@ def data_entry():
                      bio, practicality, love, excitment, challenge, closeness, structure, live_music, 
                      spare_moment_purchases, gym_member, outdoors, volunteering, entreprenuer, reading) 
                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
-                     (randName.lower(), 0, imageName.lower(), randName, randGender, "", (randint(18, 70)), 0, 0,
+                     (randName.lower(), (randint(0, 500)), imageName.lower(), randName, randGender, "", (randint(18, 70)), 0, 0,
                      (randint(145, 213)), randLocation, "", randEducation, randBio, (randint(1, 100)), (randint(1, 100)),
                      (randint(1, 100)), (randint(1, 100)), (randint(1, 100)), (randint(1, 100)), random.choice(experienceValues),
                      random.choice(experienceValues), random.choice(experienceValues), random.choice(experienceValues),
                      random.choice(experienceValues), random.choice(experienceValues), random.choice(experienceValues)))
 
-        conn.execute('''INSERT INTO user (id, username, email, password, setup) VALUES (?, ?, ?, ?, ?)''',
-                     (idCounter, randName.lower(), emailName.lower(), test_passwordHash, True))
+        conn.execute('''INSERT INTO user (id, username, email, password, setup, activated) VALUES (?, ?, ?, ?, ?, ?)''',
+                     (idCounter, randName.lower(), emailName.lower(), test_passwordHash, True, True))
 
         conn.execute('''INSERT INTO PersonalityAnswers (username, q1, q2, q3, q4, q5, q6, q7, q8) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)''',
                      (randName.lower(), random.choice(answers), random.choice(answers), random.choice(answers),
@@ -190,8 +190,8 @@ def data_entry():
         usernames.remove(randName)
         idCounter += 1;
 
-    conn.execute('''INSERT INTO user (id, username, email, password, setup) VALUES (?, ?, ?, ?, ?)''',
-                 (idCounter, "admin", "admin@gmail.com", admin_passwordHash, True))
+    conn.execute('''INSERT INTO user (id, username, email, password, setup, activated) VALUES (?, ?, ?, ?, ?, ?)''',
+                 (idCounter, "admin", "admin@gmail.com", admin_passwordHash, True, True))
 
     conn.execute('''INSERT INTO Match (username, view_count, image, name, gender, pref_gender,
                          age, pref_age_min, pref_age_max, height, location, pref_location, education,
