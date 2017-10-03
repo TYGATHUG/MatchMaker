@@ -97,8 +97,10 @@ class Match(db.Model):
     volunteering = db.Column(db.Integer())
     entreprenuer = db.Column(db.Integer())
     reading = db.Column(db.Integer())
+    similarity = db.Column(db.Integer())
 
 admin.add_view(ModelView(Match, db.session)) # create User view for current session
+
 
 class PersonalityAnswers(db.Model):
     __tablename__ = 'PersonalityAnswers'
@@ -642,14 +644,18 @@ def match_users_watson(curr_user):
 
             if not curr_user.live_music == 0:
                 if not user.live_music == 0:
-                   matched_users[user.username].append({'structure': user.live_music})
+                   matched_users[user.username].append({'live_music': user.live_music})
 
         # get the number of fields that match for each user
         up = 0
         down = 1000
         for match in matched_users:
             num_match = len(matched_users[match])
+
             matched_users[match].append({'num_match': num_match})
+            similarity = get_similarity(matched_users[match], curr_user)
+
+            print similarity
             if num_match > up:
                 up = num_match
             if num_match < down:
@@ -666,6 +672,7 @@ def match_users_watson(curr_user):
                 user_match = 0
                 try:
                     user_match = data['num_match']
+
                 except:
                     user_match = 0
 
@@ -673,6 +680,11 @@ def match_users_watson(curr_user):
                     #highest_match_users.append(matched_users[match])
 
                     user = Match.query.filter_by(username=match).first()
+
+                    # write num match to Match DB
+                    user.similarity = num_match
+                    db.session.merge(user)
+                    db.session.commit()
 
                     highest_match_users.append([
                         {'username': user.username},
@@ -683,7 +695,8 @@ def match_users_watson(curr_user):
                         {'height': user.height},
                         {'location': user.location},
                         {'education': user.education},
-                        {'bio': user.bio}
+                        {'bio': user.bio},
+                        {'similarity': user.similarity}
                     ])
                     break;
 
@@ -720,7 +733,8 @@ def fetch_mutual_likes(curr_user):
             'height': liked_user_details.height,
             'location': liked_user_details.location,
             'education': liked_user_details.education,
-            'age': liked_user_details.age
+            'age': liked_user_details.age,
+            'similarity': liked_user_details.similarity
             }
         ])
 
@@ -774,7 +788,6 @@ def process_profile_form(match_form):
     practicality = results['needs'][0]['practicality']
     love = results['needs'][0]['love']
     challenge = results['needs'][0]['challenge']
-    challenge = results['needs'][0]['challenge']
     closeness = results['needs'][0]['closeness']
     excitment = results['needs'][0]['excitment']
     structure = results['needs'][0]['structure']
@@ -810,8 +823,29 @@ def process_profile_form(match_form):
 
     return True
 
-    return True
+
+def get_similarity(matched_user, curr_user):
+
+    similarity = ""
+
+
+    for items in matched_user:
+        for key, value in items.iteritems():
+
+            if "love" in key:
+                print key
+                print curr_user.love - value
+
+            if "practicality" in key:
+                print key
+                print curr_user.practicality - value
+
+
+
+
+    print "EEEEEE"
+    return similarity
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(debug=True)

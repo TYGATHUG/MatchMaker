@@ -28,6 +28,7 @@ class User(UserMixin, db.Model):
     setup = db.Column(db.Boolean())
     activated = db.Column(db.Boolean())
 
+
 class Match(db.Model):
     __tablename__ = 'Match'
     username = db.Column(db.String(15), primary_key=True, unique=True)
@@ -57,6 +58,8 @@ class Match(db.Model):
     volunteering = db.Column(db.Integer())
     entreprenuer = db.Column(db.Integer())
     reading = db.Column(db.Integer())
+    similarity = db.Column(db.Integer())
+
 
 class PersonalityAnswers(db.Model):
     __tablename__ = 'PersonalityAnswers'
@@ -169,13 +172,13 @@ def data_entry():
         conn.execute('''INSERT INTO Match (username, view_count, image, name, gender, pref_gender,
                      age, pref_age_min, pref_age_max, height, location, pref_location, education,
                      bio, practicality, love, excitment, challenge, closeness, structure, live_music, 
-                     spare_moment_purchases, gym_member, outdoors, volunteering, entreprenuer, reading) 
-                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                     spare_moment_purchases, gym_member, outdoors, volunteering, entreprenuer, reading, similarity) 
+                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
                      (randName.lower(), (randint(0, 500)), imageName.lower(), randName, randGender, "", (randint(18, 70)), 0, 0,
                      (randint(145, 213)), randLocation, "", randEducation, randBio, (randint(1, 100)), (randint(1, 100)),
                      (randint(1, 100)), (randint(1, 100)), (randint(1, 100)), (randint(1, 100)), random.choice(experienceValues),
                      random.choice(experienceValues), random.choice(experienceValues), random.choice(experienceValues),
-                     random.choice(experienceValues), random.choice(experienceValues), random.choice(experienceValues)))
+                     random.choice(experienceValues), random.choice(experienceValues), random.choice(experienceValues), 0))
 
         conn.execute('''INSERT INTO user (id, username, email, password, setup, activated) VALUES (?, ?, ?, ?, ?, ?)''',
                      (idCounter, randName.lower(), emailName.lower(), test_passwordHash, True, True))
