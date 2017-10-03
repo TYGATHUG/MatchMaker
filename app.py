@@ -236,7 +236,6 @@ def member():
     print 'user ref'
     print curr_user_table.setup
 
-
     try:
         curr_user = Match.query.filter_by(username=username.lower()).first()    # get current user by matching session and Match DB
     except curr_user is None:
@@ -468,6 +467,15 @@ def viewprofile():
     return render_template('viewprofile.html', update_form=update_form,
                            curr_ans_table=curr_ans_table, curr_match_table=curr_match_table,
                            curr_user_table=curr_user_table, answer_form=answer_form)
+
+
+@app.route('/chat', methods=['GET', 'POST'])
+@login_required
+def chat():
+
+
+    return render_template('chat.html')
+
 
 
 @app.route('/terms', methods=['GET', 'POST'])

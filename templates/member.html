@@ -282,6 +282,10 @@
                                 <input type="hidden" name="name" value="{{ value.name }}">
                                 <input type="submit" value="View Profile" class="btn btn-default btn-xs" id="indv-prof-btn">
                             </form>
+                            <form method="POST" action="/chat">
+                                <input type="hidden" name="name" value="{{ value.name }}">
+                                <input type="submit" value="Chat" class="btn btn-default btn-xs" id="chat-btn">
+                            </form>
                                 {% endfor %}
 
                             </div>
