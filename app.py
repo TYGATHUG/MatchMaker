@@ -59,6 +59,8 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(80))
     setup = db.Column(db.Boolean())
+    activated = db.Column(db.Boolean())
+
 
 admin.add_view(ModelView(User, db.session)) # create User view for current session
 
@@ -169,6 +171,7 @@ class MatchForm(FlaskForm):
     q7 = StringField('Question 7', validators=[InputRequired(), Length(min=15, max=255)])
     q8 = StringField('Question 8', validators=[InputRequired(), Length(min=15, max=255)])
     setup = BooleanField()
+    activated = BooleanField()
 
 
 # for updating only the user's details
@@ -585,6 +588,13 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
+# route to deactivate the user
+@app.route('/deactivate', methods=['POST'])
+def deactivate_user():
+    username = User.query.filter_by(username=request.form["name"]).first()
+    username.activated = 0
+    db.session.commit()
+    return redirect(url_for('home'))
 
 
 # ---------------------------------------------------------------------------------
@@ -818,6 +828,8 @@ def process_profile_form(match_form):
     # update the setup value
     update = User.query.filter_by(username=username).first()
     update.setup = True
+    update.activated = True
+
     db.session.merge(update)
     db.session.commit()
 
