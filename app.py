@@ -490,6 +490,13 @@ def admin():
     return render_template('admin.html')
 
 
+@app.route('/chat', methods=['GET', 'POST'])
+@login_required
+def chat():
+
+    return render_template('chat.html')
+
+
 # ---------------------------------------------------------------------------------
 #   Routes for user authentication
 # -------------------------------------------------------------------------------*/
