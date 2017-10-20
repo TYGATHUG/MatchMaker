@@ -522,19 +522,21 @@ def login():
         else:
             login_form.username.errors.append('Invalid Username')
 
+    if request.referrer is not None:
+        previous_route = str(request.referrer.split("/", 2)[2].split('/')[1]) + ".html"
 
-    previous_route = str(request.referrer.split("/", 2)[2].split('/')[1]) + ".html"
-
-    if previous_route == ".html":
-        previous_route = PREVIOUS_SAVED_ROUTE
-    elif previous_route == "#.html":
-        previous_route = PREVIOUS_SAVED_ROUTE
-    elif previous_route == "register.html":
-        previous_route = PREVIOUS_SAVED_ROUTE
-    elif previous_route == "login.html":
-        previous_route = PREVIOUS_SAVED_ROUTE
+        if previous_route == ".html":
+            previous_route = PREVIOUS_SAVED_ROUTE
+        elif previous_route == "#.html":
+            previous_route = PREVIOUS_SAVED_ROUTE
+        elif previous_route == "register.html":
+            previous_route = PREVIOUS_SAVED_ROUTE
+        elif previous_route == "login.html":
+            previous_route = PREVIOUS_SAVED_ROUTE
+        else:
+            globals()['PREVIOUS_SAVED_ROUTE'] = previous_route
     else:
-        globals()['PREVIOUS_SAVED_ROUTE'] = previous_route
+        previous_route = PREVIOUS_SAVED_ROUTE
 
     return render_template(previous_route, register_form=register_form, login_form=login_form)
 
