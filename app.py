@@ -222,11 +222,18 @@ def home():
 @login_required
 def member():
 
+    curr_user_table = ''
+    curr_match_table = ''
+    mutual_likes = ''
+    highest_match_users = ''
+
     # instasiate SettingsForm
     settings_form = SettingsForm()
 
     username = current_user.username.title()    # get session based username
     curr_user = Match.query.filter_by(username=username.lower()).first()    # get current user by matching session and Match DB
+    #print 'curr user'
+    #print curr_user.username
 
     # take care of likes / dislikes
     if request.method == "POST":
@@ -267,48 +274,36 @@ def member():
             db.session.commit()
 
     # fetch Recommended using Watson algo
+    curr_user_table = User.query.filter_by(username=current_user.username).first()
     if curr_user:
         highest_match_users = match_users_watson(curr_user)
-    else:
-        highest_match_users = ""
 
-    # fetch Matched users (mutual likes)
-    if curr_user:
+        # fetch Matched users (mutual likes)
         mutual_likes = fetch_mutual_likes(curr_user)
-    else:
-        mutual_likes = ""
 
-    # take care of matching
-    curr_user_table = User.query.filter_by(username=current_user.username).first()
-    curr_match_table = Match.query.filter_by(username=current_user.username).first()
+        # take care of matching
+        curr_user_table = User.query.filter_by(username=current_user.username).first()
+        curr_match_table = Match.query.filter_by(username=current_user.username).first()
 
-    # run settings over matches to filter further
-    settings_pref = Match.query.filter_by(username=curr_user.username).first()
-    if settings_pref.pref_gender != "":
-        filter_highest_match_users = []
+        # run settings over matches to filter further
+        settings_pref = Match.query.filter_by(username=current_user.username).first()
+        if settings_pref.pref_gender != "":
+            filter_highest_match_users = []
 
-        pref_gender = settings_pref.pref_gender
-        age_min = settings_pref.pref_age_min
-        age_max = settings_pref.pref_age_max
-        print age_min
-        print age_max
+            pref_gender = settings_pref.pref_gender
+            age_min = settings_pref.pref_age_min
+            age_max = settings_pref.pref_age_max
 
-        print "PREF GENDER"
-        print pref_gender
+            for user in highest_match_users:
 
-        for user in highest_match_users:
+                gender = user[3]['gender']
 
-            gender = user[3]['gender']
+                if (pref_gender == "female") or (pref_gender == "male"):
+                    if pref_gender == gender.lower():
+                        filter_highest_match_users.append(user)
 
-            if (pref_gender == "female") or (pref_gender == "male"):
-                if pref_gender == gender.lower():
-
+                if pref_gender == "both":
                     filter_highest_match_users.append(user)
-
-
-            if pref_gender == "both":
-                filter_highest_match_users.append(user)
-
 
     try:
         if filter_highest_match_users:
@@ -828,7 +823,7 @@ def get_similarity(matched_user, curr_user):
 
     similarity = ""
 
-
+    """
     for items in matched_user:
         for key, value in items.iteritems():
 
@@ -841,9 +836,9 @@ def get_similarity(matched_user, curr_user):
                 print curr_user.practicality - value
 
 
+    
+    """
 
-
-    print "EEEEEE"
     return similarity
 
 
