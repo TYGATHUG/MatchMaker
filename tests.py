@@ -18,6 +18,7 @@ class TestUser(UserMixin, db.Model):
 class BaseTestCase(TestCase):
     """A base test  case."""
 
+    # return the flask instance
     def create_app(self):
         # establishes our test configuration
         app.config.from_object('config.TestConfig')
@@ -35,7 +36,6 @@ class BaseTestCase(TestCase):
     def tearDown(self):
         db.session.remove()
         db.drop_all()
-
 
 
 # based on the above, each test will be run on a clean database
@@ -59,6 +59,32 @@ class FlaskTestCase(BaseTestCase):
 
         response = self.client.get('/login', content_type='html/text')
         self.assertTrue(b'LOGIN' in response.data)
+        self.assertEqual(response.status_code, 200)
+
+    # test other main pages
+    def test_help_page(self):
+
+        response = self.client.get('/help', content_type='html/text')
+        self.assertTrue(b'Help' in response.data)
+        self.assertEqual(response.status_code, 200)
+
+    def test_tnc_page(self):
+
+        response = self.client.get('/terms', content_type='html/text')
+        self.assertTrue(b'Terms' in response.data)
+        self.assertEqual(response.status_code, 200)
+
+    def test_privacy_page(self):
+
+        response = self.client.get('/terms', content_type='html/text')
+        self.assertTrue(b'Privacy' in response.data)
+        self.assertEqual(response.status_code, 200)
+
+    def test_aboutus_page(self):
+
+        response = self.client.get('/about', content_type='html/text')
+        self.assertTrue(b'Privacy' in response.data)
+        self.assertEqual(response.status_code, 200)
 
     # ensure that login behaves correctly given the correct credentials
     # def test_correct_login(self):
